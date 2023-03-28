@@ -5,7 +5,7 @@ import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.gameConfiguration.GameConfig;
 import com.example.GameFramework.infoMessage.GameState;
 
-public class MainActivity extends GameMainActivity {
+public class ScrabbleMainActivity extends GameMainActivity {
 
     private final static String TAG = "MainActivity";
     @Override

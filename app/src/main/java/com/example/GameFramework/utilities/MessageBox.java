@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.example.GameFramework.GameMainActivity;
-import com.example.gametestb.R;
+import com.example.Scrabble2.R;
 
 /**
  * Helper-class for showing dialog boxes

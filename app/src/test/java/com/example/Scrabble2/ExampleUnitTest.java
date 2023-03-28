@@ -1,4 +1,4 @@
-package com.example.gametestb;
+package com.example.Scrabble2;
 
 import org.junit.Test;
 

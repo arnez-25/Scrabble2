@@ -1,8 +1,4 @@
-package com.example.gametestb;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+package com.example.Scrabble2;
 
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.LocalGame;

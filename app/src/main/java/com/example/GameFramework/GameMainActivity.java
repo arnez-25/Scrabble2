@@ -34,7 +34,9 @@ import com.example.GameFramework.utilities.IPCoder;
 import com.example.GameFramework.utilities.Logger;
 import com.example.GameFramework.utilities.MessageBox;
 import com.example.GameFramework.utilities.Saving;
-import com.example.Scrabble2.R;
+import com.example.gametestb.R;
+
+
 
 /**
  * class GameMainActivity

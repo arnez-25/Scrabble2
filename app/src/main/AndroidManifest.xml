@@ -12,7 +12,7 @@
         android:theme="@style/Theme.GameTestB"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.Scrabble2.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,4 +22,5 @@
         </activity>
     </application>
 
+    <!--Changed android:name from .MainActivty to com.example...MainActivity it can find the file now -->
 </manifest>

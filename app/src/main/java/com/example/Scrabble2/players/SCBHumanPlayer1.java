@@ -22,8 +22,9 @@ public class SCBHumanPlayer1 extends GameHumanPlayer{
      *
      * @param name the name of the player
      */
-    public SCBHumanPlayer1(String name) {
+    public SCBHumanPlayer1(String name, int layoutId) {
         super(name);
+        this.layoutId = layoutId;
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.example.Scrabble2;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.gameConfiguration.GameConfig;

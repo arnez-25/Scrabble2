@@ -1,15 +1,15 @@
-package com.example.Scrabble2;
+package com.example.Scrabble2.ScrabbleActionMessages;
 
 import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;
 
-public class ScrabbleSkipAction extends GameAction {
+public class ScrabblePlaceAction extends GameAction {
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public ScrabbleSkipAction(GamePlayer player) {
+    public ScrabblePlaceAction(GamePlayer player) {
         super(player);
     }
 }

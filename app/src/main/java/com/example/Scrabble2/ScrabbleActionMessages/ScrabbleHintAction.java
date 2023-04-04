@@ -1,4 +1,4 @@
-package com.example.Scrabble2;
+package com.example.Scrabble2.ScrabbleActionMessages;
 
 import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;

@@ -10,10 +10,16 @@ import com.example.GameFramework.gameConfiguration.GameConfig;
 import com.example.GameFramework.gameConfiguration.GamePlayerType;
 import com.example.GameFramework.infoMessage.GameState;
 import com.example.GameFramework.players.GamePlayer;
+import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.players.SCBComputerPlayer1;
 import com.example.Scrabble2.players.SCBComputerPlayer2;
 import com.example.Scrabble2.players.SCBHumanPlayer1;
+import com.example.gametestb.R;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class ScrabbleMainActivity extends GameMainActivity {
@@ -28,7 +34,7 @@ public class ScrabbleMainActivity extends GameMainActivity {
         // human player
         playerTypes.add(new GamePlayerType("Local Human Player") {
             public GamePlayer createPlayer(String name) {
-                return new SCBHumanPlayer1()(name, R.layout.ttt_human_player1);
+                return new SCBHumanPlayer1(name, R.layout.scb_humanplayer1);
             }
         });
 
@@ -73,7 +79,18 @@ public class ScrabbleMainActivity extends GameMainActivity {
      */
     @Override
     public LocalGame createLocalGame(GameState gameState){
-        return null;
+        if(gameState == null) {
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new InputStreamReader(getAssets().open("dictionary.txt")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return new ScrabbleLocalGame(reader);
+        }
+
+        return new ScrabbleLocalGame((SCBState) gameState);
     }
 
     /**

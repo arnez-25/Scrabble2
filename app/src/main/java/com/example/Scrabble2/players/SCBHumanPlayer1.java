@@ -6,6 +6,7 @@ import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.gametestb.R;
+import com.example.Scrabble2.views.SCBSurfaceView;
 
 public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener{
 
@@ -13,7 +14,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private static final String TAG = "SCBHumanPlayer1";
 
     // the surface view
-    //private TTTSurfaceView surfaceView;
+    private SCBSurfaceView surfaceView;
 
     // the ID for the layout to use
     private int layoutId;

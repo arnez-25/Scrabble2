@@ -23,7 +23,7 @@ public class SCBState extends GameState implements Serializable{
     // ************** instance variables ************
     ///////////////////////////////////////////////////
 
-    //TODO: Add instance veriables for the game
+    //TODO: Add instance variables for the game
 
     private int playerToMove;
 

@@ -12,7 +12,7 @@
         android:theme="@style/Theme.GameTestB"
         tools:targetApi="31">
         <activity
-            android:name="com.example.Scrabble2.MainActivity"
+            android:name="com.example.Scrabble2.ScrabbleMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

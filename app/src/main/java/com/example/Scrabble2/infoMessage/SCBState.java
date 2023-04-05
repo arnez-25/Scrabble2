@@ -21,7 +21,7 @@ import com.example.GameFramework.infoMessage.GameState;
  * @author Riley Cameron
  * @version April 2023
  */
-public class SCBState extends GameState implements Serializable{//TODO: method for checking if the game is over (set gameRunning to false)
+public class SCBState extends GameState implements Serializable{//TODO: fix game ending early
 
     //Tag for logging
     private static final String TAG = "SCBState";
@@ -209,6 +209,32 @@ public class SCBState extends GameState implements Serializable{//TODO: method f
     }
 
     /**
+     * This method moves the tiles on the board back into the player's hand
+     *
+     * @param playerId
+     * @return
+     */
+    public boolean resetHand(int playerId) {
+        if (playerId == playerToMove) {
+            //put letters back into player's hand:
+            for (Tile[] row : board) {
+                for (Tile t : row) {
+                    if (playerId == 0 && !t.isOnBoard()) {
+                        player1Tiles.add(t);
+                    } else if (playerId == 1 && !t.isOnBoard()) {
+                        player2Tiles.add(t);
+                    }
+                }
+            }
+
+            cleanBoard();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Tells whose move it is.
      *
      * @return the index (0 or 1) of the player whose move it is.
@@ -248,26 +274,22 @@ public class SCBState extends GameState implements Serializable{//TODO: method f
             player2Tiles.remove(t);
         }
     }
-/*
-    public void initBoard(Tile[][] board, Tile t, int row, int col) {
-        for (int i = 0; i < 15; i++) {
-            for(int j = 0; j < 15; j++) {
-                if (i == row && j == col) {
-                    board[i][j] = t;
-                }
-            }
-        }
+
+    /**
+     * Mathod to find a Tile given its coordinates
+     *
+     * @param row
+     * @param col
+     * @return Tile  - at position row, col
+     */
+    public Tile getPiece(int row, int col) {
+        // if we're out of bounds or anything, return '?';
+        if (board == null || row < 0 || col < 0) return null;
+        if (row >= board.length || col >= board[row].length) return null;
+
+        // return the character that is in the proper position
+        return board[row][col];
     }
-    */
-
-public Tile getPiece(int row, int col) {
-    // if we're out of bounds or anything, return '?';
-    if (board == null || row < 0 || col < 0) return null;
-    if (row >= board.length || col >= board[row].length) return null;
-
-    // return the character that is in the proper position
-    return board[row][col];
-}
 
 
     /**
@@ -451,7 +473,13 @@ public Tile getPiece(int row, int col) {
                 if (playerId == 0) {
                     //draw back up to hand size:
                     while (player1Tiles.size() < 7) {
-                        player1Tiles.add(drawFromBag());
+                        Tile t = drawFromBag();
+                        if (t == null) {
+                            gameRunning = false;
+                            break;
+                        } else {
+                            player1Tiles.add(t);
+                        }
                     }
 
                     String info = "Player 0 has played the word " + wordPlayed + ", to form:";
@@ -466,7 +494,13 @@ public Tile getPiece(int row, int col) {
                     p1Score += calculateScore(lettersPlayed, perpWords);
                 } else {
                     while (player2Tiles.size() < 7) {
-                        player2Tiles.add(drawFromBag());
+                        Tile t = drawFromBag();
+                        if (t == null) {
+                            gameRunning = false;
+                            break;
+                        } else {
+                            player2Tiles.add(t);
+                        }
                     }
 
                     String info = "Player 1 has played the word " + wordPlayed + ", to form:";
@@ -776,8 +810,12 @@ public Tile getPiece(int row, int col) {
      * @return random tile
      */
     public Tile drawFromBag() {
-        Collections.shuffle(bag);
-        return bag.remove(0);
+        if(!bag.isEmpty()) {
+            Collections.shuffle(bag);
+            return bag.remove(0);
+        } else {
+            return null;
+        }
     }
 
     /**

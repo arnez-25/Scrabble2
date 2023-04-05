@@ -6,6 +6,7 @@ import com.example.GameFramework.players.GamePlayer;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleHintAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleResetAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSkipAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSwapAction;
 import com.example.Scrabble2.infoMessage.SCBState;
@@ -78,6 +79,9 @@ public class ScrabbleLocalGame extends LocalGame {
             return true;
         } else if (action instanceof ScrabblePlayAction) {
             gameState.playWord(action.getPlayer().getPlayerNum());
+            return true;
+        } else if (action instanceof ScrabbleResetAction) {
+            gameState.resetHand(action.getPlayer().getPlayerNum());
             return true;
         }
 

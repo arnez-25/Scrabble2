@@ -507,11 +507,11 @@ public abstract class GameMainActivity extends Activity implements
         v = findViewById(R.id.debugLogging);
         v.setOnClickListener(this);
 
-
-        String ipCode = IPCoder.encodeLocalIP();
+        //TODO: this is causing the app to crash!!
+        /*String ipCode = IPCoder.encodeLocalIP();
         String ipAddress = IPCoder.getLocalIpAddress();
         TextView ipText = (TextView)findViewById(R.id.ipCodeLabel);
-        ipText.setText(ipText.getText()+ipCode+" ("+ipAddress+") ");
+        ipText.setText(ipText.getText()+ipCode+" ("+ipAddress+") ");*/
 
     }// initStarterGui
 

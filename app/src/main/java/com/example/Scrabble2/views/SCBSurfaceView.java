@@ -3,6 +3,7 @@ package com.example.Scrabble2.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 
 import com.example.GameFramework.utilities.FlashSurfaceView;
@@ -82,8 +83,11 @@ public class SCBSurfaceView extends FlashSurfaceView {
     }
 
     public void onDraw(Canvas g) {
+        Paint text  = new Paint();
+        text.setColor(Color.BLACK);
+        text.setTextSize(100);
 
-
+        g.drawText("Scrabble 2", 100, 100, text);
     }
 
 

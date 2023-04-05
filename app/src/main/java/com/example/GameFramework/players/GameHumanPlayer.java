@@ -121,6 +121,12 @@ public abstract class GameHumanPlayer implements GamePlayer, Tickable {
 
     }
 
+    //getter method for playerNum
+    //used in to determine which player sent an action
+    public int getPlayerNum() {
+        return playerNum;
+    }
+
     /*
      * ====================================================================
      * Abstract Methods

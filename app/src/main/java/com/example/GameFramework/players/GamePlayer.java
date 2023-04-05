@@ -36,4 +36,8 @@ public interface GamePlayer {
     //TESTING
     public GameMainActivity getActivity();
 
+    //getter method for playerNum
+    //used in to determine which player sent an action
+    public int getPlayerNum();
+
 }// interface GamePlayer

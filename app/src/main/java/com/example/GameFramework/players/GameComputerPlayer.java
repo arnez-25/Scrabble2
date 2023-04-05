@@ -60,6 +60,12 @@ public abstract class GameComputerPlayer implements GamePlayer, Tickable {
         sendInfo(new TimerInfo(timer));
     }
 
+    //getter method for playerNum
+    //used in to determine which player sent an action
+    public int getPlayerNum() {
+        return playerNum;
+    }
+
     /*
      * ====================================================================
      * Abstract Methods

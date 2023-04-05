@@ -18,10 +18,10 @@ import com.example.GameFramework.infoMessage.GameState;
  * it, or to help figure out its next move.)
  *
  * @author Jacob Arnez
- * @author
+ * @author Riley Cameron
  * @version April 2023
  */
-public class SCBState extends GameState implements Serializable{
+public class SCBState extends GameState implements Serializable{//TODO: method for checking if the game is over (set gameRunning to false)
 
     //Tag for logging
     private static final String TAG = "SCBState";
@@ -63,7 +63,7 @@ public class SCBState extends GameState implements Serializable{
     public static final int D_WORD = 2;
     public static final int EMPTY = 0;
 
-    private int playerToMove;
+    public int playerToMove;
 
     /**
      * GameState is the Constructor that establishes and defines the needed variables & parameters that will be used for the game.

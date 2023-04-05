@@ -1,4 +1,6 @@
 package com.example.Scrabble2.players;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -6,6 +8,8 @@ import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
+import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
 
@@ -19,6 +23,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the ID for the layout to use
     private int layoutId;
+
+    private Tile t;
 
 
     /**
@@ -76,13 +82,35 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * callback method when the screen it touched. We're
      * looking for a screen touch
      *
-     * @param motionEvent
+     *
      * 		the motion event that was detected
      */
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
+    public boolean onTouch(View v, MotionEvent event) {
+        // ignore if not an "up" event
+//        if (event.getAction() != MotionEvent.ACTION_UP) return true;
+        // get the x and y coordinates of the touch-location;
+        // convert them to square coordinates (where both
+        // values are in the range 0..2)
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        Point p = surfaceView.mapPixelToSquare(x, y);
 
-        //TODO: implement onTouch method for SCBHumanPlayer1
-        return false;
+        // if the location did not map to a legal square, flash
+        // the screen; otherwise, create and send an action to
+        // the game
+        if (p == null) {
+            surfaceView.flash(Color.RED, 50);
+        } else {
+            t = new Tile('d');
+            ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
+            Logger.log("onTouch", "Human player sending TTTMA ...");
+            game.sendAction(action);
+
+            surfaceView.invalidate();
+        }
+
+        // register that we have handled the event
+        return true;
+
     }
 }

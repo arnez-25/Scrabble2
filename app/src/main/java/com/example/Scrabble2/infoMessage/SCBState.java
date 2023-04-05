@@ -248,6 +248,27 @@ public class SCBState extends GameState implements Serializable{//TODO: method f
             player2Tiles.remove(t);
         }
     }
+/*
+    public void initBoard(Tile[][] board, Tile t, int row, int col) {
+        for (int i = 0; i < 15; i++) {
+            for(int j = 0; j < 15; j++) {
+                if (i == row && j == col) {
+                    board[i][j] = t;
+                }
+            }
+        }
+    }
+    */
+
+public Tile getPiece(int row, int col) {
+    // if we're out of bounds or anything, return '?';
+    if (board == null || row < 0 || col < 0) return null;
+    if (row >= board.length || col >= board[row].length) return null;
+
+    // return the character that is in the proper position
+    return board[row][col];
+}
+
 
     /**
      * This method checks the turn of the player and checks the word that is played to validate that it works.

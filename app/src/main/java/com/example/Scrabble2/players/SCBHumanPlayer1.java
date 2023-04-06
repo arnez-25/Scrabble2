@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
+import com.example.GameFramework.infoMessage.IllegalMoveInfo;
+import com.example.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
@@ -40,7 +42,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private SCBState gameState;
 
     // the ID for the layout to use
-    private int layoutId;
+    private final int layoutId;
 
     private Tile t;
 
@@ -58,42 +60,53 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     public SCBHumanPlayer1(String name, int layoutId) {
         super(name);
         this.layoutId = layoutId;
+        t = null;
     }
 
 
     @Override
     public void receiveInfo(GameInfo info) {
-    surfaceView.setState((SCBState) info);
-    //Setting player gamestate from info recieved
-    this.gameState = (SCBState) info;
+        if (surfaceView == null) return;
+
+        if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
+            // if the move was out of turn or otherwise illegal, flash the screen
+            surfaceView.flash(Color.RED, 50);
+        }
+        else if (!(info instanceof SCBState))
+            // if we do not have a TTTState, ignore
+            return;
+        else {
+            surfaceView.setState((SCBState)info);
+            surfaceView.invalidate();
+            this.gameState = (SCBState) info;
+            Logger.log(TAG, "receiving");
+        }
+
+
     }
 
     @Override
     public void setAsGui(GameMainActivity activity) {
-
         // Load the layout resource for the new configuration
         activity.setContentView(layoutId);
 
         // set the surfaceView instance variable
-        surfaceView = (SCBSurfaceView)myActivity.findViewById(R.id.surfaceView);
+        surfaceView = myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
         surfaceView.setOnTouchListener(this);
         playerHand = new Button[]{
-                (Button) myActivity.findViewById(R.id.tile0),
-                (Button) myActivity.findViewById(R.id.tile1),
-                (Button) myActivity.findViewById(R.id.tile2),
-                (Button) myActivity.findViewById(R.id.tile3),
-                (Button) myActivity.findViewById(R.id.tile4),
-                (Button) myActivity.findViewById(R.id.tile5),
-                (Button) myActivity.findViewById(R.id.tile6),
+                myActivity.findViewById(R.id.tile0),
+                myActivity.findViewById(R.id.tile1),
+                myActivity.findViewById(R.id.tile2),
+                myActivity.findViewById(R.id.tile3),
+                myActivity.findViewById(R.id.tile4),
+                myActivity.findViewById(R.id.tile5),
+                myActivity.findViewById(R.id.tile6),
 
         };
 
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 7; i++) {
             playerHand[i].setOnClickListener(this);
-            //playerHand[i].setText();
-
-
         }
     }
 
@@ -114,7 +127,9 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      */
     protected void initAfterReady() {
         myActivity.setTitle("Scrabble: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+
     }
+
 
 
     /**
@@ -140,21 +155,46 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (p == null) {
             surfaceView.flash(Color.RED, 50);
         } else {
-            t = new Tile('d');
-            ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
-            Logger.log("onTouch", "Human player sending TTTMA ...");
-            game.sendAction(action);
+            if (t != null) {
+                ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
+                Logger.log("onTouch", "Human player sending TTTMA ...");
+                game.sendAction(action);
 
-            surfaceView.invalidate();
+                surfaceView.invalidate();
+                t = null;
+            }
+
+            for (int i = 0; i < 7; i++) {
+                if (gameState != null) {
+                    String ch = "" + gameState.player1Tiles.get(i).getLetter();
+                    playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
+                }
+            }
         }
 
         // register that we have handled the event
         return true;
-
     }
 
     @Override
     public void onClick(View view) {
+        Button clicked = (Button) view;
+
+        if (clicked.getId() == R.id.tile0) {
+            t = gameState.player1Tiles.get(0);
+        } else if (clicked.getId() == R.id.tile1) {
+            t = gameState.player1Tiles.get(1);
+        } else if (clicked.getId() == R.id.tile2) {
+            t = gameState.player1Tiles.get(2);
+        } else if (clicked.getId() == R.id.tile3) {
+            t = gameState.player1Tiles.get(3);
+        } else if (clicked.getId() == R.id.tile4) {
+            t = gameState.player1Tiles.get(4);
+        } else if (clicked.getId() == R.id.tile5) {
+            t = gameState.player1Tiles.get(5);
+        } else if (clicked.getId() == R.id.tile6) {
+            t = gameState.player1Tiles.get(6);
+        }
 
         Log.d("BUTTON", "ButtonClick");
     }

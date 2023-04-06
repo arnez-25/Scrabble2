@@ -28,6 +28,7 @@ class Node {
         this.childNodes = new HashMap<Character,Node>();
     }
 
+    //Getter methods
     public boolean getIsWord() {
         return isWord;
     }
@@ -37,9 +38,9 @@ class Node {
     }
 
     public Node getChild(char c) {
-        return childNodes.get(c);//if node doesnt exist, null is returned
+        return childNodes.get(c);//if node doesn't exist, null is returned
     }
-
+    //Adds the child to the nodes
     public void addChild(char c, boolean end) {
         childNodes.put(c, new Node(c,end));//adds a node with given char to the hashmap
     }
@@ -66,6 +67,7 @@ public class ScrabbleDictionary {
         }
     }
 
+    //Adds words
     public void addWord(String word) {
         int strLen = word.length();
         Node currentNode = root;
@@ -83,7 +85,7 @@ public class ScrabbleDictionary {
         }
 
     }
-
+    //Checks if word exists
     public boolean checkWord(String word) {
         int strLen = word.length();
         Node currentNode = root;

@@ -4,6 +4,15 @@ import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;
 import com.example.Scrabble2.infoMessage.Tile;
 
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/5/2023
+ */
 public class ScrabbleSwapAction extends GameAction {
 
     private Tile t;//tile to be swapped
@@ -18,6 +27,7 @@ public class ScrabbleSwapAction extends GameAction {
         t = toSwap;
     }
 
+    //Getter to receive info for Tile
     public Tile getTile(){
         return t;
     }

@@ -45,8 +45,16 @@ public class ScrabbleLocalGame extends LocalGame {
         p.sendInfo(new SCBState(gameState));
     }
 
+    /**
+     * This method checks if the player is able to move
+     *
+     * @param playerIdx
+     * 		the player's player-number (ID)
+     * @return returns whether the player can move or not.
+     */
     @Override
     protected boolean canMove(int playerIdx) {
+        //Checks to see if the index of the player is able to move.
         if (playerIdx == gameState.playerToMove) {
             return true;
         } else {
@@ -54,6 +62,11 @@ public class ScrabbleLocalGame extends LocalGame {
         }
     }
 
+    /**
+     *This method is a checker to ensure that if the game is no longer running, that it will activate Game Over.
+     *
+     * @returns if the game is over or not.
+     */
     @Override
     protected String checkIfGameOver() {
         if (!gameState.gameRunning) {
@@ -63,6 +76,13 @@ public class ScrabbleLocalGame extends LocalGame {
         }
     }
 
+    /**
+     * The method checks whether you are able to make a move or not.
+     *
+     * @param action
+     * 			The move that the player has sent to the game
+     * @return true if the move is possible or not.
+     */
     @Override
     protected boolean makeMove(GameAction action) {
         if (action instanceof ScrabbleHintAction) {
@@ -84,7 +104,6 @@ public class ScrabbleLocalGame extends LocalGame {
             gameState.resetHand(action.getPlayer().getPlayerNum());
             return true;
         }
-
         return false;
     }
 }

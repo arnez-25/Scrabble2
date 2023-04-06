@@ -82,7 +82,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             }
         }
 
-        //init board point key
+        //init board point key, it as well establishes special slots that include Double Letter & Double Word, with Start Position. Alongside default empty spots.
         pointKey = new int[15][15];
         pointKey[0] = new int[]{D_WORD, EMPTY, EMPTY, D_LETTER, EMPTY, EMPTY, EMPTY, D_WORD, EMPTY, EMPTY, EMPTY, D_LETTER, EMPTY, EMPTY, D_WORD};
         pointKey[1] = new int[]{EMPTY, D_WORD, EMPTY, EMPTY, EMPTY, D_LETTER, EMPTY, EMPTY, EMPTY, D_LETTER, EMPTY, EMPTY, EMPTY, D_WORD, EMPTY};
@@ -883,7 +883,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         test = test.concat("\n Player Turn: ");
         String playerIdString = String.valueOf(playerToMove);
         test = test.concat(playerIdString);
-
 
         Log.d(TAG, test);
         return test;

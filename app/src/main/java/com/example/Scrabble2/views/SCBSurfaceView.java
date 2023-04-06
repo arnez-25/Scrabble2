@@ -219,6 +219,11 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float xLoc = BORDER_PERCENT + col * SQUARE_DELTA_PERCENT; // compute ...
         float yLoc = BORDER_PERCENT + row * SQUARE_DELTA_PERCENT; // ... location
 
+        Paint text  = new Paint();
+        text.setColor(Color.WHITE);
+        text.setTextSize(55);
+
+
         // set the paint color to be the foreground color
         Paint p = new Paint();
         p.setColor(foregroundColor());
@@ -227,7 +232,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         switch (sym) {
             case 'd':
-
+/*
                 // 'O' found: draw it by drawing two circles: an outer one with the
                 // foreground color, and an inner one with the background color
                 RectF rect = new RectF(h(xLoc + 5), v(yLoc + 1), h(xLoc
@@ -239,6 +244,9 @@ public class SCBSurfaceView extends FlashSurfaceView {
                         + SQUARE_SIZE_PERCENT - 8), v(yLoc + SQUARE_SIZE_PERCENT
                         - 3));
                 g.drawOval(rect, p); // carve out "hole"
+                */
+                g.drawText("S", h(xLoc + 2), v(yLoc + 4), text);
+
                 break;
             case 'X': // 'X' found: draw it
 

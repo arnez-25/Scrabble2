@@ -26,6 +26,10 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     // the surface view
     private SCBSurfaceView surfaceView;
 
+    // the gamestate
+
+    private SCBState gameState;
+
     // the ID for the layout to use
     private int layoutId;
 
@@ -51,6 +55,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     @Override
     public void receiveInfo(GameInfo info) {
     surfaceView.setState((SCBState) info);
+    //Setting player gamestate from info recieved
+    this.gameState = (SCBState) info;
     }
 
     @Override

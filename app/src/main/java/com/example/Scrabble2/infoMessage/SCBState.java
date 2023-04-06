@@ -32,7 +32,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
     ///////////////////////////////////////////////////
 
     //Establishing variables to be used in the Game State.
-    private ScrabbleDictionary dictionary;
+    public ScrabbleDictionary dictionary;
     public boolean gameRunning;
     public boolean firstPlay;
 

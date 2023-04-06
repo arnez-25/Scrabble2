@@ -55,7 +55,7 @@ public class ScrabbleLocalGame extends LocalGame {
     }
 
     @Override
-    protected String checkIfGameOver() {//TODO
+    protected String checkIfGameOver() {
         if (!gameState.gameRunning) {
             return "Game Over";
         } else {

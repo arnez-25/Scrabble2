@@ -94,6 +94,8 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
                     }
                 }
             }
+
+            game.sendAction(new ScrabbleSkipAction(this));
         }
     }
 

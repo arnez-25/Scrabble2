@@ -1,6 +1,7 @@
 package com.example.Scrabble2.players;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.example.Scrabble2.views.SCBSurfaceView;
 public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
 
 
+
     //Tag for logging
     private static final String TAG = "SCBHumanPlayer1";
 
@@ -28,6 +30,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private int layoutId;
 
     private Tile t;
+
+    private Button[] playerHand = null;
 
 
     /**
@@ -59,6 +63,23 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         surfaceView = (SCBSurfaceView)myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
         surfaceView.setOnTouchListener(this);
+        playerHand = new Button[]{
+                (Button) myActivity.findViewById(R.id.tile0),
+                (Button) myActivity.findViewById(R.id.tile1),
+                (Button) myActivity.findViewById(R.id.tile2),
+                (Button) myActivity.findViewById(R.id.tile3),
+                (Button) myActivity.findViewById(R.id.tile4),
+                (Button) myActivity.findViewById(R.id.tile5),
+                (Button) myActivity.findViewById(R.id.tile6),
+
+        };
+
+        for(int i = 0; i < 7; i++){
+            playerHand[i].setOnClickListener(this);
+            //playerHand[i].setText();
+
+
+        }
     }
 
     /**
@@ -120,5 +141,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     @Override
     public void onClick(View view) {
 
+        Log.d("BUTTON", "ButtonClick");
     }
 }

@@ -16,6 +16,15 @@ import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
 
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/5/2023
+ */
 public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
 
 

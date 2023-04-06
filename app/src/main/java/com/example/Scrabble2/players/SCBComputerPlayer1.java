@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * It is so dumb it can't even play the game!
  *
  * @author Jacob Arnez
- * @versio2 May 2023
+ * @version May 2023
  */
 public class SCBComputerPlayer1 extends GameComputerPlayer{
     SCBState scb;
@@ -55,6 +55,7 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
 //            //0 IQ, ultra veggie AI
 //            ScrabbleSkipAction skip = new ScrabbleSkipAction(this);
 //            game.sendAction(skip);
+
 
             String wordDir = "";
             for (int i = 0; i < 15; i++) {
@@ -98,6 +99,7 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
 
 
     /**
+     * A method to help find a letter word throughout the table/playing area.
      *
      * @param playOff
      * @param row

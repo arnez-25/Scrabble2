@@ -1,9 +1,7 @@
 package com.example.Scrabble2;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.gameConfiguration.GameConfig;
@@ -17,13 +15,20 @@ import com.example.Scrabble2.players.SCBComputerPlayer1;
 import com.example.Scrabble2.players.SCBComputerPlayer2;
 import com.example.Scrabble2.players.SCBHumanPlayer1;
 import com.example.gametestb.R;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.Buffer;
 import java.util.ArrayList;
-
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/5/2023
+ */
 public class ScrabbleMainActivity extends GameMainActivity {
 
     public static final int PORT_NUMBER = 5213;
@@ -88,10 +93,8 @@ public class ScrabbleMainActivity extends GameMainActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return new ScrabbleLocalGame(reader);
         }
-
         return new ScrabbleLocalGame((SCBState) gameState);
     }
 

@@ -1,6 +1,7 @@
 package com.example.Scrabble2.players;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,17 @@ import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
 
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/5/2023
+ */
 public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
+
 
 
     //Tag for logging
@@ -24,10 +35,16 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     // the surface view
     private SCBSurfaceView surfaceView;
 
+    // the gamestate
+
+    private SCBState gameState;
+
     // the ID for the layout to use
     private int layoutId;
 
     private Tile t;
+
+    private Button[] playerHand = null;
 
 
     /**
@@ -47,6 +64,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     @Override
     public void receiveInfo(GameInfo info) {
     surfaceView.setState((SCBState) info);
+    //Setting player gamestate from info recieved
+    this.gameState = (SCBState) info;
     }
 
     @Override
@@ -59,6 +78,23 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         surfaceView = (SCBSurfaceView)myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
         surfaceView.setOnTouchListener(this);
+        playerHand = new Button[]{
+                (Button) myActivity.findViewById(R.id.tile0),
+                (Button) myActivity.findViewById(R.id.tile1),
+                (Button) myActivity.findViewById(R.id.tile2),
+                (Button) myActivity.findViewById(R.id.tile3),
+                (Button) myActivity.findViewById(R.id.tile4),
+                (Button) myActivity.findViewById(R.id.tile5),
+                (Button) myActivity.findViewById(R.id.tile6),
+
+        };
+
+        for(int i = 0; i < 7; i++){
+            playerHand[i].setOnClickListener(this);
+            //playerHand[i].setText();
+
+
+        }
     }
 
     /**
@@ -120,5 +156,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     @Override
     public void onClick(View view) {
 
+        Log.d("BUTTON", "ButtonClick");
     }
 }

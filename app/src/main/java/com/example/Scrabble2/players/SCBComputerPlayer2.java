@@ -6,7 +6,7 @@ import com.example.GameFramework.players.GameComputerPlayer;
  * This will be our smart AI. It Should be able to compete with the player instead of just skipping turn
  *
  * @author Jacob Arnez
- * @versio2 May 2023
+ * @version May 2023
  */
 public class SCBComputerPlayer2 extends GameComputerPlayer{
 

@@ -10,6 +10,8 @@ import com.example.GameFramework.gameConfiguration.GameConfig;
 import com.example.GameFramework.gameConfiguration.GamePlayerType;
 import com.example.GameFramework.infoMessage.GameState;
 import com.example.GameFramework.players.GamePlayer;
+import com.example.GameFramework.utilities.Logger;
+import com.example.GameFramework.utilities.Saving;
 import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.players.SCBComputerPlayer1;
 import com.example.Scrabble2.players.SCBComputerPlayer2;
@@ -113,6 +115,9 @@ public class ScrabbleMainActivity extends GameMainActivity {
      */
     @Override
     public GameState loadGame(String gameName){
-        return null;
+        String appName = getGameString(gameName);
+        super.loadGame(appName);
+        Logger.log(TAG, "Loading: " + gameName);
+        return (GameState) new SCBState((SCBState) Saving.readFromFile(appName, this.getApplicationContext()));
     }
 }

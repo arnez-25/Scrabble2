@@ -3,6 +3,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
@@ -14,7 +15,8 @@ import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
 
-public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener{
+public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
+
 
     //Tag for logging
     private static final String TAG = "SCBHumanPlayer1";
@@ -112,6 +114,11 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         // register that we have handled the event
         return true;
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 }

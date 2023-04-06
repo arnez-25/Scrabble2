@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
+import com.example.GameFramework.infoMessage.IllegalMoveInfo;
+import com.example.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
@@ -35,7 +37,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Tile t;
 
-    private Button[] playerHand = null;
+    public Button[] playerHand = null;
 
 
     /**
@@ -54,9 +56,27 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     @Override
     public void receiveInfo(GameInfo info) {
+        if (surfaceView == null) return;
+
+        if(info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo){
+            // if the move was out of turn or otherwise illegal, flash the screen
+            surfaceView.flash(Color.RED, 50);
+        }
+        else if(!(info instanceof SCBState)){
+            // if we do not have a SCBState, ignore
+            return;
+        }
+        else {
+            surfaceView.setState((SCBState) info);
+            surfaceView.invalidate();
+            Logger.log(TAG, "receiving");
+        }
+        /*
     surfaceView.setState((SCBState) info);
-    //Setting player gamestate from info recieved
+    //Setting player gamestate from info received
     this.gameState = (SCBState) info;
+
+         */
     }
 
     @Override
@@ -82,7 +102,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         for(int i = 0; i < 7; i++){
             playerHand[i].setOnClickListener(this);
-            //playerHand[i].setText();
+            //playerHand[i].setText(Character.toString(gameState.player1Tiles.get(i).getLetter()));
+            //Log.d("PlayerHand", Boolean.toString(gameState. );
 
 
         }

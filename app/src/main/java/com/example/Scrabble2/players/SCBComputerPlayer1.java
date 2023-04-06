@@ -1,6 +1,9 @@
 package com.example.Scrabble2.players;
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameComputerPlayer;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSkipAction;
+import com.example.Scrabble2.infoMessage.SCBState;
+
 /**
  * This is the dumb AI for our game. Right now we just want it to skip its turn.
  * It is so dumb it can't even play the game!
@@ -30,6 +33,20 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
      */
     @Override
     protected void receiveInfo(GameInfo info) {
+        if (!(info instanceof SCBState)){
+            return;
+        }
+        try{
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        SCBState scb = (SCBState) info;
 
+        if(scb.getWhoseMove() == 1){
+            ScrabbleSkipAction skip = new ScrabbleSkipAction(this);
+            game.sendAction(skip);
+        }
     }
 }

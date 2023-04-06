@@ -9,6 +9,7 @@ import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
+import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
@@ -43,7 +44,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     @Override
     public void receiveInfo(GameInfo info) {
-
+    surfaceView.setState((SCBState) info);
     }
 
     @Override

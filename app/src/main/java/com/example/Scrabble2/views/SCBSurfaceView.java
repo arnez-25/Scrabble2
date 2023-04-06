@@ -219,50 +219,18 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float xLoc = BORDER_PERCENT + col * SQUARE_DELTA_PERCENT; // compute ...
         float yLoc = BORDER_PERCENT + row * SQUARE_DELTA_PERCENT; // ... location
 
+        Paint text  = new Paint();
+        text.setColor(Color.WHITE);
+        text.setTextSize(55);
+
+
         // set the paint color to be the foreground color
         Paint p = new Paint();
         p.setColor(foregroundColor());
 
-        // draw either an X or O, depending on the symbol
+        String letter = String.valueOf(sym);
+                g.drawText(letter, h(xLoc + 2), v(yLoc + 4), text);
 
-        switch (sym) {
-            case 'd':
-
-                // 'O' found: draw it by drawing two circles: an outer one with the
-                // foreground color, and an inner one with the background color
-                RectF rect = new RectF(h(xLoc + 5), v(yLoc + 1), h(xLoc
-                        + SQUARE_SIZE_PERCENT - 5), v(yLoc + SQUARE_SIZE_PERCENT
-                        - 1));
-                g.drawOval(rect, p); // outside of the 'O'
-                p.setColor(backgroundColor());
-                rect = new RectF(h(xLoc + 6), v(yLoc + 2), h(xLoc
-                        + SQUARE_SIZE_PERCENT - 8), v(yLoc + SQUARE_SIZE_PERCENT
-                        - 3));
-                g.drawOval(rect, p); // carve out "hole"
-                break;
-            case 'X': // 'X' found: draw it
-
-                // create a translation matrix to move Path to the given square on the
-                // surface
-                Matrix translateMatrix = new Matrix();
-                translateMatrix.setTranslate(h(xLoc), v(yLoc));
-
-                // create the Path object for the X's first slash; move and draw it
-                Path pth = createPoly(xPoints1, yPoints1, fullSquare
-                        * SQUARE_SIZE_PERCENT / 100);
-                pth.transform(translateMatrix);
-                g.drawPath(pth, p);
-
-                // create the Path object for the X's second slash; move and draw it
-                pth = createPoly(xPoints2, yPoints2, fullSquare
-                        * SQUARE_SIZE_PERCENT / 100);
-                pth.transform(translateMatrix);
-                g.drawPath(pth, p);
-                break;
-            default:
-                // if not X or O, draw nothing
-                break;
-        }
     }
 
     /**

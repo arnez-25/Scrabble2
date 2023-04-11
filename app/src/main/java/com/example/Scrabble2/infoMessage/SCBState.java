@@ -762,17 +762,42 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      */
     public boolean swapper(int playerId, Tile playTile){//TODO: fix so that the tile being swapped is the local copy
         if(playerId == playerToMove){
-            bag.add(playTile);//put swapped out tile back in the bag
+            Tile localTile = null;
+            //find matching tile in our copy:
+            if (playerId == 0) {
+                for (Tile tile : player1Tiles) {
+                    if (tile.getLetter() == playTile.getLetter()) {
+                        localTile = tile;
+                        break;
+                    }
+                }
+            } else {
+                for (Tile tile : player2Tiles) {
+                    if (tile.getLetter() == playTile.getLetter()) {
+                        localTile = tile;
+                        break;
+                    }
+                }
+            }
+
+            bag.add(localTile);//put swapped out tile back in the bag
 
             //remove the swapped out tile from the correct player's hand and give them a new tile
             if (playerId == 0) {
-                player1Tiles.remove(playTile);
+                player1Tiles.remove(localTile);
                 player1Tiles.add(drawFromBag());
                 Log.d(TAG, "Player 0 has swapped their one of their tiles");
             } else if (playerId == 1) {
-                player2Tiles.remove(playTile);
+                player2Tiles.remove(localTile);
                 player2Tiles.add(drawFromBag());
                 Log.d(TAG, "Player 1 has swapped their one of their tiles");
+            }
+
+            resetHand(playerId);
+            if (playerId == 0) {
+                playerToMove = 1;
+            } else {
+                playerToMove = 0;
             }
             return true;
         }

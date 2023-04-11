@@ -36,6 +36,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
     private final static float SQUARE_DELTA_PERCENT = SQUARE_SIZE_PERCENT
             + LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
 
+    private final static float BORDER_PERCENT2 = 5;
+    private final static float SQUARE_SIZE_PERCENT2 = 6; // size of each of our 9 squares
+    // private final static float LINE_WIDTH_PERCENT = 3; // width of a tic-tac-toe line
+    private final static float LINE_WIDTH_PERCENT2 = 1;
+    private final static float SQUARE_DELTA_PERCENT2 = SQUARE_SIZE_PERCENT
+            + LINE_WIDTH_PERCENT;
     /*
      * Instance variables
      */
@@ -107,6 +113,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return Color.RED;
     }
 
+    public int testColor() {
+        return Color.GREEN;
+    }
+
+
+
     public void onDraw(Canvas g) {
         // update the variables that relate
         // to the dimensions of the animation surface
@@ -132,6 +144,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
         g.drawRect(h(4), v(5), h(5), v(96), p);
         g.drawRect(h(5), v(5), h(110), v(6), p);
 
+        onHand(g); //draw the tile bag
+
         // if we don't have any state, there's nothing more to draw, so return
         if (state == null) {
             return;
@@ -146,6 +160,79 @@ public class SCBSurfaceView extends FlashSurfaceView {
                Tile t = state.board[row][col]; // get piece
                char letter = t.getLetter();
                drawSymbol(g, letter, col, row);
+            }
+
+        }
+
+
+    }
+
+    public void onHand(Canvas g) {
+        // update the variables that relate
+        // to the dimensions of the animation surface
+        updateDimensions(g);
+
+        // paint the TTT-board's horizontal and vertical lines
+        Paint p = new Paint();
+        p.setColor(testColor());
+
+        int i = 0;
+        float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
+                + (i * SQUARE_DELTA_PERCENT);
+        float variable2 = variable1 + LINE_WIDTH_PERCENT;
+        float fixed1 = BORDER_PERCENT;
+        float fixed2 = 100 - BORDER_PERCENT;
+        float hardFixed = 103;
+
+        float x = h(variable1);
+        float y = v(fixed1);
+        float x2 = h(variable2);
+        float y2 = v(fixed2);
+
+        float left = 2340;
+        float topLeft = 82;
+        float right = 2357;
+       // float bottomRight = 1558;
+        float bottomRight = 1000;
+
+
+
+
+      //  g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
+        g.drawRect(left, topLeft, right, bottomRight, p);
+        g.drawRect(left + 150, topLeft, right + 150, bottomRight, p);
+
+       // g.drawRect(82, 640, 1558, 657, p);
+        g.drawRect(2340, 983, 2500, 1000, p);
+        float leftHor = 2340;
+        float topLeftHor = 983;
+        float rightHor = 2500;
+        float bottomRightHor = 1000;
+
+        for (int z = 0; z <= 8; z++) {
+            g.drawRect(leftHor, topLeftHor - (z*130), rightHor, bottomRightHor - (z*130), p);
+
+        }
+
+
+        //hard code the very left  wall and very top wall
+       // g.drawRect(h(4), v(5), h(5), v(96), p);
+       // g.drawRect(h(5), v(5), h(110), v(6), p);
+
+        // if we don't have any state, there's nothing more to draw, so return
+        if (state == null) {
+            return;
+        }
+
+        // for each square that has an X or O, draw it on the appropriate
+        // place on the canvas
+
+        for (int row = 0; row < 15; row++) {
+            for (int col = 0; col < 15; col++) {
+                //char result =
+                Tile t = state.board[row][col]; // get piece
+                char letter = t.getLetter();
+                drawSymbol(g, letter, col, row);
             }
 
         }

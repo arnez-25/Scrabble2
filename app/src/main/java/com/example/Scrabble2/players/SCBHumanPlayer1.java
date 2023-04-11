@@ -13,6 +13,8 @@ import com.example.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSkipAction;
 import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
@@ -47,6 +49,9 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private Tile t;
 
     private Button[] playerHand = null;
+
+    private Button play;
+    private Button skip;
 
 
     /**
@@ -104,6 +109,10 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 myActivity.findViewById(R.id.tile6),
 
         };
+        play = myActivity.findViewById(R.id.play_button);
+        play.setOnClickListener(this);
+        skip = myActivity.findViewById(R.id.skip_button);
+        skip.setOnClickListener(this);
 
         for(int i = 0; i < 7; i++) {
             playerHand[i].setOnClickListener(this);
@@ -158,18 +167,24 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             if (t != null) {
                 ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
                 Logger.log("onTouch", "Human player sending TTTMA ...");
-                game.sendAction(action);
+                //redraw button text:
+                for (Button b : playerHand) {
+                    b.setText("");
+                }
 
+                for (int i = 0; i < gameState.player1Tiles.size() && i < 7; i++) {
+                    if (gameState != null) {
+                        String ch = "" + gameState.player1Tiles.get(i).getLetter();
+                        playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
+                    }
+                }
+
+
+                game.sendAction(action);
                 surfaceView.invalidate();
                 t = null;
             }
 
-            for (int i = 0; i < 7; i++) {
-                if (gameState != null) {
-                    String ch = "" + gameState.player1Tiles.get(i).getLetter();
-                    playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
-                }
-            }
         }
 
         // register that we have handled the event
@@ -180,20 +195,26 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     public void onClick(View view) {
         Button clicked = (Button) view;
 
-        if (clicked.getId() == R.id.tile0) {
-            t = gameState.player1Tiles.get(0);
-        } else if (clicked.getId() == R.id.tile1) {
-            t = gameState.player1Tiles.get(1);
-        } else if (clicked.getId() == R.id.tile2) {
-            t = gameState.player1Tiles.get(2);
-        } else if (clicked.getId() == R.id.tile3) {
-            t = gameState.player1Tiles.get(3);
-        } else if (clicked.getId() == R.id.tile4) {
-            t = gameState.player1Tiles.get(4);
-        } else if (clicked.getId() == R.id.tile5) {
-            t = gameState.player1Tiles.get(5);
-        } else if (clicked.getId() == R.id.tile6) {
-            t = gameState.player1Tiles.get(6);
+        if (gameState.getWhoseMove() == playerNum) {
+            if (clicked.getId() == R.id.tile0 && gameState.player1Tiles.size() >= 1) {
+                t = gameState.player1Tiles.get(0);
+            } else if (clicked.getId() == R.id.tile1 && gameState.player1Tiles.size() >= 2) {
+                t = gameState.player1Tiles.get(1);
+            } else if (clicked.getId() == R.id.tile2 && gameState.player1Tiles.size() >= 3) {
+                t = gameState.player1Tiles.get(2);
+            } else if (clicked.getId() == R.id.tile3 && gameState.player1Tiles.size() >= 4) {
+                t = gameState.player1Tiles.get(3);
+            } else if (clicked.getId() == R.id.tile4 && gameState.player1Tiles.size() >= 5) {
+                t = gameState.player1Tiles.get(4);
+            } else if (clicked.getId() == R.id.tile5 && gameState.player1Tiles.size() >= 6) {
+                t = gameState.player1Tiles.get(5);
+            } else if (clicked.getId() == R.id.tile6 && gameState.player1Tiles.size() >= 7) {
+                t = gameState.player1Tiles.get(6);
+            } else if (clicked.getId() == R.id.play_button) {
+                game.sendAction(new ScrabblePlayAction(this));
+            } else if (clicked.getId() == R.id.skip_button) {
+                game.sendAction(new ScrabbleSkipAction(this));
+            }
         }
 
         Log.d("BUTTON", "ButtonClick");

@@ -108,12 +108,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
     }
 
     public void onDraw(Canvas g) {
-        Paint text  = new Paint();
-        text.setColor(Color.BLACK);
-        text.setTextSize(100);
-
-        g.drawText("Scrabble 2", 100, 100, text);
-
         // update the variables that relate
         // to the dimensions of the animation surface
         updateDimensions(g);

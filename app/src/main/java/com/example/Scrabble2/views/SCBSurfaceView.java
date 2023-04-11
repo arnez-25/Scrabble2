@@ -37,6 +37,21 @@ public class SCBSurfaceView extends FlashSurfaceView {
     private final static float SQUARE_DELTA_PERCENT = SQUARE_SIZE_PERCENT
             + LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
 
+    //Coordinate boundaries for the board and player hand
+
+    //Board
+    private int Gx_MIN = 445;
+    private int Gy_MIN = 88;
+    private int Gx_MAX = 2170;
+    private int Gy_MAX = 1568;
+
+    //Hand
+    private int Tx_MIN = 110;
+    private int Ty_MIN = 243;
+    private int Tx_MAX = 310;
+    private int Ty_MAX = 1403;
+
+
     /*
      * Instance variables
      */
@@ -141,6 +156,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
         g.drawRect(h(4), v(5), h(5), v(96), p);
         g.drawRect(h(5), v(5), h(110), v(6), p);
 
+        /*
+        //drawing where the hand will be
+        g.drawRect(Tx_MIN, Ty_MIN, 300, 1200, p);
+        g.drawRect(0,0, 20, 100, p);
+
+         */
         // if we don't have any state, there's nothing more to draw, so return
         if (state == null) {
             return;
@@ -252,7 +273,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
      */
     private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
 
-        // in case array-lengths are different, take the minimim length, to avoid
+        // in case array-lengths are different, take the minimum length, to avoid
         // array-out-of-bounds errors
         int count = Math.min(xPoints.length, yPoints.length);
 

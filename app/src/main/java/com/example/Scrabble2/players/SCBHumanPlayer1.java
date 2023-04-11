@@ -27,9 +27,9 @@ import com.example.Scrabble2.views.SCBSurfaceView;
  *
  * @Version 4/5/2023
  */
-public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
+public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener {
 
-
+//Took out on click listener
 
     //Tag for logging
     private static final String TAG = "SCBHumanPlayer1";
@@ -93,6 +93,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // set the surfaceView instance variable
         surfaceView = myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
+
         surfaceView.setOnTouchListener(this);
         playerHand = new Button[]{
                 myActivity.findViewById(R.id.tile0),
@@ -108,6 +109,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         for(int i = 0; i < 7; i++) {
             playerHand[i].setOnClickListener(this);
         }
+
+
     }
 
     /**
@@ -147,6 +150,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // values are in the range 0..2)
         int x = (int) event.getX();
         int y = (int) event.getY();
+        Log.d("CORDS", x + ", " + y);
         Point p = surfaceView.mapPixelToSquare(x, y);
 
         // if the location did not map to a legal square, flash
@@ -164,12 +168,15 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 t = null;
             }
 
+
             for (int i = 0; i < 7; i++) {
                 if (gameState != null) {
                     String ch = "" + gameState.player1Tiles.get(i).getLetter();
                     playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
                 }
             }
+
+
         }
 
         // register that we have handled the event
@@ -198,4 +205,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         Log.d("BUTTON", "ButtonClick");
     }
+
+
 }

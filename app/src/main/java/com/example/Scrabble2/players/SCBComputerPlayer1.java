@@ -3,6 +3,7 @@ import android.graphics.Point;
 
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameComputerPlayer;
+import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleComputerAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
  * @version May 2023
  */
 public class SCBComputerPlayer1 extends GameComputerPlayer{
+
+    private static final String TAG = "ComputerPlayer";
+
     SCBState scb;
 
     /**
@@ -43,10 +47,12 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
      */
     @Override
     protected void receiveInfo(GameInfo info) {
+        Logger.log(TAG, "Computer player " + playerNum + " received info");
         ArrayList<Tile> tilesToPlace = new ArrayList<>();
         ArrayList<Point> tilePoints = new ArrayList<>();
 
         if (!(info instanceof SCBState)){
+            Logger.log(TAG, "Computer player: info is not a gamestate");
             return;
         }
         try{
@@ -57,7 +63,8 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         }
         scb = (SCBState) info;
 
-        if(scb.getWhoseMove() == playerNum){//TODO: case for AI having the first move
+        Logger.log(TAG, "Computer player(" + playerNum + "), Player turn: " + scb.getWhoseMove());
+        if(scb.getWhoseMove() == playerNum){
             ArrayList<Tile> myTiles;
             if (playerNum == 0) {
                 myTiles = scb.player1Tiles;
@@ -125,6 +132,18 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         int rootRow = scb.getTileRow(playOff);
         int rootCol = scb.getTileCol(playOff);
         String word = "";
+
+        //make sure there are no surrounding tiles that could mess up the word
+        if (scb.board[row+1][col].getLetter() != ' ' && !scb.board[row+1][col].equals(playOff)) {
+            return null;
+        } else if (scb.board[row-1][col].getLetter() != ' ' && !scb.board[row-1][col].equals(playOff)) {
+            return null;
+        } else if (scb.board[row][col+1].getLetter() != ' ' && !scb.board[row][col+1].equals(playOff)) {
+            return null;
+        } else if (scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
+            return null;
+        }
+
         for (Tile t : hand) {
             if (rootRow > row || rootCol > col) {
                 word = "" + t.getLetter() + playOff.getLetter();

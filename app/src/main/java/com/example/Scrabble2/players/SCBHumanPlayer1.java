@@ -84,6 +84,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     @Override
     public void receiveInfo(GameInfo info) {
+        Logger.log(TAG, "Human player " + playerNum + " received info");
         if (surfaceView == null) return;
 
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {

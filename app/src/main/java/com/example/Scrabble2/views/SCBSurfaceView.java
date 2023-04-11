@@ -124,14 +124,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
     }
 
     public void onDraw(Canvas g) {
-
-
-        Paint text  = new Paint();
-        text.setColor(Color.BLACK);
-        text.setTextSize(100);
-
-        g.drawText("Scrabble 2", 100, 100, text);
-
         // update the variables that relate
         // to the dimensions of the animation surface
         updateDimensions(g);
@@ -179,9 +171,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
             }
 
         }
-
-
-
 
 
     }
@@ -273,7 +262,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
      */
     private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
 
-        // in case array-lengths are different, take the minimum length, to avoid
+        // in case array-lengths are different, take the minimim length, to avoid
         // array-out-of-bounds errors
         int count = Math.min(xPoints.length, yPoints.length);
 

@@ -3,6 +3,7 @@ package com.example.Scrabble2;
 import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleComputerAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleHintAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
@@ -103,6 +104,12 @@ public class ScrabbleLocalGame extends LocalGame {
         } else if (action instanceof ScrabbleResetAction) {
             gameState.resetHand(action.getPlayer().getPlayerNum());
             return true;
+        } else if (action instanceof ScrabbleComputerAction) {
+            ScrabbleComputerAction compAction = (ScrabbleComputerAction) action;
+            for (int i = 0; i < compAction.getTilesToPlace().size(); i++) {
+                gameState.placeTile(action.getPlayer().getPlayerNum(), compAction.getTilesToPlace().get(i), compAction.getTilePoints().get(i).x, compAction.getTilePoints().get(i).y);
+            }
+            gameState.playWord(action.getPlayer().getPlayerNum());
         }
         return false;
     }

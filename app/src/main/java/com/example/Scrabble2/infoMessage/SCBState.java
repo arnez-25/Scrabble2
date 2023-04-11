@@ -263,16 +263,36 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
     public void placeTile(int playerId, Tile t, int row, int col) {
         if (playerId != playerToMove) {return;}//if its not this player's turn, don't place the tile
 
+        Tile localTile = null;
+        //find matching tile in our copy:
+        if (playerId == 0) {
+            for (Tile tile : player1Tiles) {
+                if (tile.getLetter() == t.getLetter()) {
+                    localTile = tile;
+                    break;
+                }
+            }
+        } else {
+            for (Tile tile : player2Tiles) {
+                if (tile.getLetter() == t.getLetter()) {
+                    localTile = tile;
+                    break;
+                }
+            }
+        }
+
         //place the tile *if* the board position is empty
         if (board[row][col].getLetter() == ' ') {
-            board[row][col] = t;
+            board[row][col] = localTile;
+
+            //remove the placed tile from the player's hand
+            if (playerId == 0) {
+                player1Tiles.remove(localTile);
+            } else {
+                player2Tiles.remove(localTile);
+            }
         }
-        //remove the placed tile from the player's hand
-        if (playerId == 0) {
-            player1Tiles.remove(t);
-        } else {
-            player2Tiles.remove(t);
-        }
+
     }
 
     /**
@@ -723,6 +743,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 Log.d(TAG, "Player 1 has skipped their turn");
                 playerToMove = 0;
             }
+            cleanBoard();
             return true;
         }
         else{
@@ -739,19 +760,44 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      * @param playTile Checks the tile that they are swapping
      * @return returns whether action was true or false
      */
-    public boolean swapper(int playerId, Tile playTile){
+    public boolean swapper(int playerId, Tile playTile){//TODO: fix so that the tile being swapped is the local copy
         if(playerId == playerToMove){
-            bag.add(playTile);//put swapped out tile back in the bag
+            Tile localTile = null;
+            //find matching tile in our copy:
+            if (playerId == 0) {
+                for (Tile tile : player1Tiles) {
+                    if (tile.getLetter() == playTile.getLetter()) {
+                        localTile = tile;
+                        break;
+                    }
+                }
+            } else {
+                for (Tile tile : player2Tiles) {
+                    if (tile.getLetter() == playTile.getLetter()) {
+                        localTile = tile;
+                        break;
+                    }
+                }
+            }
+
+            bag.add(localTile);//put swapped out tile back in the bag
 
             //remove the swapped out tile from the correct player's hand and give them a new tile
             if (playerId == 0) {
-                player1Tiles.remove(playTile);
+                player1Tiles.remove(localTile);
                 player1Tiles.add(drawFromBag());
                 Log.d(TAG, "Player 0 has swapped their one of their tiles");
             } else if (playerId == 1) {
-                player2Tiles.remove(playTile);
+                player2Tiles.remove(localTile);
                 player2Tiles.add(drawFromBag());
                 Log.d(TAG, "Player 1 has swapped their one of their tiles");
+            }
+
+            resetHand(playerId);
+            if (playerId == 0) {
+                playerToMove = 1;
+            } else {
+                playerToMove = 0;
             }
             return true;
         }

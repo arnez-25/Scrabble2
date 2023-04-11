@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.infoMessage.GameInfo;
@@ -13,10 +14,16 @@ import com.example.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleResetAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSkipAction;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleSwapAction;
 import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
 import com.example.gametestb.R;
 import com.example.Scrabble2.views.SCBSurfaceView;
+
+import java.util.ArrayList;
 
 /**
  * @author Riley Cameron
@@ -27,9 +34,9 @@ import com.example.Scrabble2.views.SCBSurfaceView;
  *
  * @Version 4/5/2023
  */
-public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener {
+public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
 
-//Took out on click listener
+
 
     //Tag for logging
     private static final String TAG = "SCBHumanPlayer1";
@@ -41,12 +48,23 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private SCBState gameState;
 
+    private ArrayList<Tile> myHand;
+
     // the ID for the layout to use
     private final int layoutId;
 
-    private Tile t;
+    private Tile t; // the currently selected tile
 
     private Button[] playerHand = null;
+
+    private Button play;
+    private Button skip;
+
+    private Button hint;
+
+    private Button reset;
+
+    private Button swap;
 
 
     /**
@@ -78,7 +96,14 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         else {
             surfaceView.setState((SCBState)info);
             surfaceView.invalidate();
+
             this.gameState = (SCBState) info;
+            if (playerNum == 0) {
+                myHand = gameState.player1Tiles;
+            } else {
+                myHand = gameState.player2Tiles;
+            }
+
             Logger.log(TAG, "receiving");
         }
 
@@ -93,7 +118,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // set the surfaceView instance variable
         surfaceView = myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
-
         surfaceView.setOnTouchListener(this);
         playerHand = new Button[]{
                 myActivity.findViewById(R.id.tile0),
@@ -106,11 +130,20 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         };
 
+        play = myActivity.findViewById(R.id.play_button);
+        play.setOnClickListener(this);
+        skip = myActivity.findViewById(R.id.skip_button);
+        skip.setOnClickListener(this);
+        swap = myActivity.findViewById(R.id.swap_button);
+        swap.setOnClickListener(this);
+        reset = myActivity.findViewById(R.id.reset_button);
+        reset.setOnClickListener(this);
+        hint = myActivity.findViewById(R.id.hint_button);
+        hint.setOnClickListener(this);
+
         for(int i = 0; i < 7; i++) {
             playerHand[i].setOnClickListener(this);
         }
-
-
     }
 
     /**
@@ -162,20 +195,23 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             if (t != null) {
                 ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
                 Logger.log("onTouch", "Human player sending TTTMA ...");
-                game.sendAction(action);
+                //redraw button text:
+                for (Button b : playerHand) {
+                    b.setText("");
+                }
 
+                for (int i = 0; i < myHand.size() && i < 7; i++) {
+                    if (gameState != null) {
+                        String ch = "" + myHand.get(i).getLetter();
+                        playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
+                    }
+                }
+
+
+                game.sendAction(action);
                 surfaceView.invalidate();
                 t = null;
             }
-
-
-            for (int i = 0; i < 7; i++) {
-                if (gameState != null) {
-                    String ch = "" + gameState.player1Tiles.get(i).getLetter();
-                    playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
-                }
-            }
-
 
         }
 
@@ -187,24 +223,34 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     public void onClick(View view) {
         Button clicked = (Button) view;
 
-        if (clicked.getId() == R.id.tile0) {
-            t = gameState.player1Tiles.get(0);
-        } else if (clicked.getId() == R.id.tile1) {
-            t = gameState.player1Tiles.get(1);
-        } else if (clicked.getId() == R.id.tile2) {
-            t = gameState.player1Tiles.get(2);
-        } else if (clicked.getId() == R.id.tile3) {
-            t = gameState.player1Tiles.get(3);
-        } else if (clicked.getId() == R.id.tile4) {
-            t = gameState.player1Tiles.get(4);
-        } else if (clicked.getId() == R.id.tile5) {
-            t = gameState.player1Tiles.get(5);
-        } else if (clicked.getId() == R.id.tile6) {
-            t = gameState.player1Tiles.get(6);
+        if (gameState.getWhoseMove() == playerNum) {
+            if (clicked.getId() == R.id.tile0 && myHand.size() >= 1) {
+                t = myHand.get(0);
+            } else if (clicked.getId() == R.id.tile1 && myHand.size() >= 2) {
+                t = myHand.get(1);
+            } else if (clicked.getId() == R.id.tile2 && myHand.size() >= 3) {
+                t = myHand.get(2);
+            } else if (clicked.getId() == R.id.tile3 && myHand.size() >= 4) {
+                t = myHand.get(3);
+            } else if (clicked.getId() == R.id.tile4 && myHand.size() >= 5) {
+                t = myHand.get(4);
+            } else if (clicked.getId() == R.id.tile5 && myHand.size() >= 6) {
+                t = myHand.get(5);
+            } else if (clicked.getId() == R.id.tile6 && myHand.size() >= 7) {
+                t = myHand.get(6);
+            } else if (clicked.getId() == R.id.play_button) {
+                game.sendAction(new ScrabblePlayAction(this));
+            } else if (clicked.getId() == R.id.skip_button) {
+                game.sendAction(new ScrabbleSkipAction(this));
+            } else if (clicked.getId() == R.id.reset_button) {
+                game.sendAction(new ScrabbleResetAction(this));
+            } else if (clicked.getId() == R.id.swap_button && t != null) {
+                game.sendAction(new ScrabbleSwapAction(this, t));
+            } else if (clicked.getId() == R.id.hint_button) {
+                Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();//TODO: provide a hint
+            }
         }
 
         Log.d("BUTTON", "ButtonClick");
     }
-
-
 }

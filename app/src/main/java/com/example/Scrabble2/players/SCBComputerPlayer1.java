@@ -3,6 +3,7 @@ import android.graphics.Point;
 
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameComputerPlayer;
+import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleComputerAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
  * @version May 2023
  */
 public class SCBComputerPlayer1 extends GameComputerPlayer{
+
+    private static final String TAG = "ComputerPlayer";
+
     SCBState scb;
 
     /**
@@ -43,10 +47,12 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
      */
     @Override
     protected void receiveInfo(GameInfo info) {
+        Logger.log(TAG, "Computer player " + playerNum + " received info");
         ArrayList<Tile> tilesToPlace = new ArrayList<>();
         ArrayList<Point> tilePoints = new ArrayList<>();
 
         if (!(info instanceof SCBState)){
+            Logger.log(TAG, "Computer player: info is not a gamestate");
             return;
         }
         try{
@@ -57,7 +63,8 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         }
         scb = (SCBState) info;
 
-        if(scb.getWhoseMove() == playerNum){//TODO: case for AI having the first move
+        Logger.log(TAG, "Computer player(" + playerNum + "), Player turn: " + scb.getWhoseMove());
+        if(scb.getWhoseMove() == playerNum){
             ArrayList<Tile> myTiles;
             if (playerNum == 0) {
                 myTiles = scb.player1Tiles;

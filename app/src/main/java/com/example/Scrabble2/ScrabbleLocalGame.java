@@ -109,7 +109,12 @@ public class ScrabbleLocalGame extends LocalGame {
             for (int i = 0; i < compAction.getTilesToPlace().size(); i++) {
                 gameState.placeTile(action.getPlayer().getPlayerNum(), compAction.getTilesToPlace().get(i), compAction.getTilePoints().get(i).x, compAction.getTilePoints().get(i).y);
             }
-            gameState.playWord(action.getPlayer().getPlayerNum());
+
+            if(!gameState.playWord(action.getPlayer().getPlayerNum())) {
+                gameState.skipper(action.getPlayer().getPlayerNum());
+            }
+
+            return true;
         }
         return false;
     }

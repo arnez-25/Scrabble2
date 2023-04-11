@@ -168,6 +168,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         dictionary = g.dictionary;
         gameRunning = g.gameRunning;
         firstPlay = g.firstPlay;
+        playerToMove = g.playerToMove;
 
         player1Tiles = new ArrayList<>();
         for (Tile t : g.player1Tiles) {

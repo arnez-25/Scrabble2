@@ -132,6 +132,18 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         int rootRow = scb.getTileRow(playOff);
         int rootCol = scb.getTileCol(playOff);
         String word = "";
+
+        //make sure there are no surrounding tiles that could mess up the word
+        if (scb.board[row+1][col].getLetter() != ' ' && !scb.board[row+1][col].equals(playOff)) {
+            return null;
+        } else if (scb.board[row-1][col].getLetter() != ' ' && !scb.board[row-1][col].equals(playOff)) {
+            return null;
+        } else if (scb.board[row][col+1].getLetter() != ' ' && !scb.board[row][col+1].equals(playOff)) {
+            return null;
+        } else if (scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
+            return null;
+        }
+
         for (Tile t : hand) {
             if (rootRow > row || rootCol > col) {
                 word = "" + t.getLetter() + playOff.getLetter();

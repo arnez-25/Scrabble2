@@ -1,8 +1,11 @@
 package com.example.Scrabble2;
 
+import android.widget.Toast;
+
 import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;
+import com.example.GameFramework.utilities.Logger;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleComputerAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleHintAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
@@ -17,6 +20,8 @@ import java.io.BufferedReader;
 public class ScrabbleLocalGame extends LocalGame {
 
     private SCBState gameState;
+
+    private static final String TAG = "ScrabbleLocalGame";
 
     /**
      * Constructor for the ScrabbleLocalGame.
@@ -112,6 +117,7 @@ public class ScrabbleLocalGame extends LocalGame {
 
             if(!gameState.playWord(action.getPlayer().getPlayerNum())) {
                 gameState.skipper(action.getPlayer().getPlayerNum());
+                Logger.log(TAG, "Computer Player tried to play a word that was incorrect");
             }
 
             return true;

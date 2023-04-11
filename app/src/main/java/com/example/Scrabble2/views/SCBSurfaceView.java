@@ -127,23 +127,30 @@ public class SCBSurfaceView extends FlashSurfaceView {
         // paint the TTT-board's horizontal and vertical lines
         Paint p = new Paint();
         p.setColor(foregroundColor());
-        for (int i = 0; i <= 14; i++) {
-            float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
-                    + (i * SQUARE_DELTA_PERCENT);
-            float variable2 = variable1 + LINE_WIDTH_PERCENT;
-            float fixed1 = BORDER_PERCENT;
-            float fixed2 = 100 - BORDER_PERCENT;
-            // float hardFixed = 103;
-            float hardFixed = 110;
-            g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-            g.drawRect(h(fixed1), v(variable1), h(hardFixed), v(variable2), p);
-            //  g.drawRect(h(fixed1), v(variable1), h(fixed2), v(variable2), p);
+
+        float leftVert = 500;
+        float topLeftVert = 82;
+        float rightVert = 517;
+         float bottomRightVert = 1588;
+
+        //IMPORTANT!: @Jacob
+         //TOPLEFT BOARD: (500, 82)
+        //BOTRIGHT BOARD: (2000, 1588)
+
+
+        float leftHor = 80;
+        float topLeftHor = 500;
+        float rightHor = 97;
+        float bottomRightHor = 2017;
+
+
+       // g.drawRect(topLeftHor, leftHor, bottomRightHor, rightHor, p);
+        for (int j = 0; j <= 15; j++) {
+            g.drawRect(leftVert + (j*100), topLeftVert, rightVert + (j*100), bottomRightVert, p); //vertical
+            g.drawRect(topLeftHor, leftHor + (j*100), bottomRightHor, rightHor + (j*100), p);
         }
 
-        //hard code the very left  wall and very top wall
-        g.drawRect(h(4), v(5), h(5), v(96), p);
-        g.drawRect(h(5), v(5), h(110), v(6), p);
-
+        //TO MAKE THE HAND
         onHand(g); //draw the tile bag
 
         // if we don't have any state, there's nothing more to draw, so return
@@ -199,8 +206,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
 
       //  g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-        g.drawRect(left, topLeft, right, bottomRight, p);
-        g.drawRect(left + 150, topLeft, right + 150, bottomRight, p);
+        g.drawRect(left, topLeft, right, bottomRight, p); //vertical line 1
+        g.drawRect(left + 150, topLeft, right + 150, bottomRight, p); //vertical line 2
 
        // g.drawRect(82, 640, 1558, 657, p);
         g.drawRect(2340, 983, 2500, 1000, p);
@@ -215,9 +222,9 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
 
-        //hard code the very left  wall and very top wall
-       // g.drawRect(h(4), v(5), h(5), v(96), p);
-       // g.drawRect(h(5), v(5), h(110), v(6), p);
+        //IMPORTANT!:@jacob
+        //TOPLEFT HAND: (2340, 73)
+        //BOTRIGHT HAND: (2507, 1000)
 
         // if we don't have any state, there's nothing more to draw, so return
         if (state == null) {
@@ -236,8 +243,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
             }
 
         }
-
-
     }
 
 

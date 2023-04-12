@@ -168,6 +168,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         dictionary = g.dictionary;
         gameRunning = g.gameRunning;
         firstPlay = g.firstPlay;
+        playerToMove = g.playerToMove;
 
         player1Tiles = new ArrayList<>();
         for (Tile t : g.player1Tiles) {
@@ -318,7 +319,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      * @param playerId Checks which player is playing
      * @return Returns either a true or false response after the method has completed
      */
-    public boolean playWord(int playerId) {
+    public boolean playWord(int playerId) {//TODO: make sure firstmove is only updated once a word is played
         if (playerId == playerToMove) {
             String wordPlayed = "";
             boolean wordChecker = false;

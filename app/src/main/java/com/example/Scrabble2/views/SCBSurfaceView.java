@@ -40,10 +40,14 @@ public class SCBSurfaceView extends FlashSurfaceView {
     //Coordinate boundaries for the board and player hand
 
     //Board
-    private int Gx_MIN = 445;
-    private int Gy_MIN = 88;
-    private int Gx_MAX = 2170;
-    private int Gy_MAX = 1568;
+
+    // x Low and High
+    private float xL = 722;
+    private float xH = 2272;
+
+    // y Low and High
+    private float yL = 12;
+    private float yH = 1562;
 
     //Hand
     private int Tx_MIN = 110;
@@ -148,12 +152,14 @@ public class SCBSurfaceView extends FlashSurfaceView {
         g.drawRect(h(4), v(5), h(5), v(96), p);
         g.drawRect(h(5), v(5), h(110), v(6), p);
 
-        /*
-        //drawing where the hand will be
-        g.drawRect(Tx_MIN, Ty_MIN, 300, 1200, p);
-        g.drawRect(0,0, 20, 100, p);
 
-         */
+        //drawing where the hand will be and board for the surface view **This will be implemented in the final version
+
+        //g.drawRect(xL,yL,xH,yH,p);
+        //g.drawRect(Tx_MIN, Ty_MIN + 400, 300, 1400, p);
+        //g.drawRect(0,0, 20, 100, p);
+
+
         // if we don't have any state, there's nothing more to draw, so return
         if (state == null) {
             return;
@@ -304,7 +310,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
                 float top = v(BORDER_PERCENT + (j * SQUARE_DELTA_PERCENT));
                 float bottom = v(BORDER_PERCENT + SQUARE_SIZE_PERCENT
                         + (j * SQUARE_DELTA_PERCENT));
-                System.out.println(left + " " + right + " " + top + " " + bottom);
+                //System.out.println(left + " " + right + " " + top + " " + bottom);
                 if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
                     return new Point(i, j);
                 }
@@ -337,6 +343,51 @@ public class SCBSurfaceView extends FlashSurfaceView {
      */
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
+    }
+
+    /**
+     * helper-method to find the x percentage clicked in board
+     *
+     * @param x
+     *      the x cordinate touched on the screen
+     * @return
+     *      the x percentage clicked on the board
+     */
+    public float windowX(float x){
+        float bX = (x - xL) / (xH - xL);
+        return bX;
+
+    }
+
+    /**
+     * helper-method to find the y percentage clicked in the board
+     * @param y
+     *      the y cordinate touched on the screen
+     * @return
+     *      the y percentage clicked on the board
+     */
+    public float windowY(float y){
+        float bY = (y - yL) / (xH - xL);
+        return bY;
+    }
+
+    /*
+        Getters for surface view
+     */
+    public float getxL() {
+        return xL;
+    }
+
+    public float getxH() {
+        return xH;
+    }
+
+    public float getyL() {
+        return yL;
+    }
+
+    public float getyH() {
+        return yH;
     }
 
 

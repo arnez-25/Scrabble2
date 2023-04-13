@@ -65,6 +65,8 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
     public int playerToMove;
 
+    public boolean computerSkipped;
+
     /**
      * GameState is the Constructor that establishes and defines the needed variables & parameters that will be used for the game.
      */
@@ -319,7 +321,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      * @param playerId Checks which player is playing
      * @return Returns either a true or false response after the method has completed
      */
-    public boolean playWord(int playerId) {//TODO: make sure firstmove is only updated once a word is played
+    public boolean playWord(int playerId) {//TODO: make sure firstmove is only updated once a word is played, bug where one letter words cant be played to the right
         if (playerId == playerToMove) {
             String wordPlayed = "";
             boolean wordChecker = false;

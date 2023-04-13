@@ -63,7 +63,7 @@ public class Tile {
         Paint paint = new Paint();
         paint.setColor(Color.YELLOW);
         paint.setStyle(Paint.Style.FILL);
-        g.drawRoundRect(x, y, x+size, y+size, size/10, size/10, paint);
+        g.drawRoundRect(x, y, x+size, y+size, size/6, size/6, paint);
 
         Paint text = new Paint();
         text.setColor(Color.BLACK);

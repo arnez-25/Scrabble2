@@ -136,13 +136,13 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         String word = "";
 
         //make sure there are no surrounding tiles that could mess up the word
-        if (scb.board[row+1][col].getLetter() != ' ' && !scb.board[row+1][col].equals(playOff)) {
+        if (row+1 < 15 && scb.board[row+1][col].getLetter() != ' ' && !scb.board[row+1][col].equals(playOff)) {
             return null;
-        } else if (scb.board[row-1][col].getLetter() != ' ' && !scb.board[row-1][col].equals(playOff)) {
+        } else if (row-1 > 0 && scb.board[row-1][col].getLetter() != ' ' && !scb.board[row-1][col].equals(playOff)) {
             return null;
-        } else if (scb.board[row][col+1].getLetter() != ' ' && !scb.board[row][col+1].equals(playOff)) {
+        } else if (col+1 < 15 && scb.board[row][col+1].getLetter() != ' ' && !scb.board[row][col+1].equals(playOff)) {
             return null;
-        } else if (scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
+        } else if (col-1 > 0 && scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
             return null;
         }
 

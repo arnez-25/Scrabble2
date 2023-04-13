@@ -103,6 +103,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 myHand = gameState.player2Tiles;
             }
 
+
             Logger.log(TAG, "receiving");
         }
 

@@ -17,6 +17,13 @@ import com.example.Scrabble2.infoMessage.SCBState;
 
 import java.io.BufferedReader;
 
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ */
 public class ScrabbleLocalGame extends LocalGame {
 
     private SCBState gameState;

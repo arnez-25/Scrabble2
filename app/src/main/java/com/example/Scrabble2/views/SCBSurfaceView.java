@@ -22,11 +22,18 @@ import java.util.ArrayList;
  * A SurfaceView which allows which an animation to be drawn on it by a
  * Animator.
  *
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
  * @author Jacob Arnez
+ * @author David Leon
+ *
  * @version April 2023
  *
  *
  */
+
+
 public class SCBSurfaceView extends FlashSurfaceView {
 
     //Tag for logging
@@ -253,6 +260,15 @@ public class SCBSurfaceView extends FlashSurfaceView {
         g.drawText(myScore, 50, 950, scores);
         g.drawText(oppScore, 50, 1020, scores);
 
+        //display whose turn it is
+        String whoseTurn = "";
+        if (playerNum == state.getWhoseMove()) {
+            whoseTurn = "Your Turn!";
+        } else {
+            whoseTurn = "Opponent's Turn";
+        }
+        scores.setTextSize(50);
+        g.drawText(whoseTurn, 50, 880, scores);
     }
 
     public void onHand(Canvas g) {

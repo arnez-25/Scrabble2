@@ -160,23 +160,35 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         float leftVert = 500;
         float topLeftVert = 82;
-        float rightVert = 517;
-         float bottomRightVert = 1588;
+        float rightVert = 510;
+         float bottomRightVert = 1013;
 
-
+        //IMPORTANT!: @Jacob
+         //TOPLEFT BOARD: (500, 82)
+        //BOTRIGHT BOARD: (1440, 1020)
 
 
         float leftHor = 80;
         float topLeftHor = 500;
-        float rightHor = 97;
-        float bottomRightHor = 2017;
+        float rightHor = 90;
+        float bottomRightHor = 1440;
 
 
        // g.drawRect(topLeftHor, leftHor, bottomRightHor, rightHor, p);
+        /*
         for (int j = 0; j <= 15; j++) {
             g.drawRect(leftVert + (j*100), topLeftVert, rightVert + (j*100), bottomRightVert, p); //vertical
             g.drawRect(topLeftHor, leftHor + (j*100), bottomRightHor, rightHor + (j*100), p);
         }
+        */
+
+
+        for (int j = 0; j <= 15; j++) {
+            g.drawRect(leftVert + (j*62), topLeftVert, rightVert + (j*62), bottomRightVert, p); //vertical
+            g.drawRect(topLeftHor, leftHor + (j*62), bottomRightHor, rightHor + (j*62), p);
+        }
+
+
 
         //TO MAKE THE HAND
         onHand(g); //draw the tile bag
@@ -234,32 +246,29 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
 
       //  g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-        g.drawRect(left, topLeft, right, bottomRight, p); //vertical line 1
-        g.drawRect(left + 150, topLeft, right + 150, bottomRight, p); //vertical line 2
+        g.drawRect(left - 700, topLeft, right - 700, bottomRight, p); //vertical line 1
+        g.drawRect(left + 150 - 700, topLeft, right + 150 - 700, bottomRight, p); //vertical line 2
+
+
+
 
        // g.drawRect(82, 640, 1558, 657, p);
         g.drawRect(2340, 983, 2500, 1000, p);
-        float leftHor = 2340;
+        float leftHor = 1640;
         float topLeftHor = 983;
-        float rightHor = 2500;
+        float rightHor = 1807;
         float bottomRightHor = 1000;
 
-        for (int z = 0; z <= 8; z++) {
+        for (int z = 0; z <= 7; z++) {
             g.drawRect(leftHor, topLeftHor - (z*130), rightHor, bottomRightHor - (z*130), p);
 
         }
 
 
         //IMPORTANT!:@jacob
-        //TOPLEFT HAND: (2340, 73)
-        //BOTRIGHT HAND: (2507, 1000)
+        //TOPLEFT HAND: (1640, 73)
+        //BOTRIGHT HAND: (1807, 1000)
 
-
-        //drawing where the hand will be and board for the surface view **This will be implemented in the final version
-
-        //g.drawRect(xL,yL,xH,yH,p);
-        //g.drawRect(Tx_MIN, Ty_MIN + 400, 300, 1400, p);
-        //g.drawRect(0,0, 20, 100, p);
 
 
         // if we don't have any state, there's nothing more to draw, so return
@@ -416,8 +425,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
                 }
             }
         }
-
-
 
         // no match: return null
         return null;

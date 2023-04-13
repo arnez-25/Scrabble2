@@ -203,8 +203,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
             for (int col = 0; col < 15; col++) {
                 //char result =
                Tile t = state.board[row][col]; // get piece
-               char letter = t.getLetter();
-               drawSymbol(g, letter, col, row);
+               t.drawMe(g, 510+col*62, 90+row*62, 50);
             }
 
         }

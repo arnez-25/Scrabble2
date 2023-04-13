@@ -59,18 +59,20 @@ public class Tile {
     }
 
     public void drawMe(Canvas g, float x, float y, float size) {
+        if (letter == ' ')return;
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.YELLOW);
         paint.setStyle(Paint.Style.FILL);
         g.drawRoundRect(x, y, x+size, y+size, size/10, size/10, paint);
 
         Paint text = new Paint();
         text.setColor(Color.BLACK);
         text.setTextSize(size/2);
-        g.drawText(letter.toString(), x, y, text);
+        text.setTextAlign(Paint.Align.CENTER);
+        g.drawText(letter.toString(), x+size/2, y+size/2, text);
 
         text.setTextSize(size/5);
-        g.drawText(score.toString(), x+size/2, y+size/2, text);
+        g.drawText(score.toString(), x+size/2, y+size-size/4, text);
     }
 
     //Configures the tile based on the character

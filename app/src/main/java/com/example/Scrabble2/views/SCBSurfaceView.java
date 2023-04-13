@@ -49,26 +49,26 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     //IMPORTANT!: @Jacob
     //TOPLEFT BOARD: (500, 82)
-    //BOTRIGHT BOARD: (2000, 1588)
+    //BOTRIGHT BOARD: (1440, 1020)
 
     // x Low and High
     private float xL = 500;
-    private float xH = 2000;
+    private float xH = 1440;
 
     // y Low and High
     private float yL = 82;
-    private float yH = 1588;
+    private float yH = 1020;
 
     //Hand
 
     //IMPORTANT!:@jacob
-    //TOPLEFT HAND: (2340, 73)
-    //BOTRIGHT HAND: (2507, 1000)
+    //TOPLEFT HAND: (1640, 73)
+    //BOTRIGHT HAND: (1807, 1000)
 
 
-    private float Hx_L = 2340;
+    private float Hx_L = 1640;
     private float Hy_L = 73;
-    private float Hx_H = 2507;
+    private float Hx_H = 1807;
     private float Hy_H = 1000;
 
 
@@ -163,9 +163,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float rightVert = 510;
          float bottomRightVert = 1013;
 
-        //IMPORTANT!: @Jacob
-         //TOPLEFT BOARD: (500, 82)
-        //BOTRIGHT BOARD: (1440, 1020)
+
 
 
         float leftHor = 80;
@@ -265,9 +263,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
 
-        //IMPORTANT!:@jacob
-        //TOPLEFT HAND: (1640, 73)
-        //BOTRIGHT HAND: (1807, 1000)
+
 
 
 
@@ -427,6 +423,50 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
         // no match: return null
+        return null;
+    }
+
+    /**
+     * method to map touch on board to a specific grid on the board
+     * @param Bx
+     *      the X percentage that was clicked on the board
+     * @param By
+     *      the Y percentage that was clicked on the board
+     * @return
+     *      returns A point that should contain the index of the grid touched
+     */
+
+    public Point mapTouchToBoard(float Bx, float By){
+        float width = (float) 0.0666666;
+        float bound_X = 0;
+        float bound_Y = 0;
+        int point_X = 0;
+        int point_Y = 0;
+        for(int y = 0; y < 15; y++){
+            if(bound_Y <= By && By <= (bound_Y + width)){
+                point_Y = y;
+                break;
+            }
+            else {
+                bound_Y+=width;
+            }
+
+        }
+        for(int x = 0; x < 15; x++){
+            if(bound_X <= Bx && Bx <= (bound_X + width)){
+                point_X = x;
+                break;
+            }
+            else{
+                bound_X+=width;
+            }
+
+        }
+        Log.d("BOARD_GRID", point_X + ", " + point_Y);
+        return new Point(point_X, point_Y);
+    }
+
+    public Point mapTouchToHand(float Bx, float By){
         return null;
     }
 

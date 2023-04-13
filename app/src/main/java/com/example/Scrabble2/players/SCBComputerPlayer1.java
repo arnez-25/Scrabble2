@@ -47,10 +47,12 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
      */
     @Override
     protected void receiveInfo(GameInfo info) {
+        //Tracks the current user & establishes new ArrayLists
         Logger.log(TAG, "Computer player " + playerNum + " received info");
         ArrayList<Tile> tilesToPlace = new ArrayList<>();
         ArrayList<Point> tilePoints = new ArrayList<>();
 
+        //Checks if there is an instance of the game state
         if (!(info instanceof SCBState)){
             Logger.log(TAG, "Computer player: info is not a gamestate");
             return;
@@ -63,6 +65,7 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         }
         scb = (SCBState) info;
 
+        //This sections works to list and check the number of tiles and finds a two letter word to be able to play on the board.
         Logger.log(TAG, "Computer player(" + playerNum + "), Player turn: " + scb.getWhoseMove());
         if(scb.getWhoseMove() == playerNum){
             ArrayList<Tile> myTiles;
@@ -71,7 +74,6 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
             } else {
                 myTiles = scb.player2Tiles;
             }
-
 
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {

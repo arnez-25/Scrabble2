@@ -414,6 +414,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             if (wordDir == ACROSS) {
                 int i = colStart;
                 while (i >= 0) {
+                    if(i == 15)break;
                     if (board[rowStart][i].getLetter() != ' ') {
                         lettersPlayed.add(board[rowStart][i]);
                         i++;
@@ -424,6 +425,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             } else if (wordDir == DOWN) {
                 int i = rowStart;
                 while (i >= 0) {
+                    if(i == 15)break;
                     if (board[i][colStart].getLetter() != ' ') {
                         lettersPlayed.add(board[i][colStart]);
                         i++;

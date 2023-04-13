@@ -279,29 +279,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
             g.drawRect(leftHor, topLeftHor - (z*130), rightHor, bottomRightHor - (z*130), p);
 
         }
-
-
-
-
-
-
-        // if we don't have any state, there's nothing more to draw, so return
-        if (state == null) {
-            return;
-        }
-
-        // for each square that has an X or O, draw it on the appropriate
-        // place on the canvas
-
-        for (int row = 0; row < 15; row++) {
-            for (int col = 0; col < 15; col++) {
-                //char result =
-                Tile t = state.board[row][col]; // get piece
-                char letter = t.getLetter();
-                drawSymbol(g, letter, col, row);
-            }
-
-        }
     }
 
 

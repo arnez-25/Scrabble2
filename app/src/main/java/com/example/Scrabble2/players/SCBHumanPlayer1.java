@@ -184,6 +184,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // values are in the range 0..2)
         int x = (int) event.getX();
         int y = (int) event.getY();
+        int pHand = -1;
+        Point pBoard = null;
 
         // The if statement insures that if the player doesnt click inside the board then it wont calculate its position on the board
         if((surfaceView.getxL() <= event.getX() && event.getX() <= surfaceView.getxH()) && (surfaceView.getyL() <= event.getY() && event.getY() <= surfaceView.getyH())) {
@@ -191,7 +193,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             float bY = surfaceView.windowY(event.getY()); //Get the y percentage
             Log.d("BOARD", bX + ", " + bY);
 
-            surfaceView.mapTouchToBoard(bX, bY);
+            pBoard = surfaceView.mapTouchToBoard(bX, bY);
 
         }
 
@@ -202,20 +204,19 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             float H_bY = surfaceView.handY(event.getY()); //Get the y percentage
             Log.d("HAND", H_bX + ", " + H_bY);
 
-            surfaceView.mapTouchToHand(H_bY);
+            pHand = surfaceView.mapTouchToHand(H_bY);
 
         }
         Log.d("CORDS", x + ", " + y);
-        Point p = surfaceView.mapPixelToSquare(x, y);
 
         // if the location did not map to a legal square, flash
         // the screen; otherwise, create and send an action to
         // the game
-        if (p == null) {
+        if (pBoard == null) {
             surfaceView.flash(Color.RED, 50);
         } else {
             if (t != null) {
-                ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
+                ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, pBoard.y, pBoard.x);
                 Logger.log("onTouch", "Human player sending TTTMA ...");
                 //redraw button text:
                 for (Button b : playerHand) {

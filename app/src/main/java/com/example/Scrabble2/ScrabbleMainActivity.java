@@ -28,6 +28,21 @@ import java.util.ArrayList;
  * @author David Leon
  *
  * @Version 4/5/2023
+ *
+ * GAME STATUS:
+ * The game is currently playable against the dumb AI. The smart AI is still under development
+ *
+ * KNOWN BUGS:
+ *  - scores are calculated incorrectly
+ *  - attempting to play a two letter word by playing to the right of a letter is incorrectly rejected
+ *  - playing an incorrect word on the first play will stop the ability to try again (game is stuck)
+ *  - crashes caused by ArrayOutOfBounds exceptions in dumb AI algorithm
+ *  - game will end before running out of tiles (when bag is empty it ends)
+ *  - the hint button is not currently implemented
+ *  - switching the dumb AI to player1 and the human to player2 breaks the game
+ *
+ *  The reason for these bugs is primarily due to poor time management and committing to more features than
+ *  we were capable of implementing within the given time frame.
  */
 public class ScrabbleMainActivity extends GameMainActivity {
 

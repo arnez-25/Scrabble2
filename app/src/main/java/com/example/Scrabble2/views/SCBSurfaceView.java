@@ -15,16 +15,25 @@ import com.example.GameFramework.utilities.FlashSurfaceView;
 import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
 
+import java.util.ArrayList;
+
 
 /**
  * A SurfaceView which allows which an animation to be drawn on it by a
  * Animator.
  *
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
  * @author Jacob Arnez
+ * @author David Leon
+ *
  * @version April 2023
  *
  *
  */
+
+
 public class SCBSurfaceView extends FlashSurfaceView {
 
     //Tag for logging
@@ -92,7 +101,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
     //The game state
     protected SCBState state;
 
-    private Tile t;
+    private int playerNum;
 
     //TODO: Add any instance variables for
 
@@ -107,7 +116,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     }
 
-
     /**
      * An alternate constructor for use when a subclass is directly specified
      * in the layout.
@@ -119,6 +127,13 @@ public class SCBSurfaceView extends FlashSurfaceView {
         super(context, attrs);
         init();
     }// ctor
+
+    /**
+     * Setter for the players hand (the surface view doesn't know which player is the human)
+     */
+    public void setPlayerNum(int id) {
+        playerNum = id;
+    }
 
     /**
      * Helper-method for the constructors
@@ -140,7 +155,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
      * 		the color to paint the tic-tac-toe lines, and the X's and O's
      */
     public int backgroundColor() {
-        return Color.RED;
+        return Color.WHITE;
     }
 
     public int testColor() {
@@ -154,7 +169,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         // to the dimensions of the animation surface
         updateDimensions(g);
 
-        // paint the TTT-board's horizontal and vertical lines
+        // paint the board's horizontal and vertical lines
         Paint p = new Paint();
         p.setColor(foregroundColor());
 
@@ -180,6 +195,37 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
         */
 
+        if (state == null) {
+            return;
+        }
+
+        //TO MAKE THE HAND
+        onHand(g); //draw the tile bag
+
+        // if we don't have any state, there's nothing more to draw, so return
+
+
+        //draw the double letter and double word squares
+        Paint squares = new Paint();
+        squares.setStyle(Paint.Style.FILL);
+        for(int i = 0; i < 15; i++){
+            for(int j = 0; j < 15; j++){
+                if(state.pointKey[i][j] == SCBState.D_WORD){
+                    squares.setColor(Color.GREEN);
+                    g.drawRect(505+j*62, 82+i*62, 567+j*62, 144+i*62, squares);
+                }
+
+                if(state.pointKey[i][j] == SCBState.D_LETTER){
+                    squares.setColor(Color.BLUE);
+                    g.drawRect(500+j*62, 82+i*62, 562+j*62, 144+i*62, squares);
+                }
+
+                if(i == 7 && j == 7){
+                    squares.setColor(Color.RED);
+                    g.drawRect(500+j*62, 82+i*62, 562+j*62, 144+i*62, squares);
+                }
+            }
+        }
 
         for (int j = 0; j <= 15; j++) {
             g.drawRect(leftVert + (j*62), topLeftVert, rightVert + (j*62), bottomRightVert, p); //vertical
@@ -187,29 +233,42 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
 
-
-        //TO MAKE THE HAND
-        onHand(g); //draw the tile bag
-
-        // if we don't have any state, there's nothing more to draw, so return
-        if (state == null) {
-            return;
-        }
-
-        // for each square that has an X or O, draw it on the appropriate
-        // place on the canvas
-
+        //draw each tile on the board
         for (int row = 0; row < 15; row++) {
             for (int col = 0; col < 15; col++) {
                 //char result =
                Tile t = state.board[row][col]; // get piece
-               char letter = t.getLetter();
-               drawSymbol(g, letter, col, row);
+               t.drawMe(g, 510+col*62, 90+row*62, 50);
             }
 
         }
 
+        //draw the scores:
+        String myScore = "My Score: ";
+        String oppScore = "Opponent Score: ";
+        if (playerNum == 0) {
+            myScore = myScore.concat(state.p1Score + "");
+            oppScore = oppScore.concat(state.p2Score + "");
+        } else {
+            myScore = myScore.concat(state.p2Score + "");
+            oppScore = oppScore.concat(state.p1Score + "");
+        }
 
+        Paint scores = new Paint();
+        scores.setTextSize(40);
+        scores.setColor(Color.BLACK);
+        g.drawText(myScore, 50, 950, scores);
+        g.drawText(oppScore, 50, 1020, scores);
+
+        //display whose turn it is
+        String whoseTurn = "";
+        if (playerNum == state.getWhoseMove()) {
+            whoseTurn = "Your Turn!";
+        } else {
+            whoseTurn = "Opponent's Turn";
+        }
+        scores.setTextSize(50);
+        g.drawText(whoseTurn, 50, 880, scores);
     }
 
     public void onHand(Canvas g) {
@@ -219,7 +278,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         // paint the TTT-board's horizontal and vertical lines
         Paint p = new Paint();
-        p.setColor(testColor());
+        p.setColor(foregroundColor());
 
         int i = 0;
         float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
@@ -262,30 +321,17 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         }
 
-
-
-
-
-
-        // if we don't have any state, there's nothing more to draw, so return
-        if (state == null) {
-            return;
+        //draw tiles in player's hand
+        ArrayList<Tile> myHand = new ArrayList<>();
+        if (playerNum == 0) {
+            myHand = state.player1Tiles;
+        } else {
+            myHand = state.player2Tiles;
         }
-
-        // for each square that has an X or O, draw it on the appropriate
-        // place on the canvas
-
-        for (int row = 0; row < 15; row++) {
-            for (int col = 0; col < 15; col++) {
-                //char result =
-                Tile t = state.board[row][col]; // get piece
-                char letter = t.getLetter();
-                drawSymbol(g, letter, col, row);
-            }
-
+        for (int k = 0; k < myHand.size(); k++) {
+            myHand.get(k).drawMe(g, 1670, 95 + k*130, 100);
         }
     }
-
 
 
     /**
@@ -318,47 +364,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     }
 
-    // x- and y-percentage-coordinates for a polygon that displays the X's
-    // first slash
-    private static float[] xPoints1 = { 6.25f, 12.5f, 87.5f, 93.75f };
-    private static float[] yPoints1 = { 12.5f, 6.25f, 93.75f, 87.5f };
 
-    // x- and y-percentage-coordinates for a polygon that displays the X's
-    // second slash
-    private static float[] xPoints2 = { 87.5f, 6.25f, 93.75f, 12.5f };
-    private static float[] yPoints2 = { 6.25f, 87.5f, 12.5f, 93.75f };
-
-    /**
-     * Draw a symbol (X or O) on the canvas in a particular location
-     *
-     * @param g
-     *            the graphics object on which to draw
-     * @param sym
-     *            the symbol to draw (X or O)
-     * @param col
-     *            the column number of the square on which to draw (0, 1 or 2)
-     * @param col
-     *            the row number of the square on which to draw (0, 1 or 2)
-     */
-    protected void drawSymbol(Canvas g, char sym, int col, int row) {
-
-        // compute the pixel-location
-        float xLoc = BORDER_PERCENT + col * SQUARE_DELTA_PERCENT; // compute ...
-        float yLoc = BORDER_PERCENT + row * SQUARE_DELTA_PERCENT; // ... location
-
-        Paint text  = new Paint();
-        text.setColor(Color.WHITE);
-        text.setTextSize(55);
-
-
-        // set the paint color to be the foreground color
-        Paint p = new Paint();
-        p.setColor(foregroundColor());
-
-        String letter = String.valueOf(sym);
-                g.drawText(letter, h(xLoc + 2), v(yLoc + 4), text);
-
-    }
 
     /**
      * helper-method to create a scaled polygon (Path) object from a list of points
@@ -529,6 +535,11 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     }
 
+
+    public float reverseWindowX(float bX){
+        return bX * (xH - xL) + xL;
+    }
+
     /**
      * helper-method to find the y percentage clicked in the board
      * @param y
@@ -541,6 +552,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return bY;
     }
 
+
+    public float reverseWindowY(float bY){
+        return bY * (yH - yL) + yL;
+    }
+
+
     /**
      * helper-method to find the x percentage clicked in the hand
      * @param x
@@ -552,6 +569,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float bX = (x - Hx_L) / (Hx_H - Hx_L);
         return bX;
     }
+
+
 
     /**
      * helper-method to find the y percentage clicked in the hand

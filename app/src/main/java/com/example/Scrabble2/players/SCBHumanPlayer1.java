@@ -55,8 +55,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Tile t; // the currently selected tile
 
-    private Button[] playerHand = null;
-
     private Button play;
     private Button skip;
 
@@ -105,6 +103,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 myHand = gameState.player2Tiles;
             }
 
+
             Logger.log(TAG, "receiving");
         }
 
@@ -120,16 +119,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         surfaceView = myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
         surfaceView.setOnTouchListener(this);
-        playerHand = new Button[]{
-                myActivity.findViewById(R.id.tile0),
-                myActivity.findViewById(R.id.tile1),
-                myActivity.findViewById(R.id.tile2),
-                myActivity.findViewById(R.id.tile3),
-                myActivity.findViewById(R.id.tile4),
-                myActivity.findViewById(R.id.tile5),
-                myActivity.findViewById(R.id.tile6),
+        surfaceView.setPlayerNum(playerNum);
 
-        };
 
         play = myActivity.findViewById(R.id.play_button);
         play.setOnClickListener(this);
@@ -142,9 +133,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         hint = myActivity.findViewById(R.id.hint_button);
         hint.setOnClickListener(this);
 
-        for(int i = 0; i < 7; i++) {
-            playerHand[i].setOnClickListener(this);
-        }
     }
 
     /**
@@ -184,6 +172,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // values are in the range 0..2)
         int x = (int) event.getX();
         int y = (int) event.getY();
+        int pHand = -1;
+        Point pBoard = null;
 
         // The if statement insures that if the player doesnt click inside the board then it wont calculate its position on the board
         if((surfaceView.getxL() <= event.getX() && event.getX() <= surfaceView.getxH()) && (surfaceView.getyL() <= event.getY() && event.getY() <= surfaceView.getyH())) {
@@ -191,7 +181,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             float bY = surfaceView.windowY(event.getY()); //Get the y percentage
             Log.d("BOARD", bX + ", " + bY);
 
-            surfaceView.mapTouchToBoard(bX, bY);
+            pBoard = surfaceView.mapTouchToBoard(bX, bY);
 
         }
 
@@ -202,33 +192,20 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             float H_bY = surfaceView.handY(event.getY()); //Get the y percentage
             Log.d("HAND", H_bX + ", " + H_bY);
 
-            surfaceView.mapTouchToHand(H_bY);
+            pHand = surfaceView.mapTouchToHand(H_bY);
 
         }
         Log.d("CORDS", x + ", " + y);
-        Point p = surfaceView.mapPixelToSquare(x, y);
 
         // if the location did not map to a legal square, flash
         // the screen; otherwise, create and send an action to
         // the game
-        if (p == null) {
-            surfaceView.flash(Color.RED, 50);
+        if (pBoard == null) {
+            surfaceView.invalidate();
         } else {
             if (t != null) {
-                ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, p.y, p.x);
+                ScrabblePlaceAction action = new ScrabblePlaceAction(this, t, pBoard.y, pBoard.x);
                 Logger.log("onTouch", "Human player sending TTTMA ...");
-                //redraw button text:
-                for (Button b : playerHand) {
-                    b.setText("");
-                }
-
-                for (int i = 0; i < myHand.size() && i < 7; i++) {
-                    if (gameState != null) {
-                        String ch = "" + myHand.get(i).getLetter();
-                        playerHand[i].setText(ch);//TODO: if statement to select the right players tiles
-                    }
-                }
-
 
                 game.sendAction(action);
                 surfaceView.invalidate();
@@ -236,6 +213,19 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             }
 
         }
+
+        if (pHand == -1) {
+            surfaceView.invalidate();
+        } else {
+            if (myHand.size() > pHand) {
+                t = myHand.get(pHand);
+            }
+
+            surfaceView.invalidate();
+        }
+
+        surfaceView.reverseWindowX(0);
+        Log.d("test", surfaceView.reverseWindowX(0) + "");
 
         // register that we have handled the event
         return true;
@@ -246,21 +236,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         Button clicked = (Button) view;
 
         if (gameState.getWhoseMove() == playerNum) {
-            if (clicked.getId() == R.id.tile0 && myHand.size() >= 1) {
-                t = myHand.get(0);
-            } else if (clicked.getId() == R.id.tile1 && myHand.size() >= 2) {
-                t = myHand.get(1);
-            } else if (clicked.getId() == R.id.tile2 && myHand.size() >= 3) {
-                t = myHand.get(2);
-            } else if (clicked.getId() == R.id.tile3 && myHand.size() >= 4) {
-                t = myHand.get(3);
-            } else if (clicked.getId() == R.id.tile4 && myHand.size() >= 5) {
-                t = myHand.get(4);
-            } else if (clicked.getId() == R.id.tile5 && myHand.size() >= 6) {
-                t = myHand.get(5);
-            } else if (clicked.getId() == R.id.tile6 && myHand.size() >= 7) {
-                t = myHand.get(6);
-            } else if (clicked.getId() == R.id.play_button) {
+            if (clicked.getId() == R.id.play_button) {
                 game.sendAction(new ScrabblePlayAction(this));
             } else if (clicked.getId() == R.id.skip_button) {
                 game.sendAction(new ScrabbleSkipAction(this));
@@ -274,5 +250,11 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         }
 
         Log.d("BUTTON", "ButtonClick");
+        surfaceView.invalidate();
+    }
+
+    public String hintWord(){
+
+        return "hi";
     }
 }

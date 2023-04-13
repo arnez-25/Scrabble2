@@ -10,6 +10,10 @@ package com.example.Scrabble2.infoMessage;
  * @Version 3/16/2023
  */
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
 /**
  * Class Tile
  *
@@ -52,6 +56,23 @@ public class Tile {
     //Sets the current score when updated
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public void drawMe(Canvas g, float x, float y, float size) {
+        if (letter == ' ')return;
+        Paint paint = new Paint();
+        paint.setColor(Color.YELLOW);
+        paint.setStyle(Paint.Style.FILL);
+        g.drawRoundRect(x, y, x+size, y+size, size/6, size/6, paint);
+
+        Paint text = new Paint();
+        text.setColor(Color.BLACK);
+        text.setTextSize(size/2);
+        text.setTextAlign(Paint.Align.CENTER);
+        g.drawText(letter.toString(), x+size/2, y+size/2, text);
+
+        text.setTextSize(size/5);
+        g.drawText(score.toString(), x+size/2, y+size-size/4, text);
     }
 
     //Configures the tile based on the character

@@ -47,19 +47,29 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     //Board
 
+    //IMPORTANT!: @Jacob
+    //TOPLEFT BOARD: (500, 82)
+    //BOTRIGHT BOARD: (2000, 1588)
+
     // x Low and High
-    private float xL = 722;
-    private float xH = 2272;
+    private float xL = 500;
+    private float xH = 2000;
 
     // y Low and High
-    private float yL = 12;
-    private float yH = 1562;
+    private float yL = 82;
+    private float yH = 1588;
 
     //Hand
-    private int Tx_MIN = 110;
-    private int Ty_MIN = 243;
-    private int Tx_MAX = 310;
-    private int Ty_MAX = 1403;
+
+    //IMPORTANT!:@jacob
+    //TOPLEFT HAND: (2340, 73)
+    //BOTRIGHT HAND: (2507, 1000)
+
+
+    private float Hx_L = 2340;
+    private float Hy_L = 73;
+    private float Hx_H = 2507;
+    private float Hy_H = 1000;
 
 
     /*
@@ -153,9 +163,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float rightVert = 517;
          float bottomRightVert = 1588;
 
-        //IMPORTANT!: @Jacob
-         //TOPLEFT BOARD: (500, 82)
-        //BOTRIGHT BOARD: (2000, 1588)
+
 
 
         float leftHor = 80;
@@ -409,6 +417,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
             }
         }
 
+
+
         // no match: return null
         return null;
     }
@@ -454,12 +464,36 @@ public class SCBSurfaceView extends FlashSurfaceView {
     /**
      * helper-method to find the y percentage clicked in the board
      * @param y
-     *      the y cordinate touched on the screen
+     *      the y coordinate touched on the screen
      * @return
      *      the y percentage clicked on the board
      */
     public float windowY(float y){
         float bY = (y - yL) / (xH - xL);
+        return bY;
+    }
+
+    /**
+     * helper-method to find the x percentage clicked in the hand
+     * @param x
+     *      the x coordinate touched on the screen
+     * @return
+     *      the x percentage clicked on the hand
+     */
+    public float handX(float x){
+        float bX = (x - Hx_L) / (Hx_H - Hx_L);
+        return bX;
+    }
+
+    /**
+     * helper-method to find the y percentage clicked in the hand
+     * @param y
+     *      the y coordinate touched on the screen
+     * @return
+     *      the y percentage clicked on the hand
+     */
+    public float handY(float y){
+        float bY = (y - Hy_L) / (Hy_H - Hy_L);
         return bY;
     }
 
@@ -481,6 +515,24 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float getyH() {
         return yH;
     }
+
+    public float getHx_L() {
+        return Hx_L;
+    }
+
+
+    public float getHy_L() {
+        return Hy_L;
+    }
+
+    public float getHx_H() {
+        return Hx_H;
+    }
+
+    public float getHy_H() {
+        return Hy_H;
+    }
+
 
 
 }

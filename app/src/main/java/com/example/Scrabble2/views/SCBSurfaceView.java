@@ -209,6 +209,25 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
 
+
+        for(int i = 0; i < 15; i++){
+            for(int j = 0; j < 15; j++){
+                if(state.pointKey[i][j] == state.D_WORD){
+
+                }
+
+                if(state.pointKey[i][j] == state.D_LETTER){
+
+                }
+
+                if(i == 7 && j == 7){
+
+                }
+            }
+        }
+
+
+
     }
 
     public void onHand(Canvas g) {
@@ -528,6 +547,11 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     }
 
+
+    public float reverseWindowX(float bX){
+        return bX * (xH - xL) + xL;
+    }
+
     /**
      * helper-method to find the y percentage clicked in the board
      * @param y
@@ -540,6 +564,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return bY;
     }
 
+
+    public float reverseWindowY(float bY){
+        return bY * (yH - yL) + yL;
+    }
+
+
     /**
      * helper-method to find the x percentage clicked in the hand
      * @param x
@@ -551,6 +581,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float bX = (x - Hx_L) / (Hx_H - Hx_L);
         return bX;
     }
+
+
 
     /**
      * helper-method to find the y percentage clicked in the hand

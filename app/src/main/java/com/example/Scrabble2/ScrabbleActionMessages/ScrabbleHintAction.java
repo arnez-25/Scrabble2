@@ -9,7 +9,10 @@ public class ScrabbleHintAction extends GameAction {
      *
      * @param player the player who created the action
      */
-    public ScrabbleHintAction(GamePlayer player) {
+
+    public ScrabbleHintAction(GamePlayer player)
+    {
+       // player.
         super(player);
     }
 }

@@ -237,6 +237,9 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         }
 
+        surfaceView.reverseWindowX(0);
+        Log.d("test", surfaceView.reverseWindowX(0) + "");
+
         // register that we have handled the event
         return true;
     }
@@ -274,5 +277,10 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         }
 
         Log.d("BUTTON", "ButtonClick");
+    }
+
+    public String hintWord(){
+
+        return "hi";
     }
 }

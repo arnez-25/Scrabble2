@@ -466,8 +466,29 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return new Point(point_X, point_Y);
     }
 
-    public Point mapTouchToHand(float Bx, float By){
-        return null;
+    /**
+     * method to map a touch on the hand to an index in the hand
+     * @param By
+     *      percentage for y that was touched on the hand
+     * @return
+     *      index in the hand that matches with what was touched in the surface view
+     */
+    public int mapTouchToHand(float By){
+        //width is 0.142
+        float width = (float) 0.142;
+        float bound_Y = 0;
+        int hand_Index = 0;
+        for (int i = 0; i < 7;i++){
+            if(bound_Y <= By && By <= (bound_Y + width)){
+                hand_Index = i;
+                break;
+            }
+            else {
+                bound_Y+=width;
+            }
+        }
+        Log.d("HAND_GRID", hand_Index + "");
+        return hand_Index;
     }
 
     /**

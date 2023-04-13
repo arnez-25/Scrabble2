@@ -194,11 +194,16 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.mapTouchToBoard(bX, bY);
 
         }
+
+
         //If statement for the hand coordinate
         if((surfaceView.getHx_L() <= event.getX() && event.getX() <= surfaceView.getHx_H()) && (surfaceView.getHy_L() <= event.getY() && event.getY() <= surfaceView.getHy_H())){
             float H_bX = surfaceView.handX(event.getX()); //Get the x percentage
             float H_bY = surfaceView.handY(event.getY()); //Get the y percentage
             Log.d("HAND", H_bX + ", " + H_bY);
+
+            surfaceView.mapTouchToHand(H_bY);
+
         }
         Log.d("CORDS", x + ", " + y);
         Point p = surfaceView.mapPixelToSquare(x, y);

@@ -53,10 +53,10 @@
         android:gravity="right"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/tile0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/tile0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/tile1"

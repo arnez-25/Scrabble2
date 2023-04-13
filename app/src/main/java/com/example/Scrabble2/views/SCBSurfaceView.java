@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.example.GameFramework.utilities.FlashSurfaceView;
 import com.example.Scrabble2.infoMessage.SCBState;
@@ -42,6 +43,35 @@ public class SCBSurfaceView extends FlashSurfaceView {
     private final static float LINE_WIDTH_PERCENT2 = 1;
     private final static float SQUARE_DELTA_PERCENT2 = SQUARE_SIZE_PERCENT
             + LINE_WIDTH_PERCENT;
+    //Coordinate boundaries for the board and player hand
+
+    //Board
+
+    //IMPORTANT!: @Jacob
+    //TOPLEFT BOARD: (500, 82)
+    //BOTRIGHT BOARD: (1440, 1020)
+
+    // x Low and High
+    private float xL = 500;
+    private float xH = 1440;
+
+    // y Low and High
+    private float yL = 82;
+    private float yH = 1020;
+
+    //Hand
+
+    //IMPORTANT!:@jacob
+    //TOPLEFT HAND: (1640, 73)
+    //BOTRIGHT HAND: (1807, 1000)
+
+
+    private float Hx_L = 1640;
+    private float Hy_L = 73;
+    private float Hx_H = 1807;
+    private float Hy_H = 1000;
+
+
     /*
      * Instance variables
      */
@@ -133,9 +163,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float rightVert = 510;
          float bottomRightVert = 1013;
 
-        //IMPORTANT!: @Jacob
-         //TOPLEFT BOARD: (500, 82)
-        //BOTRIGHT BOARD: (1440, 1020)
+
 
 
         float leftHor = 80;
@@ -235,9 +263,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
 
 
-        //IMPORTANT!:@jacob
-        //TOPLEFT HAND: (1640, 73)
-        //BOTRIGHT HAND: (1807, 1000)
+
 
 
 
@@ -389,7 +415,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
                 float top = v(BORDER_PERCENT + (j * SQUARE_DELTA_PERCENT));
                 float bottom = v(BORDER_PERCENT + SQUARE_SIZE_PERCENT
                         + (j * SQUARE_DELTA_PERCENT));
-                System.out.println(left + " " + right + " " + top + " " + bottom);
+                //System.out.println(left + " " + right + " " + top + " " + bottom);
                 if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
                     return new Point(i, j);
                 }
@@ -398,6 +424,71 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         // no match: return null
         return null;
+    }
+
+    /**
+     * method to map touch on board to a specific grid on the board
+     * @param Bx
+     *      the X percentage that was clicked on the board
+     * @param By
+     *      the Y percentage that was clicked on the board
+     * @return
+     *      returns A point that should contain the index of the grid touched
+     */
+
+    public Point mapTouchToBoard(float Bx, float By){
+        float width = (float) 0.0666666;
+        float bound_X = 0;
+        float bound_Y = 0;
+        int point_X = 0;
+        int point_Y = 0;
+        for(int y = 0; y < 15; y++){
+            if(bound_Y <= By && By <= (bound_Y + width)){
+                point_Y = y;
+                break;
+            }
+            else {
+                bound_Y+=width;
+            }
+
+        }
+        for(int x = 0; x < 15; x++){
+            if(bound_X <= Bx && Bx <= (bound_X + width)){
+                point_X = x;
+                break;
+            }
+            else{
+                bound_X+=width;
+            }
+
+        }
+        Log.d("BOARD_GRID", point_X + ", " + point_Y);
+        return new Point(point_X, point_Y);
+    }
+
+    /**
+     * method to map a touch on the hand to an index in the hand
+     * @param By
+     *      percentage for y that was touched on the hand
+     * @return
+     *      index in the hand that matches with what was touched in the surface view
+     */
+    public int mapTouchToHand(float By){
+        //width is 0.142
+        float width = (float) 0.142;
+        float bound_Y = 0;
+        int hand_Index = 0;
+        for (int i = 0; i < 7;i++){
+            if(bound_Y <= By && By <= (bound_Y + width)){
+                hand_Index = i;
+                break;
+            }
+            else {
+                bound_Y+=width;
+            }
+        }
+        Log.d("HAND_GRID", hand_Index + "");
+        return hand_Index;
     }
 
     /**
@@ -423,6 +514,93 @@ public class SCBSurfaceView extends FlashSurfaceView {
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
     }
+
+    /**
+     * helper-method to find the x percentage clicked in board
+     *
+     * @param x
+     *      the x cordinate touched on the screen
+     * @return
+     *      the x percentage clicked on the board
+     */
+    public float windowX(float x){
+        float bX = (x - xL) / (xH - xL);
+        return bX;
+
+    }
+
+    /**
+     * helper-method to find the y percentage clicked in the board
+     * @param y
+     *      the y coordinate touched on the screen
+     * @return
+     *      the y percentage clicked on the board
+     */
+    public float windowY(float y){
+        float bY = (y - yL) / (xH - xL);
+        return bY;
+    }
+
+    /**
+     * helper-method to find the x percentage clicked in the hand
+     * @param x
+     *      the x coordinate touched on the screen
+     * @return
+     *      the x percentage clicked on the hand
+     */
+    public float handX(float x){
+        float bX = (x - Hx_L) / (Hx_H - Hx_L);
+        return bX;
+    }
+
+    /**
+     * helper-method to find the y percentage clicked in the hand
+     * @param y
+     *      the y coordinate touched on the screen
+     * @return
+     *      the y percentage clicked on the hand
+     */
+    public float handY(float y){
+        float bY = (y - Hy_L) / (Hy_H - Hy_L);
+        return bY;
+    }
+
+    /*
+        Getters for surface view
+     */
+    public float getxL() {
+        return xL;
+    }
+
+    public float getxH() {
+        return xH;
+    }
+
+    public float getyL() {
+        return yL;
+    }
+
+    public float getyH() {
+        return yH;
+    }
+
+    public float getHx_L() {
+        return Hx_L;
+    }
+
+
+    public float getHy_L() {
+        return Hy_L;
+    }
+
+    public float getHx_H() {
+        return Hx_H;
+    }
+
+    public float getHy_H() {
+        return Hy_H;
+    }
+
 
 
 }

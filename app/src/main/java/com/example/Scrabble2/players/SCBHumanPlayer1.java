@@ -184,6 +184,28 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // values are in the range 0..2)
         int x = (int) event.getX();
         int y = (int) event.getY();
+
+        // The if statement insures that if the player doesnt click inside the board then it wont calculate its position on the board
+        if((surfaceView.getxL() <= event.getX() && event.getX() <= surfaceView.getxH()) && (surfaceView.getyL() <= event.getY() && event.getY() <= surfaceView.getyH())) {
+            float bX = surfaceView.windowX(event.getX()); //Get the x percentage
+            float bY = surfaceView.windowY(event.getY()); //Get the y percentage
+            Log.d("BOARD", bX + ", " + bY);
+
+            surfaceView.mapTouchToBoard(bX, bY);
+
+        }
+
+
+        //If statement for the hand coordinate
+        if((surfaceView.getHx_L() <= event.getX() && event.getX() <= surfaceView.getHx_H()) && (surfaceView.getHy_L() <= event.getY() && event.getY() <= surfaceView.getHy_H())){
+            float H_bX = surfaceView.handX(event.getX()); //Get the x percentage
+            float H_bY = surfaceView.handY(event.getY()); //Get the y percentage
+            Log.d("HAND", H_bX + ", " + H_bY);
+
+            surfaceView.mapTouchToHand(H_bY);
+
+        }
+        Log.d("CORDS", x + ", " + y);
         Point p = surfaceView.mapPixelToSquare(x, y);
 
         // if the location did not map to a legal square, flash

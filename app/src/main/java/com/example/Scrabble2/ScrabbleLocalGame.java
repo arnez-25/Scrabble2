@@ -82,8 +82,14 @@ public class ScrabbleLocalGame extends LocalGame {
      */
     @Override
     protected String checkIfGameOver() {
+        String message = "Game Over! Player";
         if (!gameState.gameRunning) {
-            return "Game Over";
+            if (gameState.p1Score > gameState.p2Score) {
+                message = message.concat(" One is the winner!  ");
+            } else {
+                message = message.concat(" Two is the winner!  ");
+            }
+            return message;
         } else {
             return null;
         }

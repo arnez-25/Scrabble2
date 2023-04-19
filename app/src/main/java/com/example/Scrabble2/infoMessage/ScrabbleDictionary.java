@@ -37,6 +37,14 @@ class Node {
         return ch;
     }
 
+    public boolean hasChildNodes() {
+        if (childNodes.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Node getChild(char c) {
         return childNodes.get(c);//if node doesn't exist, null is returned
     }
@@ -104,6 +112,22 @@ public class ScrabbleDictionary {
             }
         }
         Log.d("DICT", word + " is not a legal word");
+        return false;
+    }
+
+    public boolean checkPrefix(String prefix) {
+        if (root == null) return false;
+
+        Node currentNode = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            if (currentNode.getChild(prefix.charAt(i)) != null) {
+                currentNode = currentNode.getChild(prefix.charAt(i));
+
+                if (currentNode.hasChildNodes() && i == prefix.length()-1) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

@@ -34,7 +34,6 @@ import java.util.ArrayList;
  *
  * KNOWN BUGS:
  *  - scores are calculated incorrectly
- *  - attempting to play a two letter word by playing to the right of a letter is incorrectly rejected
  *  - playing an incorrect word on the first play will stop the ability to try again (game is stuck)
  *  - crashes caused by ArrayOutOfBounds exceptions in dumb AI algorithm
  *  - game will end before running out of tiles (when bag is empty it ends)

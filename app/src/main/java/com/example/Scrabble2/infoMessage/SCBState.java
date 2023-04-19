@@ -381,7 +381,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     wordDir = ACROSS;
                 } else if (col1-1 > 0 && board[row1][col1-1].getLetter() != ' ') {
                     secondLetter = board[row1][col1-1];
-                    wordDir = DOWN;
+                    wordDir = ACROSS;
                 } else {
                     return false;//the word played is a single letter that isn't connected to any other tiles
                 }

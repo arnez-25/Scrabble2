@@ -34,8 +34,6 @@ import java.util.ArrayList;
  *
  * KNOWN BUGS:
  *  - scores are calculated incorrectly
- *  - playing an incorrect word on the first play will stop the ability to try again (game is stuck)
- *  - crashes caused by ArrayOutOfBounds exceptions in dumb AI algorithm
  *  - game will end before running out of tiles (when bag is empty it ends)
  *  - the hint button is not currently implemented
  *  - switching the dumb AI to player1 and the human to player2 breaks the game

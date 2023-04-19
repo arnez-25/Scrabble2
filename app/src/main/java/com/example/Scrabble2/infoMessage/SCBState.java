@@ -486,15 +486,17 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     }
                 }
 
-                if (foundMatch) {
-                    firstPlay = false;
-                } else {
+                if (!foundMatch) {
                     wordChecker = false;
                 }
             }
 
             //all checks are finished when entering this if statement:
             if (wordChecker) {
+                if (firstPlay) {
+                    firstPlay = false;
+                }
+
                 if (playerId == 0) {
                     //draw back up to hand size:
                     while (player1Tiles.size() < 7) {

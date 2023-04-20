@@ -33,10 +33,7 @@ import java.util.ArrayList;
  * The game is currently playable against the dumb AI. The smart AI is still under development
  *
  * KNOWN BUGS:
- *  - scores are calculated incorrectly
- *  - attempting to play a two letter word by playing to the right of a letter is incorrectly rejected
- *  - playing an incorrect word on the first play will stop the ability to try again (game is stuck)
- *  - crashes caused by ArrayOutOfBounds exceptions in dumb AI algorithm
+ *  - scores are calculated incorrectly (In Progress - Alexx (Problem Found))
  *  - game will end before running out of tiles (when bag is empty it ends)
  *  - the hint button is not currently implemented
  *  - switching the dumb AI to player1 and the human to player2 breaks the game

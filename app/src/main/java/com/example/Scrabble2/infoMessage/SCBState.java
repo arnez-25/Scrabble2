@@ -381,7 +381,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     wordDir = ACROSS;
                 } else if (col1-1 > 0 && board[row1][col1-1].getLetter() != ' ') {
                     secondLetter = board[row1][col1-1];
-                    wordDir = DOWN;
+                    wordDir = ACROSS;
                 } else {
                     return false;//the word played is a single letter that isn't connected to any other tiles
                 }
@@ -486,15 +486,17 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     }
                 }
 
-                if (foundMatch) {
-                    firstPlay = false;
-                } else {
+                if (!foundMatch) {
                     wordChecker = false;
                 }
             }
 
             //all checks are finished when entering this if statement:
             if (wordChecker) {
+                if (firstPlay) {
+                    firstPlay = false;
+                }
+
                 if (playerId == 0) {
                     //draw back up to hand size:
                     while (player1Tiles.size() < 7) {
@@ -604,8 +606,9 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 int letterMultiplier = 1;
                 if (!t.isOnBoard()) {
                     if (pointKey[getTileRow(t)][getTileCol(t)] == D_LETTER) letterMultiplier *= 2;
-                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START)
+                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START) {
                         multiplier *= 2;
+                    }
                 }
                 wordScore += (t.getScore() * letterMultiplier);
             }

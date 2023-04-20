@@ -29,7 +29,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
      *
      * @param name the player's name (e.g., "John")
      */
-    public SCBComputerPlayer2(String name){
+    public SCBComputerPlayer2(String name) {
         super(name);
         scb = null;
     }

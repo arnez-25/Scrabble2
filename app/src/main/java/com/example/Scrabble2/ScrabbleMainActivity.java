@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * The game is currently playable against the dumb AI. The smart AI is still under development
  *
  * KNOWN BUGS:
- *  - scores are calculated incorrectly
+ *  - scores are calculated incorrectly (In Progress - Alexx (Problem Found))
  *  - game will end before running out of tiles (when bag is empty it ends)
  *  - the hint button is not currently implemented
  *  - switching the dumb AI to player1 and the human to player2 breaks the game

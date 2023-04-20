@@ -606,8 +606,9 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 int letterMultiplier = 1;
                 if (!t.isOnBoard()) {
                     if (pointKey[getTileRow(t)][getTileCol(t)] == D_LETTER) letterMultiplier *= 2;
-                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START)
+                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START) {
                         multiplier *= 2;
+                    }
                 }
                 wordScore += (t.getScore() * letterMultiplier);
             }

@@ -34,6 +34,10 @@ public class Tile {
     //Establishes variable for letter
     private Character letter;
 
+    //Instantiates paints for drawMe method
+    private Paint paint = new Paint();  //Paint for tile
+    private Paint text = new Paint(); //Paint for text in tile
+
     //Retrieves letter when called
     public Character getLetter() {
         return letter;
@@ -58,14 +62,25 @@ public class Tile {
         this.score = score;
     }
 
+    /**
+     * Method to have a tile draw itself in a canvas
+     * @param g
+     *      g is the canvas in the onDraw method
+     * @param x
+     *      x coordinate in the surface view
+     * @param y
+     *      y coordinate in the surface view
+     * @param size
+     *      the height and width of the tile
+     */
     public void drawMe(Canvas g, float x, float y, float size) {
         if (letter == ' ')return;
-        Paint paint = new Paint();
+
         paint.setColor(Color.YELLOW);
         paint.setStyle(Paint.Style.FILL);
         g.drawRoundRect(x, y, x+size, y+size, size/6, size/6, paint);
 
-        Paint text = new Paint();
+
         text.setColor(Color.BLACK);
         text.setTextSize(size/2);
         text.setTextAlign(Paint.Align.CENTER);

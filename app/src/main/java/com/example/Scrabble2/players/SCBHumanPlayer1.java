@@ -13,6 +13,7 @@ import com.example.GameFramework.infoMessage.IllegalMoveInfo;
 import com.example.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.GameFramework.players.GameHumanPlayer;
 import com.example.GameFramework.utilities.Logger;
+import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleComputerAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlaceAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabblePlayAction;
 import com.example.Scrabble2.ScrabbleActionMessages.ScrabbleResetAction;
@@ -34,8 +35,7 @@ import java.util.ArrayList;
  *
  * @Version 4/5/2023
  */
-public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener{
-
+public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener {
 
 
     //Tag for logging
@@ -65,13 +65,43 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private Button swap;
 
 
+    public Tile find2LetterWord(Tile playOff, int row, int col, ArrayList<Tile> hand) {
+        int rootRow = gameState.getTileRow(playOff);
+        int rootCol = gameState.getTileCol(playOff);
+        String word = "";
+
+        //make sure there are no surrounding tiles that could mess up the word
+        if (row + 1 < 15 && gameState.board[row + 1][col].getLetter() != ' ' && !gameState.board[row + 1][col].equals(playOff)) {
+            return null;
+        } else if (row - 1 > 0 && gameState.board[row - 1][col].getLetter() != ' ' && !gameState.board[row - 1][col].equals(playOff)) {
+            return null;
+        } else if (col + 1 < 15 && gameState.board[row][col + 1].getLetter() != ' ' && !gameState.board[row][col + 1].equals(playOff)) {
+            return null;
+        } else if (col - 1 > 0 && gameState.board[row][col - 1].getLetter() != ' ' && !gameState.board[row][col - 1].equals(playOff)) {
+            return null;
+        }
+
+        for (Tile t : hand) {
+            if (rootRow > row || rootCol > col) {
+                word = "" + t.getLetter() + playOff.getLetter();
+            } else if (rootRow < row || rootCol < col) {
+                word = "" + playOff.getLetter() + t.getLetter();
+            }
+
+            if (gameState.dictionary.checkWord(word)) {
+                return t;
+            }
+        }
+        //Function needs a return statement
+        return null;
+    }
+
+
     /**
      * constructor
      *
-     * @param name the name of the player
-     *
-     * @param layoutId
-     *       the id of the layout to use
+     * @param name     the name of the player
+     * @param layoutId the id of the layout to use
      */
     public SCBHumanPlayer1(String name, int layoutId) {
         super(name);
@@ -88,12 +118,11 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
             // if the move was out of turn or otherwise illegal, flash the screen
             surfaceView.flash(Color.RED, 50);
-        }
-        else if (!(info instanceof SCBState))
+        } else if (!(info instanceof SCBState))
             // if we do not have a TTTState, ignore
             return;
         else {
-            surfaceView.setState((SCBState)info);
+            surfaceView.setState((SCBState) info);
             surfaceView.invalidate();
 
             this.gameState = (SCBState) info;
@@ -138,8 +167,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     /**
      * returns the GUI's top view
      *
-     * @return
-     * 		the GUI's top view
+     * @return the GUI's top view
      */
     @Override
     public View getTopView() {
@@ -151,18 +179,17 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * knows what their game-position and opponents' names are.
      */
     protected void initAfterReady() {
-        myActivity.setTitle("Scrabble: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+        myActivity.setTitle("Scrabble: " + allPlayerNames[0] + " vs. " + allPlayerNames[1]);
 
     }
-
 
 
     /**
      * callback method when the screen it touched. We're
      * looking for a screen touch
-     *
-     *
-     * 		the motion event that was detected
+     * <p>
+     * <p>
+     * the motion event that was detected
      */
     public boolean onTouch(View v, MotionEvent event) {
         // ignore if not an "up" event
@@ -176,7 +203,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         Point pBoard = null;
 
         // The if statement insures that if the player doesnt click inside the board then it wont calculate its position on the board
-        if((surfaceView.getxL() <= event.getX() && event.getX() <= surfaceView.getxH()) && (surfaceView.getyL() <= event.getY() && event.getY() <= surfaceView.getyH())) {
+        if ((surfaceView.getxL() <= event.getX() && event.getX() <= surfaceView.getxH()) && (surfaceView.getyL() <= event.getY() && event.getY() <= surfaceView.getyH())) {
             float bX = surfaceView.windowX(event.getX()); //Get the x percentage
             float bY = surfaceView.windowY(event.getY()); //Get the y percentage
             Log.d("BOARD", bX + ", " + bY);
@@ -187,7 +214,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
 
         //If statement for the hand coordinate
-        if((surfaceView.getHx_L() <= event.getX() && event.getX() <= surfaceView.getHx_H()) && (surfaceView.getHy_L() <= event.getY() && event.getY() <= surfaceView.getHy_H())){
+        if ((surfaceView.getHx_L() <= event.getX() && event.getX() <= surfaceView.getHx_H()) && (surfaceView.getHy_L() <= event.getY() && event.getY() <= surfaceView.getHy_H())) {
             float H_bX = surfaceView.handX(event.getX()); //Get the x percentage
             float H_bY = surfaceView.handY(event.getY()); //Get the y percentage
             Log.d("HAND", H_bX + ", " + H_bY);
@@ -245,16 +272,64 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             } else if (clicked.getId() == R.id.swap_button && t != null) {
                 game.sendAction(new ScrabbleSwapAction(this, t));
             } else if (clicked.getId() == R.id.hint_button) {
-                Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();//TODO: provide a hint
+                //Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();//TODO: Should also let the player know if they cant play a hint
+
+                ArrayList<Tile> tilesToPlace = new ArrayList<>();
+                ArrayList<Point> tilePoints = new ArrayList<>();
+
+                for (int i = 0; i < 15; i++) {
+                    for (int j = 0; j < 15; j++) {
+                        if (gameState.board[i][j].getLetter() != ' ') {
+                            Tile toPlace = null;
+                            if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
+                                toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, gameState.player1Tiles);
+                                if (toPlace != null) {
+                                    tilesToPlace.add(toPlace);
+                                    tilePoints.add(new Point(i + 1, j));
+                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                    return;
+                                }
+
+                                toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, gameState.player1Tiles);
+                                if (toPlace != null) {
+                                    tilesToPlace.add(toPlace);
+                                    tilePoints.add(new Point(i - 1, j));
+                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                    return;
+                                }
+                            } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
+                                toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, gameState.player1Tiles);
+                                if (toPlace != null) {
+                                    tilesToPlace.add(toPlace);
+                                    tilePoints.add(new Point(i, j + 1));
+                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                    return;
+                                }
+
+                                toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, gameState.player1Tiles);
+                                if (toPlace != null) {
+                                    tilesToPlace.add(toPlace);
+                                    tilePoints.add(new Point(i, j - 1));
+                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                }
             }
+
+            Log.d("BUTTON", "ButtonClick");
+            surfaceView.invalidate();
+        }
+        /*
+        public String hintWord() {
+            String greet = "hi";
+            return greet;
         }
 
-        Log.d("BUTTON", "ButtonClick");
-        surfaceView.invalidate();
-    }
+         */
 
-    public String hintWord(){
-
-        return "hi";
     }
 }

@@ -443,7 +443,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
      */
 
     public Point mapTouchToBoard(float Bx, float By){
-        float width = (float) 0.0666666;
+        float width = (float) 0.0666666; // percentage width of square in board
         float bound_X = 0;
         float bound_Y = 0;
         int point_X = 0;

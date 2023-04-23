@@ -1,5 +1,6 @@
 package com.example.Scrabble2.players;
 import android.graphics.Point;
+import android.util.Pair;
 
 import com.example.GameFramework.infoMessage.GameInfo;
 import com.example.GameFramework.players.GameComputerPlayer;
@@ -10,6 +11,7 @@ import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This will be our smart AI. It Should be able to compete with the player instead of just skipping turn
@@ -48,6 +50,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         Logger.log(TAG, "Computer player " + playerNum + " received info");
         ArrayList<Tile> tilesToPlace = new ArrayList<>();
         ArrayList<Point> tilePoints = new ArrayList<>();
+        boolean isAcross = true;
 
         //Checks if there is an instance of the game state
         if (!(info instanceof SCBState)){
@@ -62,7 +65,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         }
         scb = (SCBState) info;
 
-        //This sections works to list and check the number of tiles and finds a two letter word to be able to play on the board.
+        //This section finds a word to play
         Logger.log(TAG, "Computer player(" + playerNum + "), Player turn: " + scb.getWhoseMove());
         if(scb.getWhoseMove() == playerNum){
             ArrayList<Tile> myTiles;
@@ -72,133 +75,125 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
                 myTiles = scb.player2Tiles;
             }
 
+            //create a list of usable letters
+            ArrayList<Character> myLetters = new ArrayList<>();
+            for (Tile t : myTiles) myLetters.add(t.getLetter());
+
+            //store possible words for each direction
+            ArrayList<Pair<String, Point>> acrossWords = new ArrayList<>();
+            ArrayList<Pair<String, Point>> downWords = new ArrayList<>();
+
+
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
+                    int spacesAcross = 0;
+                    int spacesDown = 0;
+
                     if (scb.board[i][j].getLetter() != ' ') {
-                        Tile toPlace = null;
-                        if (scb.board[i+1][j].getLetter() == ' ' && scb.board[i-1][j].getLetter() == ' ') {
-                            toPlace = find3LetterWord(scb.board[i][j], i+1, j, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i+1, j));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
+                        spacesAcross = findSpacesAcross(i, j);
+                        spacesDown = findSpacesDown(i, j);
 
-                            toPlace = find3LetterWord(scb.board[i][j], i-1, j, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i-1, j));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
-                        } else if (scb.board[i][j+1].getLetter() == ' ' && scb.board[i][j-1].getLetter() == ' ') {
-                            toPlace = find3LetterWord(scb.board[i][j], i, j+1, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i, j+1));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
+                        ArrayList<String> possibleWords = scb.dictionary.findWords("" + scb.board[i][j].getLetter(), null, myLetters);
 
-                            toPlace = find3LetterWord(scb.board[i][j], i, j-1, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i, j-1));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
+                        if (spacesAcross > 1) {
+                            for (String word : possibleWords) {
+                                if (!(word.length() > spacesAcross)) {
+                                    Point p = new Point(i, j);
+                                    Pair<String, Point> pair = new Pair(word, p);
+                                    acrossWords.add(pair);
+                                }
                             }
                         }
 
-                        if (scb.board[i+2][j].getLetter() == ' ' && scb.board[i-2][j].getLetter() == ' '){
-                            toPlace = find3LetterWord(scb.board[i][j], i+2, j, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i+2, j));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
-
-                            toPlace = find3LetterWord(scb.board[i][j], i-2, j, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i-2, j));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
-                        } else if (scb.board[i][j+2].getLetter() == ' ' && scb.board[i][j-2].getLetter() == ' '){
-                            toPlace = find3LetterWord(scb.board[i][j], i, j+2, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i, j+2));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
-                            }
-
-                            toPlace = find3LetterWord(scb.board[i][j], i, j-2, myTiles);
-                            if (toPlace != null) {
-                                tilesToPlace.add(toPlace);
-                                tilePoints.add(new Point(i, j-2));
-                                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                return;
+                        if (spacesDown > 1) {
+                            for (String word : possibleWords) {
+                                if (!(word.length() > spacesDown)) {
+                                    Point p = new Point(i, j);
+                                    Pair<String, Point> pair = new Pair(word, p);
+                                    downWords.add(pair);
+                                }
                             }
                         }
                     }
                 }
             }
 
-            game.sendAction(new ScrabbleSkipAction(this));
+            //pick a word from one of the lists:
+            Random rand = new Random();
+            ArrayList<Pair<String, Point>> wordChoices = new ArrayList<>();
+
+            //randomly choose between across or down
+            if (rand.nextBoolean() && downWords.size() > 0 && acrossWords.size() > 0) {
+                wordChoices = downWords;
+                isAcross = false;
+            } else if (acrossWords.size() > 0){
+                wordChoices = acrossWords;
+                isAcross = true;
+            } else if (downWords.size() > 0) {
+                wordChoices = downWords;
+                isAcross = false;
+            }
+
+            //find the longest word and choose that one
+            Pair<String, Point> longest = new Pair("", new Point(0, 0));
+            for (Pair<String, Point> p : wordChoices) {
+                if (longest.first.length() < p.first.length()) {
+                    longest = p;
+                }
+            }
+
+            //convert to a tile list and point list:
+            for (int i = 1; i < longest.first.length(); i++) {
+                for (Tile t : myTiles) {
+                    if (t.getLetter() == longest.first.charAt(i)) {
+                        tilesToPlace.add(t);
+                        Point p;
+                        if (isAcross) {
+                            p = new Point(longest.second.x, longest.second.y + i);
+                        } else {
+                            p = new Point(longest.second.x + i, longest.second.y);
+                        }
+                        tilePoints.add(p);
+                    }
+                }
+            }
+
+            if (tilesToPlace.size() == 0) {
+                game.sendAction(new ScrabbleSkipAction(this));
+            } else {
+                game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+            }
         }
     }
 
-    /**
-     * A method to help find a letter word throughout the table/playing area.
-     *
-     * @param playOff
-     * @param row
-     * @param col
-     * @param hand
-     * @return Tile - tile to play
-     */
-    public Tile find3LetterWord(Tile playOff, int row, int col, ArrayList<Tile> hand) {
-        int rootRow = scb.getTileRow(playOff);
-        int rootCol = scb.getTileCol(playOff);
-        String word = "";
 
-        //make sure there are no surrounding tiles that could mess up the word
-        if (scb.board[row+1][col].getLetter() != ' ' && !scb.board[row+1][col].equals(playOff)) {
-            return null;
-        } else if (scb.board[row-1][col].getLetter() != ' ' && !scb.board[row-1][col].equals(playOff)) {
-            return null;
-        } else if (scb.board[row][col+1].getLetter() != ' ' && !scb.board[row][col+1].equals(playOff)) {
-            return null;
-        } else if (scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
-            return null;
+    //helper methods for findWords:
+    //TODO: bounds checks
+    public int findSpacesAcross(int row, int col) {
+        int count = 0;
+        while (col+count+1 < 15 && scb.board[row][col+count+1].getLetter() == ' ' && scb.board[row+1][col].getLetter() == ' ' && scb.board[row-1][col].getLetter() == ' ') {
+            count++;
         }
 
-        if (scb.board[row+2][col].getLetter() != ' ' && !scb.board[row+2][col].equals(playOff)) {
-            return null;
-        } else if (scb.board[row-2][col].getLetter() != ' ' && !scb.board[row-2][col].equals(playOff)) {
-            return null;
-        } else if (scb.board[row][col+2].getLetter() != ' ' && !scb.board[row][col+2].equals(playOff)) {
-            return null;
-        } else if (scb.board[row][col-2].getLetter() != ' ' && !scb.board[row][col-2].equals(playOff)) {
-            return null;
+        if (scb.board[row][col-1].getLetter() != ' ') {
+            count = 0;
         }
 
-        for (Tile t : hand) {
-            if (rootRow > row || rootCol > col) {
-                word = "" + t.getLetter() + playOff.getLetter();
-            } else if (rootRow < row || rootCol < col) {
-                word = "" + playOff.getLetter() + t.getLetter();
-            }
+        return count;
+    }
 
-            if (scb.dictionary.checkWord(word)) {
-                return t;
-            }
+    public int findSpacesDown(int row, int col) {
+        int count = 0;
+        while (row+count+1 < 15 && scb.board[row+count+1][col].getLetter() == ' ' && scb.board[row+count+1][col+1].getLetter() == ' ' && scb.board[row+count+1][col-1].getLetter() == ' ') {
+            count++;
         }
 
-        //if there is no valid word, return null
-        return null;
+        if (scb.board[row-1][col].getLetter() != ' ') {
+            count = 0;
+        }
+
+        return count;
     }
 }
+
+

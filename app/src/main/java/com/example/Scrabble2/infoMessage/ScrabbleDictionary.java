@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -115,20 +116,54 @@ public class ScrabbleDictionary {
         return false;
     }
 
-    public boolean checkPrefix(String prefix) {
-        if (root == null) return false;
 
-        Node currentNode = root;
-        for (int i = 0; i < prefix.length(); i++) {
-            if (currentNode.getChild(prefix.charAt(i)) != null) {
-                currentNode = currentNode.getChild(prefix.charAt(i));
+    /**
+     * This method utilizes the dictionary node-tree to find possible words given the available letters
+     *
+     * @param prefix - starting letter of the word
+     * @param node - should be set to null when entering a starting letter
+     * @param letters - list of letters that are available to use
+     * @return - a list of possible words
+     */
+    public ArrayList<String> findWords(String prefix, Node node, ArrayList<Character> letters) {
+        if (root == null) return null;
+        ArrayList<String> validWords = new ArrayList<>();
 
-                if (currentNode.hasChildNodes() && i == prefix.length()-1) {
-                    return true;
+        //set the starting node for this point in the recursion
+        Node currentNode;
+        if (node == null) {
+            currentNode = root.getChild(prefix.charAt(0));
+        } else {
+            currentNode = node;
+        }
+
+        //if currentNode is still null then the input string most likely contained invalid characters
+        if (currentNode == null) {
+            Log.d("DICT","No node in tree with value '" + prefix.charAt(0) + "'" );
+            return null;
+        }
+
+        //loop through each character in the list of letters
+        for (Character c : letters) {
+            if (currentNode.getChild(c) != null) {
+                if (currentNode.getChild(c).isWord) {
+                    validWords.add(prefix.concat("" + c));
                 }
+
+                //make a copy of the list of letters, but remove the one that was just used
+                ArrayList<Character> copy = new ArrayList<>();
+                for (Character copyChar : letters) {
+                    if (copyChar != c) {
+                        copy.add(copyChar);
+                    }
+                }
+
+                //make a recursive call
+                validWords.addAll(this.findWords(prefix.concat("" + c), currentNode.getChild(c), copy));
             }
         }
-        return false;
+
+        return validWords;
     }
 }
 

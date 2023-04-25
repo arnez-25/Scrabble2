@@ -1,6 +1,7 @@
 package com.example.Scrabble2.views;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -10,10 +11,12 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.graphics.Bitmap;
 
 import com.example.GameFramework.utilities.FlashSurfaceView;
 import com.example.Scrabble2.infoMessage.SCBState;
 import com.example.Scrabble2.infoMessage.Tile;
+import com.example.gametestb.R;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,8 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     //Tag for logging
     private static final String TAG = "SCBSurfaceView";
+
+    final Bitmap image = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.scrabble2), 300, 300, false);
 
     private final static float BORDER_PERCENT = 5;
     private final static float SQUARE_SIZE_PERCENT = 6; // size of each of our 9 squares
@@ -269,6 +274,9 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
         scores.setTextSize(50);
         g.drawText(whoseTurn, 50, 880, scores);
+
+        //draw the image
+        g.drawBitmap(image,130, 500, new Paint());
     }
 
     public void onHand(Canvas g) {

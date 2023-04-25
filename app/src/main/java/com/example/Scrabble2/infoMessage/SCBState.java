@@ -327,8 +327,8 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      */
     public boolean playWord(int playerId) {//TODO: make sure firstmove is only updated once a word is played, bug where one letter words cant be played to the right
         if (playerId == playerToMove) {
-            String wordPlayed = "";
-            boolean wordChecker = false;
+            String wordPlayed;
+            boolean wordChecker;
 
             //algorithm for finding what word was played on the grid
             int wordDir = -1;
@@ -604,21 +604,22 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
         //add the points for each perpendicular word - same method as above
         for (ArrayList<Tile> w : perpWords) {
-            wordScore = 0;
-            multiplier = 1;
-            for (Tile t : w) {
-                int letterMultiplier = 1;
-                if (!t.isOnBoard()) {
-                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_LETTER) letterMultiplier *= 2;
-                    if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START) {
-                        multiplier *= 2;
+            if (w.size() > 1) {
+                wordScore = 0;
+                multiplier = 1;
+                for (Tile t : w) {
+                    int letterMultiplier = 1;
+                    if (!t.isOnBoard()) {
+                        if (pointKey[getTileRow(t)][getTileCol(t)] == D_LETTER) letterMultiplier *= 2;
+                        //if (pointKey[getTileRow(t)][getTileCol(t)] == D_WORD || pointKey[getTileRow(t)][getTileCol(t)] == START) {
+                        //multiplier *= 2;
+                        //}
                     }
+                    wordScore += (t.getScore() * letterMultiplier);
                 }
-                wordScore += (t.getScore() * letterMultiplier);
             }
             totalScore += wordScore * multiplier;
         }
-
         return totalScore;
     } //calculateScore
 

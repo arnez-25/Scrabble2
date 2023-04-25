@@ -617,8 +617,9 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     }
                     wordScore += (t.getScore() * letterMultiplier);
                 }
+                totalScore += wordScore * multiplier;
             }
-            totalScore += wordScore * multiplier;
+
         }
         return totalScore;
     } //calculateScore

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/5/2023
+ * @Version 4/24/2023
  *
  * GAME STATUS:
  * The game is currently playable against the dumb AI. The smart AI is still under development
@@ -108,7 +108,7 @@ public class ScrabbleMainActivity extends GameMainActivity {
             return new ScrabbleLocalGame(reader);
         }
         return new ScrabbleLocalGame((SCBState) gameState);
-    }
+    }//createLocalGame
 
     /**
      * saveGame, adds this games prepend to the filename
@@ -134,5 +134,5 @@ public class ScrabbleMainActivity extends GameMainActivity {
         super.loadGame(appName);
         Logger.log(TAG, "Loading: " + gameName);
         return (GameState) new SCBState((SCBState) Saving.readFromFile(appName, this.getApplicationContext()));
-    }
+    }//loadGame
 }

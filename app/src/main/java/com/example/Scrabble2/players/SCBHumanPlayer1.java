@@ -94,7 +94,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         }
         //Function needs a return statement
         return null;
-    }
+    }//find2LetterWord
 
 
     /**
@@ -107,7 +107,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         super(name);
         this.layoutId = layoutId;
         t = null;
-    }
+    }//SCBHumanPlayer1
 
 
     @Override
@@ -131,13 +131,9 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             } else {
                 myHand = gameState.player2Tiles;
             }
-
-
             Logger.log(TAG, "receiving");
         }
-
-
-    }
+    }//receiveInfo
 
     @Override
     public void setAsGui(GameMainActivity activity) {
@@ -162,7 +158,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         hint = myActivity.findViewById(R.id.hint_button);
         hint.setOnClickListener(this);
 
-    }
+    }//setAsGui
 
     /**
      * returns the GUI's top view
@@ -256,7 +252,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         // register that we have handled the event
         return true;
-    }
+    }//onTouch
 
     @Override
     public void onClick(View view) {
@@ -331,5 +327,5 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
          */
 
-    }
+    }//onClick
 }

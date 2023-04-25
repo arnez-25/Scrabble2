@@ -74,7 +74,7 @@ public class ScrabbleDictionary {
         } catch (IOException e) {
         e.printStackTrace();
         }
-    }
+    }//ScrabbleDictionary
 
     //Adds words
     public void addWord(String word) {
@@ -93,7 +93,7 @@ public class ScrabbleDictionary {
             }
         }
 
-    }
+    }//addWord
     //Checks if word exists
     public boolean checkWord(String word) {
         int strLen = word.length();
@@ -114,7 +114,7 @@ public class ScrabbleDictionary {
         }
         Log.d("DICT", word + " is not a legal word");
         return false;
-    }
+    }//checkWord
 
 
     /**
@@ -164,6 +164,6 @@ public class ScrabbleDictionary {
         }
 
         return validWords;
-    }
+    }//findWords
 }
 

@@ -17,8 +17,13 @@ import java.util.ArrayList;
  * This is the dumb AI for our game. Right now we just want it to skip its turn.
  * It is so dumb it can't even play the game!
  *
- * @author Jacob Arnez
- * @version May 2023
+ *@author Riley Cameron
+ *@author Alexx Blake
+ *@author Nick Tabra
+ *@author Jacob Arnez
+ *@author David Leon
+ *
+ *@Version 4/24/2023
  */
 public class SCBComputerPlayer1 extends GameComputerPlayer{
 
@@ -120,16 +125,16 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
 
             game.sendAction(new ScrabbleSkipAction(this));
         }
-    }
+    }//receiveInfo
 
 
     /**
      * A method to help find a letter word throughout the table/playing area.
      *
-     * @param playOff
-     * @param row
-     * @param col
-     * @param hand
+     * @param playOff What tile is being used
+     * @param row row in array
+     * @param col column in array
+     * @param hand the current hand of tiles
      * @return Tile - tile to play
      */
     public Tile find2LetterWord(Tile playOff, int row, int col, ArrayList<Tile> hand) {
@@ -162,5 +167,5 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
 
         //if there is no valid word, return null
         return null;
-    }
+    }//find2LetterWord
 }

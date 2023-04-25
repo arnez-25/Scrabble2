@@ -23,6 +23,8 @@ import java.io.BufferedReader;
  * @author Nick Tabra
  * @author Jacob Arnez
  * @author David Leon
+ *
+ * Version: 4/24/2023
  */
 public class ScrabbleLocalGame extends LocalGame {
 
@@ -41,7 +43,7 @@ public class ScrabbleLocalGame extends LocalGame {
         // create a new, unfilled-in SCBState object
         gameState = new SCBState(reader);
         super.state = this.gameState;
-    }
+    }//ScrabbleLocalGame
 
     /**
      * Constructor for the ScrabbleLocalGame with loaded SCBState
@@ -50,13 +52,13 @@ public class ScrabbleLocalGame extends LocalGame {
     public ScrabbleLocalGame(SCBState scrabbleState){
         super();
         super.state = new SCBState(scrabbleState);
-    }
+    }//ScrabbleLocalGame
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
         // make a copy of the state, and send it to the player
         p.sendInfo(new SCBState(gameState));
-    }
+    }//sendUpdatedStateTo
 
     /**
      * This method checks if the player is able to move
@@ -73,12 +75,12 @@ public class ScrabbleLocalGame extends LocalGame {
         } else {
             return false;
         }
-    }
+    }//canMove
 
     /**
      *This method is a checker to ensure that if the game is no longer running, that it will activate Game Over.
      *
-     * @returns if the game is over or not.
+     * @return if the game is over or not.
      */
     @Override
     protected String checkIfGameOver() {
@@ -93,7 +95,7 @@ public class ScrabbleLocalGame extends LocalGame {
         } else {
             return null;
         }
-    }
+    }//checkIfGameOver
 
     /**
      * The method checks whether you are able to make a move or not.
@@ -136,5 +138,5 @@ public class ScrabbleLocalGame extends LocalGame {
             return true;
         }
         return false;
-    }
+    }//makeMove
 }

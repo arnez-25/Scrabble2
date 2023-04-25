@@ -11,7 +11,7 @@ import com.example.Scrabble2.infoMessage.Tile;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/5/2023
+ * @Version 4/24/2023
  */
 public class ScrabblePlaceAction extends GameAction {
 
@@ -29,7 +29,7 @@ public class ScrabblePlaceAction extends GameAction {
         super(player);
 
         this.tile = t;
-      //  this.row = row;
+       // this.row = row;
        // this.col = col;
         this.row = Math.max(0, Math.min(15, row));
         this.col = Math.max(0, Math.min(15, col));

@@ -88,7 +88,7 @@ public class Tile {
 
         text.setTextSize(size/5);
         g.drawText(score.toString(), x+size/2, y+size-size/4, text);
-    }
+    }//drawMe
 
     //Configures the tile based on the character
     public Tile(Character l){

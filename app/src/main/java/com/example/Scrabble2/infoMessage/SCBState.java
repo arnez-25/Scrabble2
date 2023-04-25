@@ -17,9 +17,13 @@ import com.example.GameFramework.infoMessage.GameState;
  * a player wants to enquire about the state of the game.  (E.g., to display
  * it, or to help figure out its next move.)
  *
- * @author Jacob Arnez
  * @author Riley Cameron
- * @version April 2023
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/24/2023
  */
 public class SCBState extends GameState implements Serializable{//TODO: fix game ending early
 
@@ -159,7 +163,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             player1Tiles.add(drawFromBag());
             player2Tiles.add(drawFromBag());
         }
-    }
+    }//SCBState
 
     /**
      * This method is the copy constructor
@@ -209,13 +213,13 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         hintWord = g.hintWord;
-    }
+    }//SCBState
 
     /**
      * This method moves the tiles on the board back into the player's hand
      *
-     * @param playerId
-     * @return
+     * @param playerId the ID of the current player
+     * @return resetting of hand
      */
     public boolean resetHand(int playerId) {
         if (playerId == playerToMove) {
@@ -235,7 +239,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         } else {
             return false;
         }
-    }
+    }//resetHand
 
     /**
      * Tells whose move it is.
@@ -296,13 +300,13 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             }
         }
 
-    }
+    }//placeTile
 
     /**
      * Mathod to find a Tile given its coordinates
      *
-     * @param row
-     * @param col
+     * @param row row on the board
+     * @param col column on the board
      * @return Tile  - at position row, col
      */
     public Tile getPiece(int row, int col) {
@@ -312,7 +316,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
         // return the character that is in the proper position
         return board[row][col];
-    }
+    }//getPiece
 
 
     /**
@@ -616,13 +620,13 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         return totalScore;
-    }
+    } //calculateScore
 
     /**
      * This method finds the words connected to a given tile that are perpendicular to the word direction
      *
-     * @param t
-     * @param wordDir
+     * @param t Tile in use
+     * @param wordDir Word direction
      * @return the word perpendicular to Tile t as a string
      */
     public ArrayList<Tile> findPerpWord(Tile t, int wordDir) {
@@ -666,7 +670,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         return lettersInWord;
-    }
+    }//FindPrepWord
 
 
     /**
@@ -681,12 +685,12 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 }
             }
         }
-    }
+    }//cleanBoard
 
     /**
      * Converts a list of Tiles to a string
      *
-     * @param list
+     * @param list list of tiles in the arraylist
      * @return String:word
      */
     public String tilesToString(ArrayList<Tile> list) {
@@ -696,12 +700,12 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         return word;
-    }
+    }//tilesToString
 
     /**
      * returns the row of a given tile:  (-1 means it is not on the board)
      *
-     * @param t
+     * @param t Tile in use
      * @return row
      */
     public int getTileRow(Tile t) {
@@ -715,12 +719,12 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         return row;
-    }
+    }//getTileRow
 
     /**
      * returns the column of a given tile:  (-1 means it is not on the board)
      *
-     * @param t
+     * @param t Tile in use
      * @return col
      */
     public int getTileCol(Tile t) {
@@ -734,7 +738,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
         return col;
-    }
+    }//getTileCol
 
     /**
      * Establishes a skip method in order for the player to change over their turn.
@@ -759,7 +763,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
             return false;
         }
-    }
+    }//skipper
 
     /**
      * Swaps a tile from the bag to be added.
@@ -813,7 +817,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
             Log.d(TAG, "Invalid Move for player " + playerId );
             return false;
         }
-    }
+    }//swapper
 
     /**
      * Gives a hint towards the using player when method is active.
@@ -833,7 +837,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
             return false;
         }
-    }
+    }//hinter
 
     /**
      * This method fills the bag array list with the correct amount of each letter Tile.
@@ -856,7 +860,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 bag.add(t);//add it to the bag
             }
         }
-    }
+    }//makeBag
 
     /**
      * This method removes a Tile from the bag and returns that tile.
@@ -870,7 +874,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         } else {
             return null;
         }
-    }
+    }//drawFromBag
 
     /**
      * This method describes the state of the game as a string.
@@ -940,7 +944,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
         Log.d(TAG, test);
         return test;
-    }
+    }//toString
 
 }
 

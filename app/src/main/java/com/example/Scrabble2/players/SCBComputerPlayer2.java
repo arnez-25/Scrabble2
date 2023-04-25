@@ -16,9 +16,13 @@ import java.util.Random;
 /**
  * This will be our smart AI. It Should be able to compete with the player instead of just skipping turn
  *
- * @author Jacob Arnez
+ * @author Riley Cameron
  * @author Alexx Blake
- * @version May 2023
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @Version 4/24/2023
  */
 public class SCBComputerPlayer2 extends GameComputerPlayer{
 
@@ -164,7 +168,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
                 game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
             }
         }
-    }
+    }//receiveInfo
 
 
     //helper methods for findWords:
@@ -180,7 +184,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         }
 
         return count;
-    }
+    }//findSpacesAcross
 
     public int findSpacesDown(int row, int col) {
         int count = 0;
@@ -193,7 +197,7 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         }
 
         return count;
-    }
+    }//findSpacesDown
 }
 
 

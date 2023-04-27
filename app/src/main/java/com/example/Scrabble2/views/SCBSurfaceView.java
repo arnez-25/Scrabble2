@@ -163,16 +163,12 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return Color.WHITE;
     }
 
-    public int testColor() {
-        return Color.GREEN;
-    }
 
 
 
     public void onDraw(Canvas g) {
         // update the variables that relate
         // to the dimensions of the animation surface
-        updateDimensions(g);
 
         // paint the board's horizontal and vertical lines
         Paint p = new Paint();
@@ -277,12 +273,15 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         //draw the image
         g.drawBitmap(image,130, 500, new Paint());
+
+        //draw the key
+        drawKey(g);
     }
 
     public void onHand(Canvas g) {
         // update the variables that relate
         // to the dimensions of the animation surface
-        updateDimensions(g);
+       // updateDimensions(g);
 
         // paint the TTT-board's horizontal and vertical lines
         Paint p = new Paint();
@@ -341,104 +340,31 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
     }
 
-
     /**
-     * update the instance variables that relate to the drawing surface
-     *
-     * @param g
-     * 		an object that references the drawing surface
+     * Draws the key for the game
      */
-    private void updateDimensions(Canvas g) {
+    private void drawKey(Canvas g) {
+        //draw the fist square
+        Paint blueSquare = new Paint();
+        blueSquare.setColor(Color.BLUE);
+        g.drawRect(540, 1030, 590, 1080, blueSquare);
 
-        // initially, set the height and width to be that of the
-        // drawing surface
-        int width = g.getWidth();
-        int height = g.getHeight();
+        Paint dW = new Paint();
+        dW.setTextSize(50);
+        dW.setColor(Color.BLACK);
+        g.drawText("= Double Letter", 600, 1070, dW);
 
-        // Set the "full square" size to be the minimum of the height and
-        // the width. Depending on which is greater, set either the
-        // horizontal or vertical base to be partway across the screen,
-        // so that the "playing square" is in the middle of the screen on
-        // its long dimension
-        if (width > height) {
-            fullSquare = height;
-            vBase = 0;
-            hBase = (width - height) / (float) 2.0;
-        } else {
-            fullSquare = width;
-            hBase = 0;
-            vBase = (height - width) / (float) 2.0;
-        }
+        Paint greenSquare = new Paint();
+        greenSquare.setColor(Color.GREEN);
+        g.drawRect(960, 1030, 1010, 1080, greenSquare);
+        g.drawText("= Double Word", 1020, 1070, dW);
 
+        Paint redSquare = new Paint();
+        redSquare.setColor(Color.RED);
+        g.drawRect(1380, 1030, 1430, 1080, redSquare);
+        g.drawText("= Start", 1440, 1070, dW);
     }
 
-
-
-    /**
-     * helper-method to create a scaled polygon (Path) object from a list of points
-     *
-     * @param xPoints
-     * 		list of x-coordinates, taken as percentages
-     * @param yPoints
-     * 		corresponding list of y-coordinates--should have the same length as xPoints
-     * @param scale
-     * 		factor by which to scale them
-     * @return
-     */
-    private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
-
-        // in case array-lengths are different, take the minimim length, to avoid
-        // array-out-of-bounds errors
-        int count = Math.min(xPoints.length, yPoints.length);
-
-        // run through the points, adding each to the Path object, scaling as we go
-        Path rtnVal = new Path();
-        rtnVal.moveTo(xPoints[0] * scale / 100, yPoints[0] * scale / 100);
-        for (int i = 1; i < count; i++) {
-            float xPoint = xPoints[i] * scale / 100;
-            float yPoint = yPoints[i] * scale / 100;
-            rtnVal.lineTo(xPoint, yPoint);
-        }
-
-        // close the Path into a polygon; return the object
-        rtnVal.close();
-        return rtnVal;
-    }
-
-    /**
-     * maps a point from the canvas' pixel coordinates to "square" coordinates
-     *
-     * @param x
-     * 		the x pixel-coordinate
-     * @param y
-     * 		the y pixel-coordinate
-     * @return
-     *		a Point whose components are in the range 0-14, indicating the
-     *		column and row of the corresponding square on the tic-tac-toe
-     * 		board, or null if the point does not correspond to a square
-     */
-    public Point mapPixelToSquare(int x, int y) {
-
-        // loop through each square and see if we get a "hit"; if so, return
-        // the corresponding Point in "square" coordinates
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                float left = h(BORDER_PERCENT + (i * SQUARE_DELTA_PERCENT));
-                float right = h(BORDER_PERCENT + SQUARE_SIZE_PERCENT
-                        + (i * SQUARE_DELTA_PERCENT));
-                float top = v(BORDER_PERCENT + (j * SQUARE_DELTA_PERCENT));
-                float bottom = v(BORDER_PERCENT + SQUARE_SIZE_PERCENT
-                        + (j * SQUARE_DELTA_PERCENT));
-                //System.out.println(left + " " + right + " " + top + " " + bottom);
-                if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
-                    return new Point(i, j);
-                }
-            }
-        }
-
-        // no match: return null
-        return null;
-    }
 
     /**
      * method to map touch on board to a specific grid on the board

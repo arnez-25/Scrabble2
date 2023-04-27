@@ -40,7 +40,6 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         scb = null;
     }
 
-
     /**
      * Called when the player receives a game-state (or other info) from the game
      * This is where the AI will be written
@@ -172,14 +171,13 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
 
 
     //helper methods for findWords:
-    //TODO: bounds checks
     public int findSpacesAcross(int row, int col) {
         int count = 0;
-        while (col+count+1 < 15 && scb.board[row][col+count+1].getLetter() == ' ' && scb.board[row+1][col].getLetter() == ' ' && scb.board[row-1][col].getLetter() == ' ') {
+        while (col+count+1 < 15 && row-1 > 0 && row+1 < 15 && scb.board[row][col+count+1].getLetter() == ' ' && scb.board[row+1][col+count+1].getLetter() == ' ' && scb.board[row-1][col+count+1].getLetter() == ' ') {
             count++;
         }
 
-        if (scb.board[row][col-1].getLetter() != ' ') {
+        if (col-1 < 0 || scb.board[row][col-1].getLetter() != ' ') {
             count = 0;
         }
 
@@ -188,11 +186,11 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
 
     public int findSpacesDown(int row, int col) {
         int count = 0;
-        while (row+count+1 < 15 && scb.board[row+count+1][col].getLetter() == ' ' && scb.board[row+count+1][col+1].getLetter() == ' ' && scb.board[row+count+1][col-1].getLetter() == ' ') {
+        while (row+count+1 < 15 && col+1 < 15 && col-1 > 0 && scb.board[row+count+1][col].getLetter() == ' ' && scb.board[row+count+1][col+1].getLetter() == ' ' && scb.board[row+count+1][col-1].getLetter() == ' ') {
             count++;
         }
 
-        if (scb.board[row-1][col].getLetter() != ' ') {
+        if (row-1 < 0 || scb.board[row-1][col].getLetter() != ' ') {
             count = 0;
         }
 

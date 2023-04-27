@@ -164,7 +164,6 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
                 return t;
             }
         }
-
         //if there is no valid word, return null
         return null;
     }//find2LetterWord

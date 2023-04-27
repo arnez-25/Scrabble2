@@ -69,7 +69,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
 
     public int playerToMove;
 
-    public boolean computerSkipped;
 
     /**
      * GameState is the Constructor that establishes and defines the needed variables & parameters that will be used for the game.

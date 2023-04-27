@@ -122,6 +122,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             return;
         else {
             surfaceView.setState((SCBState) info);
+            surfaceView.setPlayerNum(playerNum);
             surfaceView.invalidate();
 
             this.gameState = (SCBState) info;
@@ -143,7 +144,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         surfaceView = myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener", "OnTouch");
         surfaceView.setOnTouchListener(this);
-        surfaceView.setPlayerNum(playerNum);
 
         play = myActivity.findViewById(R.id.play_button);
         play.setOnClickListener(this);
@@ -269,12 +269,19 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 ArrayList<Tile> tilesToPlace = new ArrayList<>();
                 ArrayList<Point> tilePoints = new ArrayList<>();
 
+                ArrayList<Tile> myTiles;
+                if (playerNum == 0) {
+                    myTiles = gameState.player1Tiles;
+                } else {
+                    myTiles = gameState.player2Tiles;
+                }
+
                 for (int i = 0; i < 15; i++) {
                     for (int j = 0; j < 15; j++) {
                         if (gameState.board[i][j].getLetter() != ' ') {
                             Tile toPlace = null;
                             if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, gameState.player1Tiles);
+                                toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, myTiles);
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i + 1, j));
@@ -282,7 +289,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                     return;
                                 }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, gameState.player1Tiles);
+                                toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, myTiles);
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i - 1, j));
@@ -290,7 +297,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                     return;
                                 }
                             } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, gameState.player1Tiles);
+                                toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, myTiles);
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i, j + 1));
@@ -298,7 +305,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                     return;
                                 }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, gameState.player1Tiles);
+                                toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, myTiles);
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i, j - 1));

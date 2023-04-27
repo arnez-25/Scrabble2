@@ -251,7 +251,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         //display whose turn it is
         String whoseTurn = "";
-        if (playerNum == state.getWhoseMove()) {
+        if (playerNum == state.playerToMove) {
             whoseTurn = "Your Turn!";
         } else {
             whoseTurn = "Opponent's Turn";

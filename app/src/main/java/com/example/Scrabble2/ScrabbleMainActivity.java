@@ -32,8 +32,8 @@ import java.util.ArrayList;
  * GAME STATUS:
  * The game is currently playable against the dumb AI. The smart AI is still under development
  *
- * KNOWN BUGS:
- *  - switching the dumb AI to player1 and the human to player2 breaks the game
+ * Source for the Scrabble Dictionary: https://github.com/redbo/scrabble/blob/master/dictionary.txt
+ * (^ we removed the inappropriate terms from it)
  *
  *  The reason for these bugs is primarily due to poor time management and committing to more features than
  *  we were capable of implementing within the given time frame.

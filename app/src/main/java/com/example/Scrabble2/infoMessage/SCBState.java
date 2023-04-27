@@ -232,7 +232,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     }
                 }
             }
-
             cleanBoard();
             return true;
         } else {
@@ -247,15 +246,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      */
     public int getWhoseMove() {
         return playerToMove;
-    }
-
-    /**
-     * set whose move it is
-     * @param id
-     * 		the player we want to set as to whose move it is
-     */
-    public void setWhoseMove(int id) {
-        playerToMove = id;
     }
 
     /**
@@ -300,22 +290,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         }
 
     }//placeTile
-
-    /**
-     * Mathod to find a Tile given its coordinates
-     *
-     * @param row row on the board
-     * @param col column on the board
-     * @return Tile  - at position row, col
-     */
-    public Tile getPiece(int row, int col) {
-        // if we're out of bounds or anything, return '?';
-        if (board == null || row < 0 || col < 0) return null;
-        if (row >= board.length || col >= board[row].length) return null;
-
-        // return the character that is in the proper position
-        return board[row][col];
-    }//getPiece
 
     /**
      * This method checks the turn of the player and checks the word that is played to validate that it works.

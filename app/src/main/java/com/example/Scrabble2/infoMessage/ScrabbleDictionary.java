@@ -38,14 +38,6 @@ class Node {
         return ch;
     }
 
-    public boolean hasChildNodes() {
-        if (childNodes.size() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public Node getChild(char c) {
         return childNodes.get(c);//if node doesn't exist, null is returned
     }
@@ -56,7 +48,7 @@ class Node {
 }
 
 public class ScrabbleDictionary {
-    Node root = null;
+    Node root;
     BufferedReader reader;
 
     public ScrabbleDictionary(BufferedReader r) {
@@ -116,7 +108,6 @@ public class ScrabbleDictionary {
         return false;
     }//checkWord
 
-
     /**
      * This method utilizes the dictionary node-tree to find possible words given the available letters
      *
@@ -136,20 +127,17 @@ public class ScrabbleDictionary {
         } else {
             currentNode = node;
         }
-
         //if currentNode is still null then the input string most likely contained invalid characters
         if (currentNode == null) {
             Log.d("DICT","No node in tree with value '" + prefix.charAt(0) + "'" );
             return null;
         }
-
         //loop through each character in the list of letters
         for (Character c : letters) {
             if (currentNode.getChild(c) != null) {
                 if (currentNode.getChild(c).isWord) {
                     validWords.add(prefix.concat("" + c));
                 }
-
                 //make a copy of the list of letters, but remove the one that was just used
                 ArrayList<Character> copy = new ArrayList<>();
                 for (Character copyChar : letters) {
@@ -157,12 +145,10 @@ public class ScrabbleDictionary {
                         copy.add(copyChar);
                     }
                 }
-
                 //make a recursive call
                 validWords.addAll(this.findWords(prefix.concat("" + c), currentNode.getChild(c), copy));
             }
         }
-
         return validWords;
     }//findWords
 }

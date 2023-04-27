@@ -177,14 +177,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float rightHor = 90;
         float bottomRightHor = 1440;
 
-       // g.drawRect(topLeftHor, leftHor, bottomRightHor, rightHor, p);
-        /*
-        for (int j = 0; j <= 15; j++) {
-            g.drawRect(leftVert + (j*100), topLeftVert, rightVert + (j*100), bottomRightVert, p); //vertical
-            g.drawRect(topLeftHor, leftHor + (j*100), bottomRightHor, rightHor + (j*100), p);
-        }
-        */
-
         if (state == null) {
             return;
         }
@@ -514,7 +506,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float getHx_L() {
         return Hx_L;
     }
-
 
     public float getHy_L() {
         return Hy_L;

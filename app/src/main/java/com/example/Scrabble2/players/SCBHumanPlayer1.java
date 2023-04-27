@@ -278,48 +278,49 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     for (int j = 0; j < 15; j++) {
                         if (gameState.board[i][j].getLetter() != ' ') {
                             Tile toPlace = null;
-                            if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, myTiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i + 1, j));
-                                    String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
-                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
+                            if (!(j + 1 > 14 || i + 1 > 14)) {
+                                if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
+                                    toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, myTiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i + 1, j));
+                                        String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, myTiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i - 1, j));
-                                    String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
-                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
-                            } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, myTiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i, j + 1));
-                                    String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
-                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
+                                    toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, myTiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i - 1, j));
+                                        String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
+                                } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, myTiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i, j + 1));
+                                        String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, myTiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i, j - 1));
-                                    String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
-                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, myTiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i, j - 1));
+                                        String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
                                 }
                             }
-                        }
                     }
 
                 }

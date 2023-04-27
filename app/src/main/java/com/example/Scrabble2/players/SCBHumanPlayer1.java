@@ -264,8 +264,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             } else if (clicked.getId() == R.id.swap_button && t != null) {
                 game.sendAction(new ScrabbleSwapAction(this, t));
             } else if (clicked.getId() == R.id.hint_button) {
-                //Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();//TODO: Should also let the player know if they cant play a hint
-
                 ArrayList<Tile> tilesToPlace = new ArrayList<>();
                 ArrayList<Point> tilePoints = new ArrayList<>();
 
@@ -285,6 +283,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i + 1, j));
+                                    String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                     game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                     return;
                                 }
@@ -293,6 +293,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i - 1, j));
+                                    String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                     game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                     return;
                                 }
@@ -301,6 +303,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i, j + 1));
+                                    String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                     game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                     return;
                                 }
@@ -309,6 +313,8 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                 if (toPlace != null) {
                                     tilesToPlace.add(toPlace);
                                     tilePoints.add(new Point(i, j - 1));
+                                    String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                    Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                     game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                     return;
                                 }
@@ -317,6 +323,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     }
 
                 }
+                Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();
             }
 
             Log.d("BUTTON", "ButtonClick");

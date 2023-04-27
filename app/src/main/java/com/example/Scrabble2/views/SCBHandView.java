@@ -21,7 +21,6 @@ public class SCBHandView extends FlashSurfaceView {
     //Tag for logging
     private static final String TAG = "SCBHandView";
 
-
     /*
      * Instance variables
      */
@@ -31,13 +30,10 @@ public class SCBHandView extends FlashSurfaceView {
 
     private Tile t;
 
-
-
     public SCBHandView(Context context) {
         super(context);
         init();
     }
-
 
     public SCBHandView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,5 +45,4 @@ public class SCBHandView extends FlashSurfaceView {
     private void init() { setBackgroundColor(Color.BLACK);} //init
 
     public void setState(SCBState state) { this.state = state; }
-
 }

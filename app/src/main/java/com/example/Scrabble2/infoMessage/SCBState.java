@@ -318,14 +318,13 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         return board[row][col];
     }//getPiece
 
-
     /**
      * This method checks the turn of the player and checks the word that is played to validate that it works.
      *
      * @param playerId Checks which player is playing
      * @return Returns either a true or false response after the method has completed
      */
-    public boolean playWord(int playerId) {//TODO: make sure firstmove is only updated once a word is played, bug where one letter words cant be played to the right
+    public boolean playWord(int playerId) {
         if (playerId == playerToMove) {
             String wordPlayed;
             boolean wordChecker;
@@ -450,8 +449,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                 }
             }
 
-
-
             //convert arrayList of Tiles into a String
             wordPlayed = tilesToString(lettersPlayed);
 
@@ -523,6 +520,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
                     Log.d(TAG, info);
                     playerToMove = 1;
                     p1Score += calculateScore(lettersPlayed, perpWords);
+
                 } else {
                     while (player2Tiles.size() < 7) {
                         Tile t = drawFromBag();
@@ -583,7 +581,7 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      * @param perpWords - new words formed that branch off the main word
      * @return totalScore - the number of points earned
      */
-    public int calculateScore(ArrayList<Tile> word, ArrayList<ArrayList<Tile>> perpWords) {//TODO: dont count points of single letter perpendicular 'words'
+    public int calculateScore(ArrayList<Tile> word, ArrayList<ArrayList<Tile>> perpWords) {
         int totalScore = 0;
         int multiplier = 1;
 
@@ -943,7 +941,6 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
         Log.d(TAG, test);
         return test;
     }//toString
-
 }
 
 

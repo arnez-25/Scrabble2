@@ -96,7 +96,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         return null;
     }//find2LetterWord
 
-
     /**
      * constructor
      *
@@ -146,7 +145,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         surfaceView.setOnTouchListener(this);
         surfaceView.setPlayerNum(playerNum);
 
-
         play = myActivity.findViewById(R.id.play_button);
         play.setOnClickListener(this);
         skip = myActivity.findViewById(R.id.skip_button);
@@ -179,7 +177,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     }
 
-
     /**
      * callback method when the screen it touched. We're
      * looking for a screen touch
@@ -207,7 +204,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             pBoard = surfaceView.mapTouchToBoard(bX, bY);
 
         }
-
 
         //If statement for the hand coordinate
         if ((surfaceView.getHx_L() <= event.getX() && event.getX() <= surfaceView.getHx_H()) && (surfaceView.getHy_L() <= event.getY() && event.getY() <= surfaceView.getHy_H())) {
@@ -319,13 +315,5 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             Log.d("BUTTON", "ButtonClick");
             surfaceView.invalidate();
         }
-        /*
-        public String hintWord() {
-            String greet = "hi";
-            return greet;
-        }
-
-         */
-
     }//onClick
 }

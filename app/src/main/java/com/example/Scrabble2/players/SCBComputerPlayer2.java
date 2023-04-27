@@ -40,7 +40,6 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         scb = null;
     }
 
-
     /**
      * Called when the player receives a game-state (or other info) from the game
      * This is where the AI will be written

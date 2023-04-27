@@ -36,7 +36,6 @@ import java.util.ArrayList;
  *
  */
 
-
 public class SCBSurfaceView extends FlashSurfaceView {
 
     //Tag for logging
@@ -108,8 +107,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
     private int playerNum;
 
-    //TODO: Add any instance variables for
-
     /**
      * Constructor for the TTTSurfaceView class.
      *
@@ -163,9 +160,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return Color.WHITE;
     }
 
-
-
-
     public void onDraw(Canvas g) {
         // update the variables that relate
         // to the dimensions of the animation surface
@@ -177,16 +171,11 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float leftVert = 500;
         float topLeftVert = 82;
         float rightVert = 510;
-         float bottomRightVert = 1013;
-
-
-
-
+        float bottomRightVert = 1013;
         float leftHor = 80;
         float topLeftHor = 500;
         float rightHor = 90;
         float bottomRightHor = 1440;
-
 
        // g.drawRect(topLeftHor, leftHor, bottomRightHor, rightHor, p);
         /*
@@ -204,7 +193,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
         onHand(g); //draw the tile bag
 
         // if we don't have any state, there's nothing more to draw, so return
-
 
         //draw the double letter and double word squares
         Paint squares = new Paint();
@@ -306,15 +294,9 @@ public class SCBSurfaceView extends FlashSurfaceView {
        // float bottomRight = 1558;
         float bottomRight = 1000;
 
-
-
-
       //  g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
         g.drawRect(left - 700, topLeft, right - 700, bottomRight, p); //vertical line 1
         g.drawRect(left + 150 - 700, topLeft, right + 150 - 700, bottomRight, p); //vertical line 2
-
-
-
 
        // g.drawRect(82, 640, 1558, 657, p);
         g.drawRect(2340, 983, 2500, 1000, p);
@@ -486,12 +468,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
         return bY;
     }
 
-
-    public float reverseWindowY(float bY){
-        return bY * (yH - yL) + yL;
-    }
-
-
     /**
      * helper-method to find the x percentage clicked in the hand
      * @param x
@@ -503,8 +479,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
         float bX = (x - Hx_L) / (Hx_H - Hx_L);
         return bX;
     }
-
-
 
     /**
      * helper-method to find the y percentage clicked in the hand
@@ -553,9 +527,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float getHy_H() {
         return Hy_H;
     }
-
-
-
 }
 
 

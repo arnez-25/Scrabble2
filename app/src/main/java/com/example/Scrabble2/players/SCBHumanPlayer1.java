@@ -277,42 +277,43 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     for (int j = 0; j < 15; j++) {
                         if (gameState.board[i][j].getLetter() != ' ') {
                             Tile toPlace = null;
-                            if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, gameState.player1Tiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i + 1, j));
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
+                            if (!(j + 1 > 14 || i + 1 > 14)) {
+                                if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
+                                    toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, gameState.player1Tiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i + 1, j));
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, gameState.player1Tiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i - 1, j));
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
-                            } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, gameState.player1Tiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i, j + 1));
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
-                                }
+                                    toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, gameState.player1Tiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i - 1, j));
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
+                                } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, gameState.player1Tiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i, j + 1));
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
 
-                                toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, gameState.player1Tiles);
-                                if (toPlace != null) {
-                                    tilesToPlace.add(toPlace);
-                                    tilePoints.add(new Point(i, j - 1));
-                                    game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
-                                    return;
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, gameState.player1Tiles);
+                                    if (toPlace != null) {
+                                        tilesToPlace.add(toPlace);
+                                        tilePoints.add(new Point(i, j - 1));
+                                        game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
+                                        return;
+                                    }
                                 }
                             }
                         }
                     }
-
                 }
             }
 

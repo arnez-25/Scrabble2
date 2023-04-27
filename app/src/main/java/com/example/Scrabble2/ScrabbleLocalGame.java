@@ -129,12 +129,10 @@ public class ScrabbleLocalGame extends LocalGame {
             for (int i = 0; i < compAction.getTilesToPlace().size(); i++) {
                 gameState.placeTile(action.getPlayer().getPlayerNum(), compAction.getTilesToPlace().get(i), compAction.getTilePoints().get(i).x, compAction.getTilePoints().get(i).y);
             }
-
             if(!gameState.playWord(action.getPlayer().getPlayerNum())) {
                 gameState.skipper(action.getPlayer().getPlayerNum());
                 Logger.log(TAG, "Computer Player tried to play a word that was incorrect");
             }
-
             return true;
         }
         return false;

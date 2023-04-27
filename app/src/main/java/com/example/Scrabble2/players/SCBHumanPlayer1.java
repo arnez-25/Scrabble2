@@ -321,14 +321,15 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                     }
                                 }
                             }
+                        }
+
                     }
-
+                    Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();
-            }
 
-            Log.d("BUTTON", "ButtonClick");
-            surfaceView.invalidate();
-        }
-    }//onClick
+                Log.d("BUTTON", "ButtonClick");
+                surfaceView.invalidate();
+            }
+        }//onClick
+    }
 }

@@ -324,13 +324,5 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             Log.d("BUTTON", "ButtonClick");
             surfaceView.invalidate();
         }
-        /*
-        public String hintWord() {
-            String greet = "hi";
-            return greet;
-        }
-
-         */
-
     }//onClick
 }

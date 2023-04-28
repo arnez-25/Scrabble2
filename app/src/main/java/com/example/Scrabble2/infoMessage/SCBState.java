@@ -25,7 +25,7 @@ import com.example.GameFramework.infoMessage.GameState;
  *
  * @Version 4/24/2023
  */
-public class SCBState extends GameState implements Serializable{//TODO: fix game ending early
+public class SCBState extends GameState implements Serializable{
 
     //Tag for logging
     private static final String TAG = "SCBState";
@@ -717,18 +717,18 @@ public class SCBState extends GameState implements Serializable{//TODO: fix game
      */
     public boolean skipper(int playerId){
         if(playerId == playerToMove) {
+            resetHand(playerId);
             if (playerId == 0) {
-                Log.d(TAG, "Player 0 has skipped their turn");
+                //Log.d(TAG, "Player 0 has skipped their turn");
                 playerToMove = 1;
             } else {
-                Log.d(TAG, "Player 1 has skipped their turn");
+                //Log.d(TAG, "Player 1 has skipped their turn");
                 playerToMove = 0;
             }
-            cleanBoard();
             return true;
         }
         else{
-            Log.d(TAG, "Invalid Move for player " + playerId );
+            //Log.d(TAG, "Invalid Move for player " + playerId );
 
             return false;
         }

@@ -22,32 +22,10 @@ public class SCBStateTest extends ContextThemeWrapper {
     }
 
     @Test
-    public void resetHand() {
-
-    }
-
-    @Test
     public void getWhoseMove() {
         state.playerToMove = 0;
         int whoseMove = state.getWhoseMove();
         assertEquals(0, whoseMove);
-    }
-
-    @Test
-    public void setWhoseMove() {
-
-    }
-
-    @Test
-    public void placeTile() {
-    }
-
-    @Test
-    public void getPiece() {
-    }
-
-    @Test
-    public void playWord() {
     }
 
     @Test
@@ -58,49 +36,8 @@ public class SCBStateTest extends ContextThemeWrapper {
     }
 
     @Test
-    public void findPerpWord() {
-    }
-
-    @Test
-    public void cleanBoard() {
-    }
-
-    @Test
-    public void tilesToString() {
-    }
-
-    @Test
-    public void getTileRow() {
-    }
-
-    @Test
-    public void getTileCol() {
-    }
-
-    @Test
     public void skipper() {
         int player = state.getWhoseMove();
         assertTrue(state.skipper(player));
-    }
-
-    @Test
-    public void swapper() {
-
-    }
-
-    @Test
-    public void hinter() {
-    }
-
-    @Test
-    public void makeBag() {
-    }
-
-    @Test
-    public void drawFromBag() {
-    }
-
-    @Test
-    public void testToString() {
     }
 }

@@ -264,8 +264,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             } else if (clicked.getId() == R.id.swap_button && t != null) {
                 game.sendAction(new ScrabbleSwapAction(this, t));
             } else if (clicked.getId() == R.id.hint_button) {
-                //Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();//TODO: Should also let the player know if they cant play a hint
-
                 ArrayList<Tile> tilesToPlace = new ArrayList<>();
                 ArrayList<Point> tilePoints = new ArrayList<>();
 
@@ -282,47 +280,56 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                             Tile toPlace = null;
                             if (!(j + 2 > 14 || i + 2 > 14)) {
                                 if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
-                                    toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, gameState.player1Tiles);
+                                    toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, myTiles);
                                     if (toPlace != null) {
                                         tilesToPlace.add(toPlace);
                                         tilePoints.add(new Point(i + 1, j));
+                                        String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                         game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                         return;
                                     }
 
-                                    toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, gameState.player1Tiles);
+                                    toPlace = find2LetterWord(gameState.board[i][j], i - 1, j, myTiles);
                                     if (toPlace != null) {
                                         tilesToPlace.add(toPlace);
                                         tilePoints.add(new Point(i - 1, j));
+                                        String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                         game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                         return;
                                     }
                                 } else if (gameState.board[i][j + 1].getLetter() == ' ' && gameState.board[i][j - 1].getLetter() == ' ') {
-                                    toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, gameState.player1Tiles);
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j + 1, myTiles);
                                     if (toPlace != null) {
                                         tilesToPlace.add(toPlace);
                                         tilePoints.add(new Point(i, j + 1));
+                                        String word = "" + gameState.board[i][j].getLetter() + toPlace.getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                         game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                         return;
                                     }
 
-                                    toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, gameState.player1Tiles);
+                                    toPlace = find2LetterWord(gameState.board[i][j], i, j - 1, myTiles);
                                     if (toPlace != null) {
                                         tilesToPlace.add(toPlace);
                                         tilePoints.add(new Point(i, j - 1));
+                                        String word = "" + toPlace.getLetter() + gameState.board[i][j].getLetter();
+                                        Toast.makeText(myActivity, "played: " + word, Toast.LENGTH_SHORT).show();
                                         game.sendAction(new ScrabbleComputerAction(this, tilesToPlace, tilePoints));
                                         return;
                                     }
                                 }
                             }
                         }
+
                     }
-
+                    Toast.makeText(myActivity, "No Hint Available", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            Log.d("BUTTON", "ButtonClick");
-            surfaceView.invalidate();
-        }
-    }//onClick
+                Log.d("BUTTON", "ButtonClick");
+                surfaceView.invalidate();
+            }
+        }//onClick
+    }
 }

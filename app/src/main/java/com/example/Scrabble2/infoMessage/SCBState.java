@@ -741,7 +741,7 @@ public class SCBState extends GameState implements Serializable{
      * @param playTile Checks the tile that they are swapping
      * @return returns whether action was true or false
      */
-    public boolean swapper(int playerId, Tile playTile){//TODO: fix so that the tile being swapped is the local copy
+    public boolean swapper(int playerId, Tile playTile){
         if(playerId == playerToMove){
             Tile localTile = null;
             //find matching tile in our copy:

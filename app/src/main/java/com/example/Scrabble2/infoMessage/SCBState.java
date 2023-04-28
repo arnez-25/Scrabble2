@@ -23,7 +23,7 @@ import com.example.GameFramework.infoMessage.GameState;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/24/2023
+ * @version 4/28/2023
  */
 public class SCBState extends GameState implements Serializable{
 
@@ -534,9 +534,7 @@ public class SCBState extends GameState implements Serializable{
                         }
                     }
                 }
-
                 cleanBoard();
-
                 return false;
             }
         }
@@ -686,7 +684,6 @@ public class SCBState extends GameState implements Serializable{
                 }
             }
         }
-
         return row;
     }//getTileRow
 
@@ -705,7 +702,6 @@ public class SCBState extends GameState implements Serializable{
                 }
             }
         }
-
         return col;
     }//getTileCol
 
@@ -729,7 +725,6 @@ public class SCBState extends GameState implements Serializable{
         }
         else{
             //Log.d(TAG, "Invalid Move for player " + playerId );
-
             return false;
         }
     }//skipper
@@ -760,7 +755,6 @@ public class SCBState extends GameState implements Serializable{
                     }
                 }
             }
-
             bag.add(localTile);//put swapped out tile back in the bag
 
             //remove the swapped out tile from the correct player's hand and give them a new tile
@@ -773,7 +767,6 @@ public class SCBState extends GameState implements Serializable{
                 player2Tiles.add(drawFromBag());
                 Log.d(TAG, "Player 1 has swapped their one of their tiles");
             }
-
             resetHand(playerId);
             if (playerId == 0) {
                 playerToMove = 1;
@@ -803,7 +796,6 @@ public class SCBState extends GameState implements Serializable{
         else{
             hintWord = "No hint available.";
             Log.d(TAG, "Invalid Move for player " + playerId );
-
             return false;
         }
     }//hinter
@@ -915,5 +907,3 @@ public class SCBState extends GameState implements Serializable{
         return test;
     }//toString
 }
-
-

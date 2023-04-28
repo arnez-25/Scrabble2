@@ -9,6 +9,8 @@ import com.example.GameFramework.players.GamePlayer;
  * @author Nick Tabra
  * @author Jacob Arnez
  * @author David Leon
+ *
+ * @version 4/28/2023
  */
 public class ScrabbleSkipAction extends GameAction {
     /**

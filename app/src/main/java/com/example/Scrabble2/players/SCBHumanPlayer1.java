@@ -33,10 +33,9 @@ import java.util.ArrayList;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/5/2023
+ * @version 4/28/2023
  */
 public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener , View.OnClickListener {
-
 
     //Tag for logging
     private static final String TAG = "SCBHumanPlayer1";
@@ -44,7 +43,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     // the surface view
     private SCBSurfaceView surfaceView;
 
-    // the gamestate
+    // The Gamestate
 
     private SCBState gameState;
 
@@ -64,7 +63,15 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Button swap;
 
-
+    /**
+     * Method to find 2 letter words
+     *
+     * @param playOff The tile being played
+     * @param row the Row in the array
+     * @param col the Column in the array
+     * @param hand
+     * @return
+     */
     public Tile find2LetterWord(Tile playOff, int row, int col, ArrayList<Tile> hand) {
         int rootRow = gameState.getTileRow(playOff);
         int rootCol = gameState.getTileCol(playOff);
@@ -87,7 +94,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             } else if (rootRow < row || rootCol < col) {
                 word = "" + playOff.getLetter() + t.getLetter();
             }
-
             if (gameState.dictionary.checkWord(word)) {
                 return t;
             }
@@ -107,7 +113,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         this.layoutId = layoutId;
         t = null;
     }//SCBHumanPlayer1
-
 
     @Override
     public void receiveInfo(GameInfo info) {
@@ -155,7 +160,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         reset.setOnClickListener(this);
         hint = myActivity.findViewById(R.id.hint_button);
         hint.setOnClickListener(this);
-
     }//setAsGui
 
     /**
@@ -166,7 +170,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     @Override
     public View getTopView() {
         return myActivity.findViewById(R.id.top_gui_layout);
-    }
+    }//getTopView
 
     /**
      * perform any initialization that needs to be done after the player
@@ -174,8 +178,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      */
     protected void initAfterReady() {
         myActivity.setTitle("Scrabble: " + allPlayerNames[0] + " vs. " + allPlayerNames[1]);
-
-    }
+    }//initAfterReady
 
     /**
      * callback method when the screen it touched. We're
@@ -202,7 +205,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             Log.d("BOARD", bX + ", " + bY);
 
             pBoard = surfaceView.mapTouchToBoard(bX, bY);
-
         }
 
         //If statement for the hand coordinate
@@ -212,7 +214,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             Log.d("HAND", H_bX + ", " + H_bY);
 
             pHand = surfaceView.mapTouchToHand(H_bY);
-
         }
         Log.d("CORDS", x + ", " + y);
 
@@ -230,7 +231,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 surfaceView.invalidate();
                 t = null;
             }
-
         }
 
         if (pHand == -1) {
@@ -245,7 +245,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         surfaceView.reverseWindowX(0);
         Log.d("test", surfaceView.reverseWindowX(0) + "");
-
         // register that we have handled the event
         return true;
     }//onTouch
@@ -321,7 +320,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                                     }
                                 }
                             }
-
                         }
                     }
                 }
@@ -330,6 +328,6 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 Log.d("BUTTON", "ButtonClick");
                 surfaceView.invalidate();
             }
-        }//onClick
-    }
+        }
+    }//onClick
 }

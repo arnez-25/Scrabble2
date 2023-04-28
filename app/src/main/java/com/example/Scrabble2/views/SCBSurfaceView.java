@@ -31,9 +31,7 @@ import java.util.ArrayList;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @version April 2023
- *
- *
+ * @version 4/28/2023
  */
 
 public class SCBSurfaceView extends FlashSurfaceView {
@@ -78,7 +76,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
     //TOPLEFT HAND: (1640, 73)
     //BOTRIGHT HAND: (1807, 1000)
 
-
     private float Hx_L = 1640;
     private float Hy_L = 73;
     private float Hx_H = 1807;
@@ -115,8 +112,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public SCBSurfaceView(Context context) {
         super(context);
         init();
-
-    }
+    }//SCBSurfaceView
 
     /**
      * An alternate constructor for use when a subclass is directly specified
@@ -128,21 +124,21 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public SCBSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-    }// ctor
+    }//SCBSurfaceView
 
     /**
      * Setter for the players hand (the surface view doesn't know which player is the human)
      */
     public void setPlayerNum(int id) {
         playerNum = id;
-    }
+    }//setPlayerNum
 
     /**
-     * Helper-method for the constructors
+     * Helper-methods for the constructors
      */
     private void init() { setBackgroundColor(backgroundColor());} //init
 
-    public void setState(SCBState state) { this.state = state; }
+    public void setState(SCBState state) { this.state = state; }//setState
 
     /**
      * @return
@@ -213,7 +209,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
             g.drawRect(topLeftHor, leftHor + (j*62), bottomRightHor, rightHor + (j*62), p);
         }
 
-
         //draw each tile on the board
         for (int row = 0; row < 15; row++) {
             for (int col = 0; col < 15; col++) {
@@ -256,7 +251,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
 
         //draw the key
         drawKey(g);
-    }
+    }//onDraw
 
     public void onHand(Canvas g) {
         // update the variables that relate
@@ -312,7 +307,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         for (int k = 0; k < myHand.size(); k++) {
             myHand.get(k).drawMe(g, 1670, 95 + k*130, 100);
         }
-    }
+    }//onHand
 
     /**
      * Draws the key for the game
@@ -337,7 +332,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         redSquare.setColor(Color.RED);
         g.drawRect(1380, 1030, 1430, 1080, redSquare);
         g.drawText("= Start", 1440, 1070, dW);
-    }
+    }//drawKey
 
 
     /**
@@ -349,7 +344,6 @@ public class SCBSurfaceView extends FlashSurfaceView {
      * @return
      *      returns A point that should contain the index of the grid touched
      */
-
     public Point mapTouchToBoard(float Bx, float By){
         float width = (float) 0.0666666; // percentage width of square in board
         float bound_X = 0;
@@ -378,7 +372,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
         Log.d("BOARD_GRID", point_X + ", " + point_Y);
         return new Point(point_X, point_Y);
-    }
+    }//mapTouchToBoard
 
     /**
      * method to map a touch on the hand to an index in the hand
@@ -403,7 +397,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
         }
         Log.d("HAND_GRID", hand_Index + "");
         return hand_Index;
-    }
+    }//mapTouchToHand
 
     /**
      * helper-method to convert from a percentage to a horizontal pixel location
@@ -440,9 +434,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float windowX(float x){
         float bX = (x - xL) / (xH - xL);
         return bX;
-
-    }
-
+    }//windowX
 
     public float reverseWindowX(float bX){
         return bX * (xH - xL) + xL;
@@ -458,7 +450,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float windowY(float y){
         float bY = (y - yL) / (xH - xL);
         return bY;
-    }
+    }//windowY
 
     /**
      * helper-method to find the x percentage clicked in the hand
@@ -470,7 +462,7 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float handX(float x){
         float bX = (x - Hx_L) / (Hx_H - Hx_L);
         return bX;
-    }
+    }//handX
 
     /**
      * helper-method to find the y percentage clicked in the hand
@@ -482,10 +474,10 @@ public class SCBSurfaceView extends FlashSurfaceView {
     public float handY(float y){
         float bY = (y - Hy_L) / (Hy_H - Hy_L);
         return bY;
-    }
+    }//handY
 
     /*
-        Getters for surface view
+     *  Getters for surface view
      */
     public float getxL() {
         return xL;

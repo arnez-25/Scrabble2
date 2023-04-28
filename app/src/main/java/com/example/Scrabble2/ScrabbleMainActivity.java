@@ -1,7 +1,5 @@
 package com.example.Scrabble2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.example.GameFramework.GameMainActivity;
 import com.example.GameFramework.LocalGame;
 import com.example.GameFramework.gameConfiguration.GameConfig;
@@ -18,8 +16,8 @@ import com.example.gametestb.R;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
+
 /**
  * @author Riley Cameron
  * @author Alexx Blake
@@ -27,16 +25,13 @@ import java.util.ArrayList;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/24/2023
+ * @version 4/28/2023
  *
  * GAME STATUS:
- * The game is currently playable against the dumb AI. The smart AI is still under development
+ * Game is Stable
  *
  * Source for the Scrabble Dictionary: https://github.com/redbo/scrabble/blob/master/dictionary.txt
  * (^ we removed the inappropriate terms from it)
- *
- *  The reason for these bugs is primarily due to poor time management and committing to more features than
- *  we were capable of implementing within the given time frame.
  */
 public class ScrabbleMainActivity extends GameMainActivity {
 
@@ -80,7 +75,6 @@ public class ScrabbleMainActivity extends GameMainActivity {
 
         //done!
         return defaultConfig;
-
     }//createDefaultConfig
 
     /**

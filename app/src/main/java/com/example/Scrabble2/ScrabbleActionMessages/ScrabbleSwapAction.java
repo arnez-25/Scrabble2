@@ -11,7 +11,7 @@ import com.example.Scrabble2.infoMessage.Tile;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/5/2023
+ * @version 4/28/2023
  */
 public class ScrabbleSwapAction extends GameAction {
 

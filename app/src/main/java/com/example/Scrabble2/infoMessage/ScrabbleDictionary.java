@@ -9,20 +9,33 @@ import java.util.HashMap;
 
 /**
  * Class that implements a scrabble dictionary as a search tree
- * 
+ *
  * @author Riley Cameron
- * @version 3/6/2023
- * 
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @version 4/28/2023
+ *
  * sources: https://www.cs.cmu.edu/afs/cs/academic/class/15451-s06/www/lectures/scrabble.pdf 
  */
 
 //node class for the dictionary tree, contains a character and a list of child nodes
 //if a node is the last letter in a playable word, isWord is set to true
 class Node {
+
+    //Instance Variables
     char ch;
     boolean isWord;
     HashMap<Character,Node> childNodes;
 
+    /**
+     * Establishes a Node and Checks info for such Node.
+     *
+     * @param ch Character
+     * @param isWord If the character is a word
+     */
     public Node(char ch, boolean isWord) {
         this.ch = ch;
         this.isWord = isWord;
@@ -47,10 +60,26 @@ class Node {
     }
 }
 
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @version 4/28/2023
+ */
+
 public class ScrabbleDictionary {
+    //Instance Variables
     Node root;
     BufferedReader reader;
 
+    /**
+     * Reader for the ScrabbleDictionary File
+     *
+     * @param r File Reader
+     */
     public ScrabbleDictionary(BufferedReader r) {
 
         root = new Node('0', false);
@@ -68,7 +97,11 @@ public class ScrabbleDictionary {
         }
     }//ScrabbleDictionary
 
-    //Adds words
+    /**
+     * Adds words
+     *
+     * @param word The string that contains the word.
+     */
     public void addWord(String word) {
         int strLen = word.length();
         Node currentNode = root;
@@ -86,7 +119,13 @@ public class ScrabbleDictionary {
         }
 
     }//addWord
-    //Checks if word exists
+
+    /**
+     * Checks if the word exists
+     *
+     * @param word The string that contains the word
+     * @return If the word exists or not
+     */
     public boolean checkWord(String word) {
         int strLen = word.length();
         Node currentNode = root;

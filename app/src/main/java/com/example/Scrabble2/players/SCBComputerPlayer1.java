@@ -17,16 +17,18 @@ import java.util.ArrayList;
  * This is the dumb AI for our game. Right now we just want it to skip its turn.
  * It is so dumb it can't even play the game!
  *
- *@author Riley Cameron
- *@author Alexx Blake
- *@author Nick Tabra
- *@author Jacob Arnez
- *@author David Leon
  *
- *@Version 4/24/2023
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @version 4/28/2023
  */
 public class SCBComputerPlayer1 extends GameComputerPlayer{
 
+    //Instance Variables
     private static final String TAG = "ComputerPlayer";
 
     SCBState scb;
@@ -122,11 +124,9 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
                     }
                 }
             }
-
             game.sendAction(new ScrabbleSkipAction(this));
         }
     }//receiveInfo
-
 
     /**
      * A method to help find a letter word throughout the table/playing area.
@@ -152,7 +152,6 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
         } else if (col-1 > 0 && scb.board[row][col-1].getLetter() != ' ' && !scb.board[row][col-1].equals(playOff)) {
             return null;
         }
-
         for (Tile t : hand) {
             if (rootRow > row || rootCol > col) {
                 word = "" + t.getLetter() + playOff.getLetter();

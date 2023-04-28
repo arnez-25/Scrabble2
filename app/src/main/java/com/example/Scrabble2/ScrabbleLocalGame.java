@@ -24,10 +24,11 @@ import java.io.BufferedReader;
  * @author Jacob Arnez
  * @author David Leon
  *
- * Version: 4/24/2023
+ * @version 4/28/2023
  */
 public class ScrabbleLocalGame extends LocalGame {
 
+    //Instance Variables
     private SCBState gameState;
 
     private static final String TAG = "ScrabbleLocalGame";

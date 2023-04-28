@@ -1,13 +1,20 @@
 package com.example.Scrabble2.ScrabbleActionMessages;
 
 import android.graphics.Point;
-
 import com.example.GameFramework.actionMessage.GameAction;
 import com.example.GameFramework.players.GamePlayer;
 import com.example.Scrabble2.infoMessage.Tile;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+/**
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @version 4/28/2023
+ */
 
 public class ScrabbleComputerAction extends GameAction {
     private ArrayList<Tile> tilesToPlace;
@@ -23,6 +30,7 @@ public class ScrabbleComputerAction extends GameAction {
         tilePoints = tilePositions;
     }
 
+    //Getter Methods for retrieving tile data.
     public ArrayList<Tile> getTilesToPlace() {
         return tilesToPlace;
     }

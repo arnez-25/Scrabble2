@@ -22,10 +22,11 @@ import java.util.Random;
  * @author Jacob Arnez
  * @author David Leon
  *
- * @Version 4/24/2023
+ * @version 4/28/2023
  */
 public class SCBComputerPlayer2 extends GameComputerPlayer{
 
+    //Instance Variables
     private static final String TAG = "ComputerPlayer";
 
     SCBState scb;
@@ -86,11 +87,10 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
             ArrayList<Pair<String, Point>> acrossWords = new ArrayList<>();
             ArrayList<Pair<String, Point>> downWords = new ArrayList<>();
 
-
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
-                    int spacesAcross = 0;
-                    int spacesDown = 0;
+                    int spacesAcross;
+                    int spacesDown;
 
                     if (scb.board[i][j].getLetter() != ' ') {
                         spacesAcross = findSpacesAcross(i, j);
@@ -107,7 +107,6 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
                                 }
                             }
                         }
-
                         if (spacesDown > 1) {
                             for (String word : possibleWords) {
                                 if (!(word.length() > spacesDown)) {
@@ -169,8 +168,13 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         }
     }//receiveInfo
 
-
-    //helper methods for findWords:
+    /**
+     * Helper method for findWords
+     *
+     * @param row Row in the array
+     * @param col Column in the array
+     * @return Returns space for move across
+     */
     public int findSpacesAcross(int row, int col) {
         int count = 0;
         while (col+count+1 < 15 && row-1 > 0 && row+1 < 15 && scb.board[row][col+count+1].getLetter() == ' ' && scb.board[row+1][col+count+1].getLetter() == ' ' && scb.board[row-1][col+count+1].getLetter() == ' ') {
@@ -180,20 +184,24 @@ public class SCBComputerPlayer2 extends GameComputerPlayer{
         if (col-1 < 0 || scb.board[row][col-1].getLetter() != ' ') {
             count = 0;
         }
-
         return count;
     }//findSpacesAcross
 
+    /**
+     * Additional Helper method for findWords
+     *
+     * @param row Row in the array
+     * @param col Column in the array
+     * @return Returns space for move downwards
+     */
     public int findSpacesDown(int row, int col) {
         int count = 0;
         while (row+count+1 < 15 && col+1 < 15 && col-1 > 0 && scb.board[row+count+1][col].getLetter() == ' ' && scb.board[row+count+1][col+1].getLetter() == ' ' && scb.board[row+count+1][col-1].getLetter() == ' ') {
             count++;
         }
-
         if (row-1 < 0 || scb.board[row-1][col].getLetter() != ' ') {
             count = 0;
         }
-
         return count;
     }//findSpacesDown
 }

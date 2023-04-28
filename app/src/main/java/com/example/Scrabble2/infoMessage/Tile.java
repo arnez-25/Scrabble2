@@ -1,15 +1,5 @@
 package com.example.Scrabble2.infoMessage;
 
-/**
- * @author Riley Cameron
- * @author Alexx Blake
- * @author Nick Tabra
- * @author Jacob Arnez
- * @author David Leon
- *
- * @Version 3/16/2023
- */
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,8 +8,15 @@ import android.graphics.Paint;
  * Class Tile
  *
  * Is the tile class used to represent the letter tiles in the game.
+ *
+ * @author Riley Cameron
+ * @author Alexx Blake
+ * @author Nick Tabra
+ * @author Jacob Arnez
+ * @author David Leon
+ *
+ * @version 4/28/2023
  */
-
 public class Tile {
 
     /**
@@ -80,7 +77,6 @@ public class Tile {
         paint.setStyle(Paint.Style.FILL);
         g.drawRoundRect(x, y, x+size, y+size, size/6, size/6, paint);
 
-
         text.setColor(Color.BLACK);
         text.setTextSize(size/2);
         text.setTextAlign(Paint.Align.CENTER);
@@ -107,5 +103,4 @@ public class Tile {
         score = t.getScore();
         onBoard = t.isOnBoard();
     }
-
 }

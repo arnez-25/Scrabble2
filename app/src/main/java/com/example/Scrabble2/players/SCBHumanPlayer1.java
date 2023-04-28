@@ -278,7 +278,7 @@ public class SCBHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     for (int j = 0; j < 15; j++) {
                         if (gameState.board[i][j].getLetter() != ' ') {
                             Tile toPlace = null;
-                            if (!(j + 2 > 14 || i + 2 > 14)) {
+                            if ((i > 1 && i < 14) && (j > 1 && j < 14)) {
                                 if (gameState.board[i + 1][j].getLetter() == ' ' && gameState.board[i - 1][j].getLetter() == ' ') {
                                     toPlace = find2LetterWord(gameState.board[i][j], i + 1, j, myTiles);
                                     if (toPlace != null) {

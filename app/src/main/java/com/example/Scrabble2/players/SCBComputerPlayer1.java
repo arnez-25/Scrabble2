@@ -84,7 +84,7 @@ public class SCBComputerPlayer1 extends GameComputerPlayer{
                 for (int j = 0; j < 15; j++) {
                     if (scb.board[i][j].getLetter() != ' ') {
                         Tile toPlace = null;
-                        if (!(j + 1 > 14 || i + 1 > 14)) {
+                        if ((i > 1 && i < 14) && (j > 1 && j < 14)) {
                             if (scb.board[i + 1][j].getLetter() == ' ' && scb.board[i - 1][j].getLetter() == ' ') {
                                 toPlace = find2LetterWord(scb.board[i][j], i + 1, j, myTiles);
                                 if (toPlace != null) {
